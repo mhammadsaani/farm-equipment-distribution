@@ -1,2 +1,3 @@
-# farm-equipment-distribution
+# Farm Equipment Distribution
+
 Final year project
