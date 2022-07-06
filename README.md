@@ -1,3 +1,31 @@
 # Farm Equipment Distribution
 
 Final year project
+
+### Requirements
+
+- Python 3
+- Git
+- Database: Sqlite, Mysql, Postgres
+
+### Installation
+
+- `git clone https://github.com/6hislain/farm-equipment-distribution`
+- `cd farm-equipment-distribution`
+- `python3 -m venv venv`
+- `source venv/bin/activate`
+- `pip install -r requirements.txt`
+- edit `mysite/settings.py` to match your preference
+- `python3 manage.py migrate`
+- `python3 manage.py createsuperuser`
+- `python3 manage.py runserver`
+
+### Todo
+
+App Models
+
+- [ ] after sale service: product, partner, service, tag
+- [ ] chat: message
+- [ ] main: user, notification, settings, search history
+- [ ] qna: question, answer
+- [ ] timeline: article, post
