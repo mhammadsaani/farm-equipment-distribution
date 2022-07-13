@@ -24,8 +24,8 @@ Final year project
 
 App Models
 
-- [ ] after sale service: product, partner, service, tag
-- [ ] chat: message
-- [ ] main: user, notification, settings, search history
-- [ ] qna: question, answer
-- [ ] timeline: article, post
+- [x] after sale service: product, partner, service, tag
+- [x] chat: message
+- [ ] main: user profile, notification, settings, search history
+- [x] qna: question, answer
+- [x] timeline: article, post
