@@ -26,6 +26,6 @@ App Models
 
 - [x] after sale service: product, partner, service, tag
 - [x] chat: message
-- [ ] main: user profile, notification, settings, search history
+- [x] main: user profile, notification, settings, search history
 - [x] qna: question, answer
 - [x] timeline: article, post

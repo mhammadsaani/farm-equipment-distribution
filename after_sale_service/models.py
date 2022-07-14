@@ -50,6 +50,7 @@ class Service(models.Model):
 class Tag(models.Model):
     name = models.CharField(max_length=200, unique=True)
     slug = models.SlugField(unique=True, null=False)
+    description = models.TextField()
     created_at = models.DateTimeField(default=datetime.now)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
