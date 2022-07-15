@@ -10,7 +10,7 @@ class Article(models.Model):
     title = models.CharField(max_length=200)
     slug = models.SlugField(unique=True, null=False)
     content = models.TextField()
-    attachment = models.FileField()
+    attachment = models.FileField(upload_to="articles/%Y/%m/%d/", blank=True)
     created_at = models.DateTimeField(default=datetime.now)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     category = models.ForeignKey(Tag, on_delete=models.CASCADE)
@@ -21,7 +21,7 @@ class Article(models.Model):
 
 class Post(models.Model):
     content = models.TextField()
-    attachment = models.FileField()
+    attachment = models.FileField(upload_to="posts/%Y/%m/%d/", blank=True)
     created_at = models.DateTimeField(default=datetime.now)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     parent = models.IntegerField(default=0)

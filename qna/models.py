@@ -10,7 +10,7 @@ class Question(models.Model):
     title = models.CharField(max_length=200)
     slug = models.SlugField(unique=True, null=False)
     content = models.TextField()
-    attachment = models.FileField()
+    attachment = models.FileField(upload_to="questions/%Y/%m/%d/", blank=True)
     created_at = models.DateTimeField(default=datetime.now)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     category = models.ForeignKey(Tag, on_delete=models.CASCADE)
@@ -24,7 +24,7 @@ class Question(models.Model):
 
 class Answer(models.Model):
     content = models.TextField()
-    attachment = models.FileField()
+    attachment = models.FileField(upload_to="answers/%Y/%m/%d/", blank=True)
     created_at = models.DateTimeField(default=datetime.now)
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)

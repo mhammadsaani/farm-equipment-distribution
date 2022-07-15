@@ -1,0 +1,44 @@
+<div class="col-md-2">
+  <div class="card card-body text-center shadow-sm">
+    <h5 class="text-truncate fw-bold">{{ user.username }}</h5>
+    <p class="text-truncate m-0">{{ user.email }}</p>
+  </div>
+  <div class="list-group shadow-sm my-3">
+    <a href="{% url 'home' %}" class="list-group-item list-group-item-action">
+      Home <span class="float-end">&rarr;</span>
+    </a>
+    <a href="{% url 'dashboard' %}" class="list-group-item list-group-item-action active" aria-current="true">
+      Dashboard <span class="float-end">&rarr;</span>
+    </a>
+    <a href="{% url 'home' %}" class="list-group-item list-group-item-action">
+      Timeline <span class="float-end">&rarr;</span>
+    </a>
+    <a href="{% url 'home' %}" class="list-group-item list-group-item-action">
+      Products <span class="float-end">&rarr;</span>
+    </a>
+    <a href="{% url 'home' %}" class="list-group-item list-group-item-action">
+      Partners <span class="float-end">&rarr;</span>
+    </a>
+    <a href="{% url 'home' %}" class="list-group-item list-group-item-action">
+      Services <span class="float-end">&rarr;</span>
+    </a>
+    <a href="{% url 'home' %}" class="list-group-item list-group-item-action">
+      Chat <span class="float-end">&rarr;</span>
+    </a>
+    <a href="{% url 'home' %}" class="list-group-item list-group-item-action">
+      Knowledge base <span class="float-end">&rarr;</span>
+    </a>
+    <a href="{% url 'home' %}" class="list-group-item list-group-item-action">
+      Notifications <span class="float-end">&rarr;</span>
+    </a>
+    <a href="{% url 'home' %}" class="list-group-item list-group-item-action">
+      Settings <span class="float-end">&rarr;</span>
+    </a>
+    <a href="{% url 'profile' id=user.id %}" class="list-group-item list-group-item-action">
+      My profile <span class="float-end">&rarr;</span>
+    </a>
+    <a href="{% url 'logout' %}" class="list-group-item list-group-item-action">
+      Log out <span class="float-end">&rarr;</span>
+    </a>
+  </div>
+</div>

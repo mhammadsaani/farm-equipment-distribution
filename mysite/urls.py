@@ -23,4 +23,5 @@ urlpatterns = [
     path("chat/", include("chat.urls")),
     path("qna/", include("qna.urls")),
     path("timeline/", include("timeline.urls")),
+    path("__debug__/", include("debug_toolbar.urls")),
 ]

@@ -8,7 +8,7 @@ User = get_user_model()
 # Create your models here.
 class Message(models.Model):
     content = models.TextField()
-    attachment = models.FileField()
+    attachment = models.FileField(upload_to="messages/%Y/%m/%d/", blank=True)
     created_at = models.DateTimeField(default=datetime.now)
     sender = models.ForeignKey(User, on_delete=models.CASCADE)
     receiver = models.IntegerField()

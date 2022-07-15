@@ -1,11 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Document</title>
-</head>
-<body>
-	<h1>Farm equipment distribution & analytics</h1>
-</body>
-</html>
+{% extends 'layouts/base.html' %}
+{% block title %} Farm Equipment Distribution & Analytics {% endblock %}
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-md-6">
+    <h1 class="display-6 text-center fw-bold my-4">Farm Equipment <br> Distribution & Analytics</h1>
+    <p class="text-muted fs-5 my-2">
+    	We work hand in hand with farm equipment distributors to help you find after-sale services such as:
+    </p>
+    <ul class='text-muted fs-5 my-2 mx-5'>
+    	<li>Insurance</li>
+    	<li>Trainings</li>
+    	<li>Maintainance and servicing</li>
+    	<li>Finding spare parts</li>
+    	<li>Leasing, etc.</li>
+    </ul>
+  </div>
+</div>
+{% endblock %}
