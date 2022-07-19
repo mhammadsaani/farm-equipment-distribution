@@ -17,7 +17,10 @@
             <input type="password" class="form-control" name="password" />
           </div>
           {% csrf_token %}
-          <button class="btn btn-primary" type="submit">Continue</button>
+          <div class='d-flex justify-content-between'>
+            <button class="btn btn-primary" type="submit">Continue</button>
+            <a class="btn btn-link" href="{% url 'signup' %}">Forgot password</a>
+          </div>
         </form>
       </div>
     </div>

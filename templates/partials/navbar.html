@@ -32,7 +32,7 @@
           <a class="nav-link" href="{% url 'about' %}#features">Partners</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="{% url 'about' %}#features">Knowledge Base</a>
+          <a class="nav-link" href="{% url 'qna:question.index' %}">QnA</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="{% url 'about' %}">About</a>
@@ -90,7 +90,7 @@
           <form class='d-flex' action='{% url "search" %}' method='POST' autocomplete="off">
             {% csrf_token %}
             <input type="text" name="keyword" class='form-control me-1' placeholder='Search . . .' required='true' />
-            <button type='submit' class='btn btn-primary'>go</button>
+            <button type='submit' class='btn btn-info'>GO</button>
           </form>
         </li>
       </ul>

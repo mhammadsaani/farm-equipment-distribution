@@ -1,0 +1,40 @@
+{% extends 'qna/layout.html' %}
+{% block qna_content %}
+<form class='d-flex mb-3' action='{% url "qna:question.search" %}' method='POST' autocomplete="off">
+  {% csrf_token %}
+  <a class='btn btn-info' href='{% url "qna:question.create" %}'>Ask new question</a>
+  <input type="text" name="keyword" class='form-control w-50 mx-1' required='true' placeholder="Search all discussions" />
+  <select class='form-control w-25' name='tag'>
+    <option value='all'>all tags</option>
+  </select>
+  <button type='submit' class='btn btn-primary mx-1'>search</button>
+</form>
+<div class='table-response'>
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th scope="col">Discussions</th>
+        <th scope="col"></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for question in questions %}
+      <tr>
+        <td>
+          <b>{{ question.title }}</b><br/>
+          {{ question.content }}<br/>
+          <span class='badge bg-light'>{{ question.category }}</span>
+        </td>
+        <td>
+          <a href='' class='btn btn-sm btn-info'>view</a>
+          {% if question.user_id == user.id %}
+          <a href='' class='btn btn-sm btn-success'>edit</a>
+          <a href='{% url "qna:question.delete" id=question.id %}' class='btn btn-sm btn-warning'>delete</a>
+          {% endif %}
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

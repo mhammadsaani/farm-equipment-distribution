@@ -1,19 +1,23 @@
 {% extends 'layouts/base.html' %}
+{% load static %}
 {% block title %} Farm Equipment Distribution & Analytics {% endblock %}
 {% block content %}
 <div class="row justify-content-center">
   <div class="col-md-6">
-    <h1 class="display-6 text-center fw-bold my-4">Farm Equipment <br> Distribution & Analytics</h1>
+    <h1 class="display-6 fw-bold my-4">Farm Equipment <br/> Distribution & Analytics</h1>
     <p class="text-muted fs-5 my-2">
     	We work hand in hand with farm equipment distributors to help you find after-sale services such as:
     </p>
-    <ul class='text-muted fs-5 my-2 mx-5'>
-    	<li>Insurance</li>
-    	<li>Trainings</li>
-    	<li>Maintainance and servicing</li>
-    	<li>Finding spare parts</li>
-    	<li>Leasing, etc.</li>
+    <ul class='text-muted fs-5 my-2 mx-3'>
+      <li>Maintainance and servicing</li>
+      <li>Finding spare parts</li>
+      <li>Leasing</li>
+      <li>Trainings</li>
+    	<li>Insurance, etc.</li>
     </ul>
+  </div>
+  <div class='col-md-6'>
+    <img src="{% static 'img/brainstorming.svg' %}" class='w-100' alt='brain storming'/>
   </div>
 </div>
 {% endblock %}
