@@ -22,6 +22,10 @@ Final year project
 
 ### Todo
 
+- [ ] form validation
+- [ ] search
+- [ ] pagination
+
 App Models
 
 - [x] after sale service: product, partner, service, tag
