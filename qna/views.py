@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.http import require_http_methods
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator
 from django.utils.text import slugify
 from django.contrib import messages
 from .models import Question, Answer
@@ -10,10 +11,14 @@ from after_sale_service.models import Tag
 # Create your views here.
 @require_http_methods(["GET"])
 def question_index(request):
+    questions = Question.objects.all()
     tags = Tag.objects.order_by("-id")[:10]
-    questions = Question.objects.order_by("-id")[:10]
+    paginator = Paginator(questions, 10)
+    page_number = request.GET.get("page")
+    page_object = paginator.get_page(page_number)
+
     return render(
-        request, "qna/question/index.html", {"tags": tags, "questions": questions}
+        request, "qna/question/index.html", {"tags": tags, "page_object": page_object}
     )
 
 

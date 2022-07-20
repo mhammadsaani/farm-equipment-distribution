@@ -3,6 +3,12 @@
 {% block content %}
 <div class="row justify-content-center">
   <div class='col-md-3'>
+    {% if user.is_authenticated %}
+    <div class="card card-body text-center shadow-sm mb-3">
+      <h5 class="text-truncate fw-bold">{{ user.username }}</h5>
+      <p class="text-truncate m-0">{{ user.email }}</p>
+    </div>
+    {% endif %}
     <h4>Tags</h4>
     <div class="list-group shadow-sm my-3">
       {% for tag in tags %}

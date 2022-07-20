@@ -6,58 +6,70 @@
     <form class='d-flex' action='{% url "search" %}' method='POST' autocomplete="off">
       {% csrf_token %}
       <input type="text" name="keyword" class='form-control me-1' value='{{ keyword }}' required='true' />
-      <button type='submit' class='btn btn-primary'>search</button>
+      <button type='submit' class='btn btn-primary'>Search</button>
     </form>
   </div>
   <div class='col-12 my-4'>
-    <div class='card card-body shadow-sm'>
-      <ul class='nav nav-tabs' id='search-tab' role='tablist'>
-        <li class='nav-item' role='presentation'>
-          <button class='nav-link active' id='all-tab' data-bs-toggle='tab' data-bs-target='#all' type='button' role='tab' aria-controls='all' aria-selected='true'>All</button>
-        </li>
-        <li class='nav-item' role='presentation'>
-          <button class='nav-link' id='question-tab' data-bs-toggle='tab' data-bs-target='#question' type='button' role='tab' aria-controls='question' aria-selected='false'>Questions</button>
-        </li>
-        <li class='nav-item' role='presentation'>
-          <button class='nav-link' id='answer-tab' data-bs-toggle='tab' data-bs-target='#answer' type='button' role='tab' aria-controls='answer' aria-selected='false'>Answers</button>
-        </li>
-        <li class='nav-item' role='presentation'>
-          <button class='nav-link' id='post-tab' data-bs-toggle='tab' data-bs-target='#post' type='button' role='tab' aria-controls='post' aria-selected='false'>Posts</button>
-        </li>
-        <li class='nav-item' role='presentation'>
-          <button class='nav-link' id='article-tab' data-bs-toggle='tab' data-bs-target='#article' type='button' role='tab' aria-controls='article' aria-selected='false'>Articles</button>
-        </li>
-        <li class='nav-item' role='presentation'>
-          <button class='nav-link' id='people-tab' data-bs-toggle='tab' data-bs-target='#people' type='button' role='tab' aria-controls='people' aria-selected='false'>People</button>
-        </li>
-        <li class='nav-item' role='presentation'>
-          <button class='nav-link' id='tag-tab' data-bs-toggle='tab' data-bs-target='#tag' type='button' role='tab' aria-controls='tag' aria-selected='false'>Tags</button>
-        </li>
-        <li class='nav-item' role='presentation'>
-          <button class='nav-link' id='product-tab' data-bs-toggle='tab' data-bs-target='#product' type='button' role='tab' aria-controls='product' aria-selected='false'>Products</button>
-        </li>
-        <li class='nav-item' role='presentation'>
-          <button class='nav-link' id='service-tab' data-bs-toggle='tab' data-bs-target='#service' type='button' role='tab' aria-controls='service' aria-selected='false'>Services</button>
-        </li>
-        <li class='nav-item' role='presentation'>
-          <button class='nav-link' id='partner-tab' data-bs-toggle='tab' data-bs-target='#partner' type='button' role='tab' aria-controls='partner' aria-selected='false'>Partners</button>
-        </li>
-      </ul>
-      <div class='tab-content' id='tab-content'>
-        <div class='tab-pane fade show active' id='all' role='tabpanel' aria-labelledby='all-tab'>
-          <div class='d-flex justify-content-center'>
-            <div class='spinner-border text-info m-5' role='status'><span class='visually-hidden'>loading...</span></div>
+    <div class='card shadow-sm'>
+      <div class='card-header pb-0 border-0'>
+        <ul class='nav nav-tabs' id='search-tab' role='tablist'>
+          <li class='nav-item' role='presentation'>
+            <button class='nav-link active' id='all-tab' data-bs-toggle='tab' data-bs-target='#all' type='button' role='tab' aria-controls='all' aria-selected='true'>
+              <i class='bi bi-layers me-1'></i> All
+            </button>
+          </li>
+          <li class='nav-item' role='presentation'>
+            <button class='nav-link' id='timeline-tab' data-bs-toggle='tab' data-bs-target='#timeline' type='button' role='tab' aria-controls='timeline' aria-selected='false'>
+              <i class='bi bi-collection me-1'></i> Timeline
+            </button>
+          </li>
+          <li class='nav-item' role='presentation'>
+            <button class='nav-link' id='question-tab' data-bs-toggle='tab' data-bs-target='#question' type='button' role='tab' aria-controls='question' aria-selected='false'>
+              <i class='bi bi-question-circle me-1'></i> Question & Answer
+            </button>
+          </li>
+          <li class='nav-item' role='presentation'>
+            <button class='nav-link' id='people-tab' data-bs-toggle='tab' data-bs-target='#people' type='button' role='tab' aria-controls='people' aria-selected='false'>
+              <i class='bi bi-person me-1'></i> People
+            </button>
+          </li>
+          <li class='nav-item' role='presentation'>
+            <button class='nav-link' id='tag-tab' data-bs-toggle='tab' data-bs-target='#tag' type='button' role='tab' aria-controls='tag' aria-selected='false'>
+              <i class='bi bi-tag me-1'></i> Tag
+            </button>
+          </li>
+          <li class='nav-item' role='presentation'>
+            <button class='nav-link' id='product-tab' data-bs-toggle='tab' data-bs-target='#product' type='button' role='tab' aria-controls='product' aria-selected='false'>
+              <i class='bi bi-box me-1'></i> Product
+            </button>
+          </li>
+          <li class='nav-item' role='presentation'>
+            <button class='nav-link' id='service-tab' data-bs-toggle='tab' data-bs-target='#service' type='button' role='tab' aria-controls='service' aria-selected='false'>
+              <i class='bi bi-check2-circle me-1'></i> Service
+            </button>
+          </li>
+          <li class='nav-item' role='presentation'>
+            <button class='nav-link' id='partner-tab' data-bs-toggle='tab' data-bs-target='#partner' type='button' role='tab' aria-controls='partner' aria-selected='false'>
+              <i class='bi bi-people me-1'></i> Partner
+            </button>
+          </li>
+        </ul>
+      </div>
+      <div class='card-body'>
+        <div class='tab-content' id='tab-content'>
+          <div class='tab-pane fade show active' id='all' role='tabpanel' aria-labelledby='all-tab'>
+            <div class='d-flex justify-content-center'>
+              <div class='spinner-border text-info m-5' role='status'><span class='visually-hidden'>loading...</span></div>
+            </div>
           </div>
+          <div class='tab-pane fade' id='product' role='tabpanel' aria-labelledby='product-tab'>product</div>
+          <div class='tab-pane fade' id='service' role='tabpanel' aria-labelledby='service-tab'>service</div>
+          <div class='tab-pane fade' id='partner' role='tabpanel' aria-labelledby='partner-tab'>partner</div>
+          <div class='tab-pane fade' id='question' role='tabpanel' aria-labelledby='question-tab'>question</div>
+          <div class='tab-pane fade' id='people' role='tabpanel' aria-labelledby='people-tab'>people</div>
+          <div class='tab-pane fade' id='timeline' role='tabpanel' aria-labelledby='timeline-tab'>timeline</div>
+          <div class='tab-pane fade' id='tag' role='tabpanel' aria-labelledby='tag-tab'>tag</div>
         </div>
-        <div class='tab-pane fade' id='product' role='tabpanel' aria-labelledby='product-tab'>product</div>
-        <div class='tab-pane fade' id='service' role='tabpanel' aria-labelledby='service-tab'>service</div>
-        <div class='tab-pane fade' id='partner' role='tabpanel' aria-labelledby='partner-tab'>partner</div>
-        <div class='tab-pane fade' id='question' role='tabpanel' aria-labelledby='question-tab'>question</div>
-        <div class='tab-pane fade' id='answer' role='tabpanel' aria-labelledby='answer-tab'>answer</div>
-        <div class='tab-pane fade' id='people' role='tabpanel' aria-labelledby='people-tab'>people</div>
-        <div class='tab-pane fade' id='article' role='tabpanel' aria-labelledby='article-tab'>article</div>
-        <div class='tab-pane fade' id='post' role='tabpanel' aria-labelledby='post-tab'>post</div>
-        <div class='tab-pane fade' id='tag' role='tabpanel' aria-labelledby='tag-tab'>tag</div>
       </div>
     </div>
   </div>

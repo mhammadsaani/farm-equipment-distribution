@@ -1,29 +1,56 @@
 {% extends 'layouts/admin.html' %}
 {% block title %} Dashboard - FEDA {% endblock %}
 {% block content %}
-<div class="row justify-content-center">
+<div class="row">
   <div class="col-md-3 col-sm-6 mb-3">
     <div class="card card-body shadow-sm">
       <h1>{{ '0' }}</h1>
-      <a href="{% url 'home' %}" class='btn btn-sm btn-outline-primary'>Products</a>
+      <a href="{% url 'home' %}" class='btn btn-sm btn-outline-primary'><i class="bi bi-box me-1"></i> Products</a>
     </div>
   </div>
   <div class="col-md-3 col-sm-6 mb-3">
     <div class="card card-body shadow-sm">
       <h1>{{ '0' }}</h1>
-      <a href="{% url 'home' %}" class='btn btn-sm btn-outline-primary'>Services</a>
+      <a href="{% url 'home' %}" class='btn btn-sm btn-outline-primary'><i class="bi bi-check2-circle me-1"></i> Services</a>
     </div>
   </div>
   <div class="col-md-3 col-sm-6 mb-3">
     <div class="card card-body shadow-sm">
       <h1>{{ '0' }}</h1>
-      <a href="{% url 'home' %}" class='btn btn-sm btn-outline-primary'>Chat messages</a>
+      <a href="{% url 'home' %}" class='btn btn-sm btn-outline-primary'><i class="bi bi-chat-dots me-1"></i> Chat messages</a>
     </div>
   </div>
   <div class="col-md-3 col-sm-6 mb-3">
     <div class="card card-body shadow-sm">
       <h1>{{ '0' }}</h1>
-      <a href="{% url 'home' %}" class='btn btn-sm btn-outline-primary'>Notifications</a>
+      <a href="{% url 'home' %}" class='btn btn-sm btn-outline-primary'><i class="bi bi-bell me-1"></i> Notifications</a>
+    </div>
+  </div>
+  <div class='col-md-8 col-sm-12 mb-3'>
+    <div class='card card-body shadow-sm'>
+      <h4 class="fw-bold">Looking for farm equipment related services</h4>
+      <p>
+        Are you looking or selling spare parts, do you need or provide trainings. Do you have questions or can answer technical questions related to farm equipments.
+        Do you need to purchase, hire, or re-sale farm equipment. Check out our numerous partners, services, products, and other offers to get started today.
+      </p>
+      <div class='d-flex'>
+        <button class='btn btn-outline-primary'><i class='bi bi-x-lg me-1'></i> Ignore</button>
+        <button class='btn btn-outline-primary ms-1'>Available offers <i class='bi bi-chevron-right ms-1'></i></button>
+        <button class='btn btn-outline-primary ms-1'>Ask questions <i class='bi bi-chevron-right ms-1'></i></button>
+        <button class='btn btn-outline-primary ms-1'>Contact us <i class='bi bi-chevron-right ms-1'></i></button>
+      </div>
+    </div>
+  </div>
+  <div class='col-md-4 col-sm-12 mb-3'>
+    <div class='card card-body shadow-sm'>
+      <h4 class="fw-bold">Partner with us</h4>
+      <p>
+        Are you a company, institution, garage, farmer association... Partner with us to help provide after-sale services to farm equipment buyers (owners).
+      </p>
+      <div class='d-flex'>
+        <button class='btn btn-outline-primary'><i class='bi bi-x-lg me-1'></i> Ignore</button>
+        <button class='btn btn-outline-primary ms-1'>Get started <i class='bi bi-chevron-right ms-1'></i></button>
+      </div>
     </div>
   </div>
 </div>
