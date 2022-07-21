@@ -36,7 +36,7 @@
       <div class='d-flex'>
         <button class='btn btn-outline-primary'><i class='bi bi-x-lg me-1'></i> Ignore</button>
         <button class='btn btn-outline-primary ms-1'>Available offers <i class='bi bi-chevron-right ms-1'></i></button>
-        <button class='btn btn-outline-primary ms-1'>Ask questions <i class='bi bi-chevron-right ms-1'></i></button>
+        <a href='{% url "qna:question.index" %}' class='btn btn-outline-primary ms-1'>Ask questions <i class='bi bi-chevron-right ms-1'></i></a>
         <button class='btn btn-outline-primary ms-1'>Contact us <i class='bi bi-chevron-right ms-1'></i></button>
       </div>
     </div>

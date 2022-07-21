@@ -14,5 +14,4 @@ urlpatterns = [
     path("answer/create", views.answer_create, name="answer.create"),
     path("answer/<int:id>/edit", views.answer_edit, name="answer.edit"),
     path("answer/<int:id>/delete", views.answer_delete, name="answer.delete"),
-    path("answer/<int:id>", views.answer_show, name="answer.show"),
 ]

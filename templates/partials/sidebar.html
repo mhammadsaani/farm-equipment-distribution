@@ -7,7 +7,7 @@
     <a href="{% url 'home' %}" class="list-group-item list-group-item-action">
       <i class="bi bi-house-door me-1"></i> Home <span class="float-end">&rarr;</span>
     </a>
-    <a href="{% url 'dashboard' %}" class="list-group-item list-group-item-action active" aria-current="true">
+    <a href="{% url 'dashboard' %}" class="list-group-item list-group-item-action {% if 'dashboard' in request.path %} active {% endif %}">
       <i class="bi bi-speedometer2 me-1"></i> Dashboard <span class="float-end">&rarr;</span>
     </a>
     <a href="{% url 'home' %}" class="list-group-item list-group-item-action">
@@ -16,7 +16,7 @@
     <a href="{% url 'home' %}" class="list-group-item list-group-item-action">
       <i class="bi bi-box me-1"></i> Products <span class="float-end">&rarr;</span>
     </a>
-    <a href="{% url 'home' %}" class="list-group-item list-group-item-action">
+    <a href="{% url 'after-sale-service:partner.create' %}" class="list-group-item list-group-item-action {% if 'partner' in request.path %} active {% endif %}">
       <i class="bi bi-people me-1"></i> Partners <span class="float-end">&rarr;</span>
     </a>
     <a href="{% url 'home' %}" class="list-group-item list-group-item-action">

@@ -18,7 +18,7 @@
       <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
         <li class="nav-item">
           <a
-            class="nav-link active"
+            class="nav-link {% if request.path == '/' %} active {% endif %}"
             aria-current="page"
             href="{% url 'home' %}"
           >
@@ -29,13 +29,13 @@
           <a class="nav-link" href="{% url 'about' %}#features">Products</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="{% url 'about' %}#features">Partners</a>
+          <a class="nav-link {% if 'partner' in request.path %} active {% endif %}" href="{% url 'after-sale-service:partner.index' %}#features">Partners</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="{% url 'qna:question.index' %}">QnA</a>
+          <a class="nav-link {% if 'qna' in request.path %} active {% endif %}" href="{% url 'qna:question.index' %}">QnA</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="{% url 'about' %}">About</a>
+          <a class="nav-link {% if 'about' in request.path %} active {% endif %}" href="{% url 'about' %}">About</a>
         </li>
         <li class="nav-item dropdown">
           <a
@@ -73,17 +73,17 @@
         </li>
         {% if user.is_authenticated %}
         <li class="nav-item">
-          <a class="nav-link" href="{% url 'dashboard' %}">Dashboard</a>
+          <a class="nav-link {% if request.path == '/dashboard' %} active {% endif %}" href="{% url 'dashboard' %}">Dashboard</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="{% url 'logout' %}">Log out</a>
         </li>
         {% else %}
         <li class="nav-item">
-          <a class="nav-link" href="{% url 'signin' %}">Log in</a>
+          <a class="nav-link {% if 'signin' in request.path %} active {% endif %}" href="{% url 'signin' %}">Log in</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="{% url 'signup' %}">Register</a>
+          <a class="nav-link {% if 'signup' in request.path %} active {% endif %}" href="{% url 'signup' %}">Register</a>
         </li>
         {% endif %}
         <li class="nav-item">

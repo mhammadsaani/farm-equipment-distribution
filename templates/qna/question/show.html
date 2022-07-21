@@ -1,6 +1,6 @@
 {% extends 'qna/layout.html' %}
+{% load static %}
 {% block qna_content %}
-<h4>{{ question.title }}</h4>
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
@@ -8,7 +8,8 @@
     <li class="breadcrumb-item active" aria-current="page">Show question</li>
   </ol>
 </nav>
-<div class="my-3">{{ question.content }}</div>
+<h4>{{ question.title }}</h4>
+<div class="my-3">{{ question.content|safe }}</div>
 <div class="accordion accordion-flush" id="accordionExample">
   <div class="accordion-item">
     <h2 class="accordion-header" id="headingOne">
@@ -42,7 +43,7 @@
             </div>
             <div class="col-md-12 mb-2">
               <label for='content' class='form-label'>Answer</label>
-              <textarea name='content' class='form-control' rows='5' placeholder='leave a reply...'></textarea>
+              <textarea id='editor' name='content' class='form-control' rows='5' placeholder='leave a reply...'></textarea>
             </div>
             {% csrf_token %}
             <div class='d-flex justify-content-between my-2'>
@@ -55,4 +56,10 @@
     </div>
   </div>
 </div>
+{% endblock %}
+{% block scripts %}
+<script src="{% static 'js/ckeditor.js' %}"></script>
+<script>
+  ClassicEditor.create(document.querySelector('#editor'))
+</script>
 {% endblock %}

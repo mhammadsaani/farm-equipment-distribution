@@ -114,7 +114,3 @@ def answer_edit(request, id):
 
 def answer_delete(request, id):
     pass
-
-
-def answer_show(request, slug):
-    pass

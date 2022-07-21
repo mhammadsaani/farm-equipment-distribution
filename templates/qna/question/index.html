@@ -24,7 +24,7 @@
       <tr>
         <td>
           <b>{{ question.title }}</b><br/>
-          {{ question.content }}<br/>
+          {{ question.content|safe }}<br/>
           <span class='badge bg-light'>{{ question.category }}</span>
         </td>
         <td>
