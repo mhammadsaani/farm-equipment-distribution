@@ -28,10 +28,16 @@
           <span class='badge bg-light'>{{ question.category }}</span>
         </td>
         <td>
-          <a href='' class='btn btn-sm btn-info'><i class='bi bi-caret-right'></i></a>
+          <a href='{% url "qna:question.show" slug=question.slug %}' class='btn btn-sm btn-info m-1' title='view' data-toggle='tooltip'>
+            <i class='bi bi-caret-right'></i>
+          </a>
           {% if question.user_id == user.id %}
-          <a href='' class='btn btn-sm btn-success'><i class='bi bi-pencil'></i></a>
-          <a href='{% url "qna:question.delete" id=question.id %}' class='btn btn-sm btn-warning'><i class='bi bi-x-lg'></i></a>
+          <a href='{% url "qna:question.edit" id=question.id %}' class='btn btn-sm btn-success m-1' title='edit' data-toggle='tooltip'>
+            <i class='bi bi-pencil'></i>
+          </a>
+          <a href='{% url "qna:question.delete" id=question.id %}' class='btn btn-sm btn-warning m-1' title='delete' data-toggle='delete'>
+            <i class='bi bi-x-lg'></i>
+          </a>
           {% endif %}
         </td>
       </tr>

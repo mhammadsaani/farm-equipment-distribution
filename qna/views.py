@@ -11,7 +11,7 @@ from after_sale_service.models import Tag
 # Create your views here.
 @require_http_methods(["GET"])
 def question_index(request):
-    questions = Question.objects.all()
+    questions = Question.objects.order_by("-id")
     tags = Tag.objects.order_by("-id")[:10]
     paginator = Paginator(questions, 10)
     page_number = request.GET.get("page")
@@ -57,19 +57,47 @@ def question_search(request):
     pass
 
 
+@login_required(login_url="signin")
+@require_http_methods(["GET", "POST"])
 def question_edit(request, id):
-    pass
+    question = get_object_or_404(Question, pk=id)
+
+    if request.method == "GET":
+        tags = Tag.objects.order_by("-id")[:10]
+
+        return render(
+            request, "qna/question/edit.html", {"tags": tags, "question": question}
+        )
+
+    elif request.method == "POST":
+        question.title = request.POST["title"]
+        question.content = request.POST["content"]
+
+        if question.user_id == request.user.id:
+            question.save()
+            messages.info(request, "Question updated")
+
+        return redirect("qna:question.index")
 
 
+@login_required(login_url="signin")
 def question_delete(request, id):
     question = get_object_or_404(Question, pk=id)
-    question.delete()
-    messages.info(request, "Question deleted")
+
+    if question.user_id == request.user.id:
+        question.delete()
+        messages.info(request, "Question deleted")
+
     return redirect("qna:question.index")
 
 
+@require_http_methods(["GET"])
 def question_show(request, slug):
-    pass
+    tags = Tag.objects.order_by("-id")[:10]
+    question = get_object_or_404(Question, slug=slug)
+    return render(
+        request, "qna/question/show.html", {"question": question, "tags": tags}
+    )
 
 
 def answer_index(request):
