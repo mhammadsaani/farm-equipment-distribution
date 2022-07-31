@@ -40,9 +40,16 @@
   </div>
 </form>
 {% endblock %}
+{% block styles %}
+<link href="{% static 'css/tagify.css' %}" rel="stylesheet" type="text/css" />
+{% endblock %}
 {% block scripts %}
+<script src="{% static 'js/tagify.js' %}"></script>
 <script src="{% static 'js/ckeditor.js' %}"></script>
+<script src="{% static 'js/tagify.polyfills.min.js' %}"></script>
 <script>
   ClassicEditor.create(document.querySelector('#editor'))
+  let input = document.querySelector('input[name=tags]');
+  new Tagify(input)
 </script>
 {% endblock %}

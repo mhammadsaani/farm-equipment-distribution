@@ -10,6 +10,11 @@
     <a href="{% url 'dashboard' %}" class="list-group-item list-group-item-action {% if 'dashboard' in request.path %} active {% endif %}">
       <i class="bi bi-speedometer2 me-1"></i> Dashboard <span class="float-end">&rarr;</span>
     </a>
+    {% if user.is_superuser %}
+    <a href="/admin" class="list-group-item list-group-item-action">
+      <i class="bi bi-shield-lock me-1"></i> Admin Area <span class="float-end">&rarr;</span>
+    </a>
+    {% endif %}
     <a href="{% url 'home' %}" class="list-group-item list-group-item-action">
       <i class="bi bi-collection me-1"></i> Timeline <span class="float-end">&rarr;</span>
     </a>
