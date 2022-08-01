@@ -5,14 +5,15 @@ from django.contrib.auth.models import User, auth
 from django.http import HttpResponse
 from django.contrib import messages
 from .models import Profile
-from after_sale_service.models import Partner
+from after_sale_service.models import Partner, Product
 
 # Create your views here.
 @require_http_methods(["GET"])
 def home(request):
     partners = Partner.objects.order_by("-id")[:10]
+    products = Product.objects.order_by("-id")[:10]
 
-    return render(request, "home.html", {"partners": partners})
+    return render(request, "home.html", {"partners": partners, "products": products})
 
 
 @require_http_methods(["GET"])

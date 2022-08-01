@@ -10,7 +10,7 @@ from ..models import Partner, Tag
 @require_http_methods(["GET"])
 def partner_index(request):
     partners = Partner.objects.order_by("-id")
-    paginator = Paginator(partners, 10)
+    paginator = Paginator(partners, 16)
     page_number = request.GET.get("page")
     page_object = paginator.get_page(page_number)
 

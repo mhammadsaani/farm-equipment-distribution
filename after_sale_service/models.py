@@ -9,10 +9,9 @@ User = get_user_model()
 class Product(models.Model):
     name = models.CharField(max_length=200)
     slug = models.SlugField(unique=True, null=False)
-    link = models.URLField(blank=True)
     image = models.ImageField(upload_to="products", blank=True)
     description = models.TextField()
-    price = models.FloatField()
+    price = models.CharField(max_length=200)
     tags = models.JSONField()
     partners = models.JSONField()
     created_at = models.DateTimeField(default=datetime.now)
@@ -20,6 +19,12 @@ class Product(models.Model):
 
     def __str__(self):
         return self.name
+
+    def json_tags(self):
+        return json.loads(self.tags)
+
+    def json_partners(self):
+        return json.loads(self.partners)
 
 
 class Partner(models.Model):
@@ -42,7 +47,6 @@ class Partner(models.Model):
 class Service(models.Model):
     name = models.CharField(max_length=200)
     slug = models.SlugField(unique=True, null=False)
-    link = models.URLField(blank=True)
     image = models.ImageField(upload_to="services", blank=True)
     description = models.TextField()
     tags = models.JSONField()
@@ -52,6 +56,12 @@ class Service(models.Model):
 
     def __str__(self):
         return self.name
+
+    def json_tags(self):
+        return json.loads(self.tags)
+
+    def json_partners(self):
+        return json.loads(self.partners)
 
 
 class Tag(models.Model):

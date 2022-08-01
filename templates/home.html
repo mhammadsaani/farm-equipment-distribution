@@ -21,16 +21,18 @@
   <div class="col-12 my-3">
     <h1 class="display-6 fw-bold my-4 text-center">Our quality products</h1>
     <div class="owl-carousel owl-theme mb-3">
-      {% for partner in partners %}
+      {% for product in products %}
       <div class="item">
         <div class="card shadow-sm">
-          <img src="/media/{{ partner.image }}" class='card-img-top' alt='{{ partner.name }}' />
+          <img src="/media/{{ product.image }}" class='card-img-top' alt='{{ product.name }}' />
           <div class="card-body">
-            <h5 class='card-title'>{{ partner.name }}</h5>
-            <h6 class='card-text'>{{ partner.website }}</h6>
-            <div class="text-muted">{{ partner.description|safe }}</div>
+            <h5 class='card-title'>{{ product.name }}</h5>
+            <h6 class='card-text'>{{ product.price }}</h6>
             <div>
-              {% for tag in partner.json_tags %}
+              {% for tag in product.json_partners %}
+              <span class="badge bg-info">{{ tag.value }}</span>
+              {% endfor %}
+              {% for tag in product.json_tags %}
               <span class="badge bg-secondary">{{ tag.value }}</span>
               {% endfor %}
             </div>
@@ -50,7 +52,6 @@
           <div class="card-body">
             <h5 class='card-title'>{{ partner.name }}</h5>
             <h6 class='card-text'>{{ partner.website }}</h6>
-            <div class="text-muted">{{ partner.description|safe }}</div>
             <div>
               {% for tag in partner.json_tags %}
               <span class="badge bg-secondary">{{ tag.value }}</span>
@@ -72,7 +73,6 @@
           <div class="card-body">
             <h5 class='card-title'>{{ partner.name }}</h5>
             <h6 class='card-text'>{{ partner.website }}</h6>
-            <div class="text-muted">{{ partner.description|safe }}</div>
             <div>
               {% for tag in partner.json_tags %}
               <span class="badge bg-secondary">{{ tag.value }}</span>
