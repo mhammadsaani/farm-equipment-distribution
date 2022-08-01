@@ -5,8 +5,16 @@ from django.contrib.auth.models import User, auth
 from django.http import HttpResponse
 from django.contrib import messages
 from .models import Profile
+from after_sale_service.models import Partner
 
 # Create your views here.
+@require_http_methods(["GET"])
+def home(request):
+    partners = Partner.objects.order_by("-id")[:10]
+
+    return render(request, "home.html", {"partners": partners})
+
+
 @require_http_methods(["GET"])
 def profile(requst, id):
     user = get_object_or_404(User, pk=id)

@@ -14,15 +14,15 @@
     <a href="/admin" class="list-group-item list-group-item-action">
       <i class="bi bi-shield-lock me-1"></i> Admin Area <span class="float-end">&rarr;</span>
     </a>
+    <a href="{% url 'after-sale-service:partner.create' %}" class="list-group-item list-group-item-action {% if 'partner' in request.path %} active {% endif %}">
+      <i class="bi bi-people me-1"></i> Partners <span class="float-end">&rarr;</span>
+    </a>
     {% endif %}
     <a href="{% url 'home' %}" class="list-group-item list-group-item-action">
       <i class="bi bi-collection me-1"></i> Timeline <span class="float-end">&rarr;</span>
     </a>
     <a href="{% url 'home' %}" class="list-group-item list-group-item-action">
       <i class="bi bi-box me-1"></i> Products <span class="float-end">&rarr;</span>
-    </a>
-    <a href="{% url 'after-sale-service:partner.create' %}" class="list-group-item list-group-item-action {% if 'partner' in request.path %} active {% endif %}">
-      <i class="bi bi-people me-1"></i> Partners <span class="float-end">&rarr;</span>
     </a>
     <a href="{% url 'home' %}" class="list-group-item list-group-item-action">
       <i class="bi bi-check2-circle me-1"></i> Services <span class="float-end">&rarr;</span>

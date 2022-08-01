@@ -1,3 +1,4 @@
+import json
 from django.db import models
 from datetime import datetime
 from django.contrib.auth import get_user_model
@@ -33,6 +34,9 @@ class Partner(models.Model):
 
     def __str__(self):
         return self.name
+
+    def json_tags(self):
+        return json.loads(self.tags)
 
 
 class Service(models.Model):

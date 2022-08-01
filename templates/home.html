@@ -18,5 +18,95 @@
   <div class='col-md-7'>
     <img src="{% static 'img/tractor.png' %}" class='w-100' alt='tractor'/>
   </div>
+  <div class="col-12 my-3">
+    <h1 class="display-6 fw-bold my-4 text-center">Our quality products</h1>
+    <div class="owl-carousel owl-theme mb-3">
+      {% for partner in partners %}
+      <div class="item">
+        <div class="card shadow-sm">
+          <img src="/media/{{ partner.image }}" class='card-img-top' alt='{{ partner.name }}' />
+          <div class="card-body">
+            <h5 class='card-title'>{{ partner.name }}</h5>
+            <h6 class='card-text'>{{ partner.website }}</h6>
+            <div class="text-muted">{{ partner.description|safe }}</div>
+            <div>
+              {% for tag in partner.json_tags %}
+              <span class="badge bg-secondary">{{ tag.value }}</span>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+  <div class="col-12 my-3">
+    <h1 class="display-6 fw-bold my-4 text-center">Our estimed partners</h1>
+    <div class="owl-carousel owl-theme mb-3">
+      {% for partner in partners %}
+      <div class="item">
+        <div class="card shadow-sm">
+          <img src="/media/{{ partner.image }}" class='card-img-top' alt='{{ partner.name }}' />
+          <div class="card-body">
+            <h5 class='card-title'>{{ partner.name }}</h5>
+            <h6 class='card-text'>{{ partner.website }}</h6>
+            <div class="text-muted">{{ partner.description|safe }}</div>
+            <div>
+              {% for tag in partner.json_tags %}
+              <span class="badge bg-secondary">{{ tag.value }}</span>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+  <div class="col-12 my-3">
+    <h1 class="display-6 fw-bold my-4 text-center">Available services</h1>
+    <div class="owl-carousel owl-theme mb-3">
+      {% for partner in partners %}
+      <div class="item">
+        <div class="card shadow-sm">
+          <img src="/media/{{ partner.image }}" class='card-img-top' alt='{{ partner.name }}' />
+          <div class="card-body">
+            <h5 class='card-title'>{{ partner.name }}</h5>
+            <h6 class='card-text'>{{ partner.website }}</h6>
+            <div class="text-muted">{{ partner.description|safe }}</div>
+            <div>
+              {% for tag in partner.json_tags %}
+              <span class="badge bg-secondary">{{ tag.value }}</span>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
 </div>
+{% endblock %}
+{% block scripts %}
+<link rel="stylesheet" type="text/css" href="{% static 'vendor/owl-carousel/assets/owl.carousel.min.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'vendor/owl-carousel/assets/owl.theme.default.min.css' %}">
+<script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'vendor/owl-carousel/owl.carousel.min.js' %}"></script>
+<script type="text/javascript">
+$(document).ready(function () {
+  $(".owl-carousel").owlCarousel({
+    loop: true,
+    margin: 10,
+    autoplay: true,
+    autoplayTimeout: 5000,
+    autoplayHoverPause: true,
+    animateOut: "slideOutDown",
+    animateIn: "flipInX",
+    responsive: {
+      0: { items: 1 },
+      600: { items: 2 },
+      1000: { items: 4 },
+    },
+  });
+});
+</script>
 {% endblock %}
