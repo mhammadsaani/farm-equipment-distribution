@@ -1,39 +1,55 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.http import require_http_methods
 from django.contrib.auth.decorators import login_required
+from django.http import HttpResponse, JsonResponse
 from django.contrib.auth.models import User, auth
-from django.http import HttpResponse
+from django.forms.models import model_to_dict
 from django.contrib import messages
-from .models import Profile
-from after_sale_service.models import Partner, Product
+from .models import Profile, Notification
+from after_sale_service.models import Partner, Product, Service
 
 # Create your views here.
 @require_http_methods(["GET"])
 def home(request):
     partners = Partner.objects.order_by("-id")[:10]
     products = Product.objects.order_by("-id")[:10]
+    services = Service.objects.order_by("-id")[:10]
 
-    return render(request, "home.html", {"partners": partners, "products": products})
+    return render(
+        request,
+        "home.html",
+        {"partners": partners, "products": products, "services": services},
+    )
 
 
 @require_http_methods(["GET"])
 def profile(requst, id):
     user = get_object_or_404(User, pk=id)
-    return HttpResponse(user)
+    return JsonResponse(model_to_dict(user))
 
 
+@require_http_methods(["GET"])
 def search(request):
-    if request.method != "POST":
-        return redirect("home")
-
-    keyword = request.POST["keyword"]
+    keyword = request.GET.get("keyword")
     return render(request, "search.html", {"keyword": keyword})
 
 
 @require_http_methods(["GET"])
 @login_required(login_url="signin")
 def dashboard(request):
-    return render(request, "dashboard.html")
+    product_count = Product.objects.count()
+    service_count = Service.objects.count()
+    notification_count = Notification.objects.count()
+
+    return render(
+        request,
+        "dashboard.html",
+        {
+            "product_count": product_count,
+            "service_count": service_count,
+            "notification_count": notification_count,
+        },
+    )
 
 
 @require_http_methods(["GET", "POST"])
@@ -69,7 +85,7 @@ def signup(request):
 
         user_model = User.objects.get(email=email)
         new_profile = Profile.objects.create(
-            user=user_model, profile_user_id=user_model.id, role={"access": ["user"]}
+            user=user_model, profile_user_id=user_model.id
         )
         new_profile.save()
         return redirect("dashboard")

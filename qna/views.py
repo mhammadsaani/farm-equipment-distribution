@@ -53,8 +53,23 @@ def question_create(request):
         return redirect("qna:question.index")
 
 
+@require_http_methods(["GET"])
 def question_search(request):
-    pass
+    questions = Question.objects.filter(content__contains=request.GET.get("keyword"))
+    tags = Tag.objects.order_by("-id")[:10]
+    paginator = Paginator(questions, 50)
+    page_number = request.GET.get("page")
+    page_object = paginator.get_page(page_number)
+
+    return render(
+        request,
+        "qna/question/index.html",
+        {
+            "tags": tags,
+            "page_object": page_object,
+            "keyword": request.GET.get("keyword"),
+        },
+    )
 
 
 @login_required(login_url="signin")

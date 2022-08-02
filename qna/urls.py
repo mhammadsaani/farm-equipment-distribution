@@ -1,9 +1,10 @@
 from django.urls import path
-from django.views.generic import TemplateView
+from django.views.generic import RedirectView
 from . import views
 
 app_name = "qna"
 urlpatterns = [
+    path("", RedirectView.as_view(url="question")),
     path("question", views.question_index, name="question.index"),
     path("question/create", views.question_create, name="question.create"),
     path("question/search", views.question_search, name="question.search"),

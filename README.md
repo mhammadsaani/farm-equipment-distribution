@@ -23,8 +23,10 @@ Final year project
 ### Todo
 
 -   [ ] form validation
--   [ ] search
+-   [x] search
 -   [x] pagination
+-   [x] return JSON from model
+-   [x] redirect from urls.py
 
 App Models
 

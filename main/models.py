@@ -8,7 +8,6 @@ User = get_user_model()
 class Profile(models.Model):
     bio = models.TextField()
     profile_user_id = models.BigIntegerField()
-    role = models.JSONField()
     image = models.ImageField(upload_to="profiles", blank=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(default=datetime.now)

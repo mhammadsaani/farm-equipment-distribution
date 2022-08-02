@@ -32,7 +32,7 @@
           <a class="nav-link {% if '/partner' in request.path %} active {% endif %}" href="{% url 'after-sale-service:partner.index' %}">Partners</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link {% if '/service' in request.path %} active {% endif %}" href="{% url 'after-sale-service:partner.index' %}">Services</a>
+          <a class="nav-link {% if '/service' in request.path %} active {% endif %}" href="{% url 'after-sale-service:service.index' %}">Services</a>
         </li>
         <li class="nav-item">
           <a class="nav-link {% if 'qna' in request.path %} active {% endif %}" href="{% url 'qna:question.index' %}">QnA</a>
@@ -88,8 +88,7 @@
         </li>
         {% endif %}
         <li class="nav-item">
-          <form class='d-flex' action='{% url "search" %}' method='POST' autocomplete="off">
-            {% csrf_token %}
+          <form class='d-flex' action='{% url "search" %}' method='GET' autocomplete="off">
             <input type="text" name="keyword" class='form-control me-1' placeholder='Search . . .' required='true' />
             <button type='submit' class='btn btn-info'><i class="bi bi-search"></i></button>
           </form>

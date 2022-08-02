@@ -66,15 +66,18 @@
   <div class="col-12 my-3">
     <h1 class="display-6 fw-bold my-4 text-center">Available services</h1>
     <div class="owl-carousel owl-theme mb-3">
-      {% for partner in partners %}
+      {% for service in services %}
       <div class="item">
         <div class="card shadow-sm">
-          <img src="/media/{{ partner.image }}" class='card-img-top' alt='{{ partner.name }}' />
+          <img src="/media/{{ service.image }}" class='card-img-top' alt='{{ service.name }}' />
           <div class="card-body">
-            <h5 class='card-title'>{{ partner.name }}</h5>
-            <h6 class='card-text'>{{ partner.website }}</h6>
+            <h5 class='card-title'>{{ service.name }}</h5>
+            <h6 class='card-text'>{{ service.website }}</h6>
             <div>
-              {% for tag in partner.json_tags %}
+              {% for tag in service.json_partners %}
+              <span class="badge bg-info">{{ tag.value }}</span>
+              {% endfor %}
+              {% for tag in service.json_tags %}
               <span class="badge bg-secondary">{{ tag.value }}</span>
               {% endfor %}
             </div>
