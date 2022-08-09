@@ -28,7 +28,6 @@ class Answer(models.Model):
     created_at = models.DateTimeField(default=datetime.now)
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    parent = models.IntegerField(default=0)
     tags = models.JSONField()
 
     def __str__(self):

@@ -8,8 +8,10 @@
     <li class="breadcrumb-item active" aria-current="page">Show question</li>
   </ol>
 </nav>
-<h4>{{ question.title }}</h4>
-<div class="my-3">{{ question.content|safe }}</div>
+<div class="bg-light mb-3 py-2 px-3">
+  <h4>{{ question.title }}</h4>
+  <div>{{ question.content|safe }}</div>
+</div>
 <div class="accordion accordion-flush" id="accordionExample">
   <div class="accordion-item">
     <h2 class="accordion-header" id="headingOne">
@@ -19,7 +21,16 @@
     </h2>
     <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
       <div class="accordion-body">
-        <ul><li>answer 1</li></ul>
+        {% for answer in answers %}
+        <div class="bg-light mb-2 py-2 px-3">
+          <div class="row">
+            <div class="col">{{ answer.content|safe }}</div>
+            {% if user.id == answer.user_id %}
+            <div class="col-md-1"><a href="{% url 'qna:answer.delete' id=answer.id %}" class="btn btn-sm btn-warning"><i class="bi bi-x-lg"></i></a></div>
+            {% endif %}
+          </div>
+        </div>
+        {% endfor %}
       </div>
     </div>
   </div>
@@ -31,7 +42,7 @@
     </h2>
     <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
       <div class="accordion-body">
-        <form action="{% url 'qna:answer.create' %}" method='post'>
+        <form action="{% url 'qna:answer.create' %}" method='post' enctype='multipart/form-data'>
           <div class='row'>
             <div class='col-md-6 mb-2'>
               <label class='form-label'>File</label>
@@ -47,6 +58,7 @@
             </div>
             {% csrf_token %}
             <div class='d-flex justify-content-between my-2'>
+              <input type="hidden" name='question' value='{{ question.id }}'>
               <button class="btn btn-primary" type="submit">Continue</button>
               <a class="btn btn-link" href="{% url 'qna:question.index' %}">All discussions</a>
             </div>

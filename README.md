@@ -7,6 +7,7 @@ Final year project
 -   Python 3
 -   Git
 -   Database: Sqlite, Mysql, Postgres
+-   Code Editor: Visual code, Sublime text
 
 ### Installation
 
@@ -35,3 +36,7 @@ App Models
 -   [x] main: user profile, notification, settings, search history
 -   [x] qna: question, answer
 -   [x] timeline: article, post
+
+CRUD operations
+
+- [x] qna

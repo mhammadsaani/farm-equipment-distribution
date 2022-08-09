@@ -6,6 +6,7 @@ from django.utils.text import slugify
 from django.contrib import messages
 from .models import Question, Answer
 from after_sale_service.models import Tag
+from django.db.models import Q
 
 
 # Create your views here.
@@ -48,6 +49,10 @@ def question_create(request):
             category_id=tag.id,
             user_id=request.user.id,
         )
+
+        if request.FILES.get("attachment") != None:
+            question.attachment = request.FILES.get("attachment")
+
         question.save()
         messages.info(request, "Question saved")
         return redirect("qna:question.index")
@@ -55,7 +60,10 @@ def question_create(request):
 
 @require_http_methods(["GET"])
 def question_search(request):
-    questions = Question.objects.filter(content__contains=request.GET.get("keyword"))
+    keyword = request.GET.get("keyword")
+    questions = Question.objects.filter(
+        Q(content__contains=keyword) | Q(title__contains=keyword)
+    )
     tags = Tag.objects.order_by("-id")[:10]
     paginator = Paginator(questions, 50)
     page_number = request.GET.get("page")
@@ -88,6 +96,9 @@ def question_edit(request, id):
         question.title = request.POST["title"]
         question.content = request.POST["content"]
 
+        if request.FILES.get("attachment") != None:
+            question.attachment = request.FILES.get("attachment")
+
         if question.user_id == request.user.id:
             question.save()
             messages.info(request, "Question updated")
@@ -110,22 +121,41 @@ def question_delete(request, id):
 def question_show(request, slug):
     tags = Tag.objects.order_by("-id")[:10]
     question = get_object_or_404(Question, slug=slug)
+    answers = Answer.objects.filter(question_id=question.id).order_by("-id")[:10]
+
     return render(
-        request, "qna/question/show.html", {"question": question, "tags": tags}
+        request,
+        "qna/question/show.html",
+        {"question": question, "tags": tags, "answers": answers},
     )
 
 
-def answer_index(request):
-    pass
-
-
+@require_http_methods(["POST"])
+@login_required(login_url="signin")
 def answer_create(request):
-    pass
+    tags = request.POST["tags"]
+    content = request.POST["content"]
+    question_id = request.POST["question"]
+
+    answer = Answer(
+        tags=tags, content=content, question_id=question_id, user_id=request.user.id
+    )
+
+    if request.FILES.get("attachment") != None:
+        answer.attachment = request.FILES.get("attachment")
+
+    answer.save()
+    messages.info(request, "Answer saved")
+    return redirect(request.META.get("HTTP_REFERER"))
 
 
-def answer_edit(request, id):
-    pass
-
-
+@require_http_methods(["GET"])
+@login_required(login_url="signin")
 def answer_delete(request, id):
-    pass
+    answer = get_object_or_404(Answer, pk=id)
+
+    if answer.user_id == request.user.id:
+        answer.delete()
+        messages.info(request, "Answer deleted")
+
+    return redirect(request.META.get("HTTP_REFERER"))
