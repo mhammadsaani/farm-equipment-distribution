@@ -31,6 +31,8 @@ class Partner(models.Model):
     name = models.CharField(max_length=200)
     slug = models.SlugField(unique=True, null=False)
     website = models.URLField(blank=True)
+    twitter = models.URLField(blank=True)
+    facebook = models.URLField(blank=True)
     image = models.ImageField(upload_to="partners", blank=True)
     description = models.TextField()
     tags = models.JSONField()

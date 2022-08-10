@@ -42,7 +42,6 @@ INSTALLED_APPS = [
     "chat",
     "main",
     "qna",
-    "timeline",
 ]
 
 MIDDLEWARE = [
