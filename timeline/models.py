@@ -24,7 +24,6 @@ class Post(models.Model):
     attachment = models.FileField(upload_to="posts/%Y/%m/%d/", blank=True)
     created_at = models.DateTimeField(default=datetime.now)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    parent = models.IntegerField(default=0)
     tags = models.JSONField()
 
     def __str__(self):
