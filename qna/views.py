@@ -106,6 +106,7 @@ def question_edit(request, id):
         return redirect("qna:question.index")
 
 
+@require_http_methods(["GET"])
 @login_required(login_url="signin")
 def question_delete(request, id):
     question = get_object_or_404(Question, pk=id)
@@ -118,6 +119,7 @@ def question_delete(request, id):
 
 
 @require_http_methods(["GET"])
+@login_required(login_url="signin")
 def question_show(request, slug):
     tags = Tag.objects.order_by("-id")[:10]
     question = get_object_or_404(Question, slug=slug)

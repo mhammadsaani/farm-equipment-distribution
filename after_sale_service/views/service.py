@@ -27,6 +27,7 @@ def service_create(request):
 
     elif request.method == "POST":
         name = request.POST["name"]
+        link = request.POST["link"]
         tags = request.POST["tags"]
         partners = request.POST["partners"]
         description = request.POST["description"]
@@ -46,3 +47,7 @@ def service_create(request):
         service.save()
         messages.info(request, "Service saved")
         return redirect("after-sale-service:service.index")
+
+
+def service_show(request, slug):
+    pass

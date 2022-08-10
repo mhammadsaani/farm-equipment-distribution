@@ -47,6 +47,7 @@ class Partner(models.Model):
 class Service(models.Model):
     name = models.CharField(max_length=200)
     slug = models.SlugField(unique=True, null=False)
+    link = models.CharField(max_length=200, blank=True)
     image = models.ImageField(upload_to="services", blank=True)
     description = models.TextField()
     tags = models.JSONField()

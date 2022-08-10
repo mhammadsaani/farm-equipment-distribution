@@ -5,16 +5,17 @@
 <div class="card shadow-sm mb-3">
   <div class="card-header">Post new updates</div>
   <div class="card-body">
-    <form action='{% url "qna:question.search" %}' method='GET' autocomplete="off">
+    <form action='{% url "timeline:post.create" %}' method='post' enctype='multipart/form-data'>
       <div class="row">
         <div class="col-md-8">
-          <textarea name="" id="editor" rows="3" class="form-control my-1" placeholder="Post new updates..."></textarea>
+          {% csrf_token %}
+          <textarea name="content" id="editor" class="form-control my-1" placeholder="Post new updates..."></textarea>
         </div>
         <div class="col-md-4">
           <div class="d-grid gap-2">
             <input type="file" class="form-control" name="attachment" accept='image/*' />
             <input type="text" class="form-control" name="tags" placeholder='tag 1, tag 2, tag 3' />
-            <button class="btn btn-primary">Submit</button>
+            <button class="btn btn-primary" type='submit'>Submit</button>
           </div>
         </div>
       </div>
@@ -22,51 +23,31 @@
   </div>
 </div>
 {% endif %}
-<div class='table-response'>
-  <table class="table table-hover">
-    <thead>
-      <tr>
-        <th scope="col">Discussions</th>
-        <th scope="col"></th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for question in page_object %}
-      <tr>
-        <td>
-          <b>{{ question.title }}</b><br/>
-          {{ question.content|safe }}<br/>
-          <span class='badge bg-light'>{{ question.category }}</span>
-        </td>
-        <td>
-          <a href='{% url "qna:question.show" slug=question.slug %}' class='btn btn-sm btn-info m-1' title='view' data-toggle='tooltip'>
-            <i class='bi bi-caret-right'></i>
-          </a>
-          {% if question.user_id == user.id %}
-          <a href='{% url "qna:question.edit" id=question.id %}' class='btn btn-sm btn-success m-1' title='edit' data-toggle='tooltip'>
-            <i class='bi bi-pencil'></i>
-          </a>
-          <a href='{% url "qna:question.delete" id=question.id %}' class='btn btn-sm btn-warning m-1' title='delete' data-toggle='delete'>
-            <i class='bi bi-x-lg'></i>
-          </a>
-          {% endif %}
-        </td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
-  <nav aria-label="pagination">
-    <ul class="pagination justify-content-center">
-      {% if page_object.has_previous %}
-      <li class="page-item"><a class="page-link" href='?page={{ page_object.previous_page_number }}'><i class='bi bi-chevron-left'></i></a></li>
-      {% endif %}
-      <li class="page-item"><a class="page-link" href="#">{{ page_object.number }} / {{ page_object.paginator.num_pages }}</a></li>
-      {% if page_object.has_next %}
-      <li class="page-item"><a class="page-link" href='?page={{ page_object.next_page_number }}'><i class='bi bi-chevron-right'></i></a></li>
-      {% endif %}
-    </ul>
-  </nav>
+<div class=''>
+  <h4 class='mb-3'>Recent updates</h4>
+  {% for post in page_object %}
+  <div class="row bg-light mb-2 py-2">
+    <div class="col">{{ post.content|safe }}</div>
+    {% if post.attachment %}
+    <div class="col-md-4"><img src="/media/{{ post.attachment }}" class="w-100"></div>
+    {% endif %}
+    {% if user.id == post.user_id %}
+    <div class="col-md-1"><a href="{% url 'timeline:post.delete' id=post.id %}" class="btn btn-sm btn-warning"><i class="bi bi-x-lg"></i></a></div>
+    {% endif %}
+  </div>
+  {% endfor %}
 </div>
+<nav aria-label="pagination">
+  <ul class="pagination justify-content-center">
+    {% if page_object.has_previous %}
+    <li class="page-item"><a class="page-link" href='?page={{ page_object.previous_page_number }}'><i class='bi bi-chevron-left'></i></a></li>
+    {% endif %}
+    <li class="page-item"><a class="page-link" href="#">{{ page_object.number }} / {{ page_object.paginator.num_pages }}</a></li>
+    {% if page_object.has_next %}
+    <li class="page-item"><a class="page-link" href='?page={{ page_object.next_page_number }}'><i class='bi bi-chevron-right'></i></a></li>
+    {% endif %}
+  </ul>
+</nav>
 {% endblock %}
 {% block styles %}
 <link href="{% static 'css/tagify.css' %}" rel="stylesheet" type="text/css" />

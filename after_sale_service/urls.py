@@ -14,4 +14,5 @@ urlpatterns = [
     path("product/create", views.product_create, name="product.create"),
     path("service", views.service_index, name="service.index"),
     path("service/create", views.service_create, name="service.create"),
+    path("service/<slug:slug>", views.service_show, name="service.show"),
 ]

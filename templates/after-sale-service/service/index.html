@@ -20,7 +20,11 @@
         <div class="card shadow-sm my-1">
           <img src="/media/{{ service.image }}" class='card-img-top' alt='{{ service.name }}' />
           <div class="card-body">
-            <h5 class='card-title'>{{ service.name }}</h5>
+            <h5 class='card-title'>
+              {% if service.link %}<a href='{{ service.link }}'>{% else %}
+              <a href='{% url "after-sale-service:service.show" slug=service.slug %}'>
+              {% endif %}{{ service.name }} &rarr;</a>
+            </h5>
             <h6 class='card-text'>{{ service.price }}</h6>
             <div>
               {% for tag in service.json_partners %}
