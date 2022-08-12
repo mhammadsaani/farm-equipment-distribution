@@ -34,9 +34,13 @@
   <div class='card-body'>
     <div class='tab-content' id='tab-content'>
       <div class='tab-pane fade show active' id='messages' role='tabpanel' aria-labelledby='messages-tab'>
-        <div class='d-flex justify-content-center'>
-          <div class='spinner-border text-info m-5' role='status'><span class='visually-hidden'>loading...</span></div>
+        {% for message in page_object %}
+        <div class='bg-light mb-2 py-2 px-3'>
+          <i>{{ message.sender.email }} &rarr; {{ message.receiver_email }}</i>
+          <i class='float-end'>{{ message.created_at|timesince }}</i> <br>
+          {{ message.content|safe }}
         </div>
+        {% endfor %}
       </div>
       <div class='tab-pane fade' id='start-chat' role='tabpanel' aria-labelledby='start-chat-tab'>
 
@@ -63,7 +67,7 @@
         </form>
 
       </div>
-      <div class='tab-pane fade' id='conversations' role='tabpanel' aria-labelledby='conversations-tab'>conversations</div>
+      <div class='tab-pane fade' id='conversations' role='tabpanel' aria-labelledby='conversations-tab'>{{ users }}</div>
     </div>
   </div>
 </div>
@@ -77,8 +81,9 @@
 <script src="{% static 'js/ckeditor.js' %}"></script>
 <script src="{% static 'js/tagify.polyfills.min.js' %}"></script>
 <script>
+  let list = {{ users|safe }}
   ClassicEditor.create(document.querySelector('#editor'))
   let input = document.querySelector('input[name=receiver]');
-  new Tagify(input)
+  new Tagify(input, {enforceWhitelist: true, whitelist: list.map(item => item?.fields?.email) })
 </script>
 {% endblock %}

@@ -1,10 +1,11 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.http import require_http_methods
 from django.contrib.auth.decorators import login_required
+from django.core.serializers import serialize
 from django.core.paginator import Paginator
 from django.utils.text import slugify
 from django.contrib import messages
-from ..models import Product, Tag
+from ..models import Product, Tag, Partner
 
 
 @require_http_methods(["GET"])
@@ -23,7 +24,13 @@ def product_index(request):
 @require_http_methods(["GET", "POST"])
 def product_create(request):
     if request.method == "GET":
-        return render(request, "after-sale-service/product/create.html")
+        tags = serialize("json", Tag.objects.all()[:50], fields=("name"))
+        partners = serialize("json", Partner.objects.all()[:50], fields=("name"))
+        return render(
+            request,
+            "after-sale-service/product/create.html",
+            {"tags": tags, "partners": partners},
+        )
 
     elif request.method == "POST":
         name = request.POST["name"]

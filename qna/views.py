@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.http import require_http_methods
 from django.contrib.auth.decorators import login_required
+from django.core.serializers import serialize
 from django.core.paginator import Paginator
 from django.utils.text import slugify
 from django.contrib import messages
@@ -36,17 +37,11 @@ def question_create(request):
         content = request.POST["content"]
         category = request.POST["category"]
 
-        if Tag.objects.filter(name=category).exists():
-            tag = Tag.objects.get(name=category)
-        else:
-            tag = Tag(name=category, slug=slugify(category), user_id=request.user.id)
-            tag.save()
-
         question = Question(
             title=title,
             slug=slugify(title),
             content=content,
-            category_id=tag.id,
+            category_id=category,
             user_id=request.user.id,
         )
 
@@ -122,12 +117,18 @@ def question_delete(request, id):
 def question_show(request, slug):
     tags = Tag.objects.order_by("-id")[:10]
     question = get_object_or_404(Question, slug=slug)
+    tags_json = serialize("json", tags, fields=("name"))
     answers = Answer.objects.filter(question_id=question.id).order_by("-id")[:10]
 
     return render(
         request,
         "qna/question/show.html",
-        {"question": question, "tags": tags, "answers": answers},
+        {
+            "tags": tags,
+            "answers": answers,
+            "question": question,
+            "tags_json": tags_json,
+        },
     )
 
 

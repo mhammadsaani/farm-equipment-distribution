@@ -79,8 +79,9 @@
 <script src="{% static 'js/ckeditor.js' %}"></script>
 <script src="{% static 'js/tagify.polyfills.min.js' %}"></script>
 <script>
+  let list = {{ tags_json|safe }}
   ClassicEditor.create(document.querySelector('#editor'))
   let input = document.querySelector('input[name=tags]');
-  new Tagify(input)
+  new Tagify(input, {enforceWhitelist: true, whitelist: list.map(item => item?.fields?.name) })
 </script>
 {% endblock %}

@@ -6,6 +6,7 @@ urlpatterns = [
     path("", views.home, name="home"),
     path("about", TemplateView.as_view(template_name="about.html"), name="about"),
     path("contact", TemplateView.as_view(template_name="contact.html"), name="contact"),
+    path("apply", TemplateView.as_view(template_name="apply.html"), name="apply"),
     path("dashboard", views.dashboard, name="dashboard"),
     # path("settings", views.settings, name="settings"),
     path("signup", views.signup, name="signup"),

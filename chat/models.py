@@ -15,3 +15,6 @@ class Message(models.Model):
 
     def __str__(self):
         return self.content
+
+    def receiver_email(self):
+        return User.objects.get(id=self.receiver).email

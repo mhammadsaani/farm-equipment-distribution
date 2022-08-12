@@ -13,23 +13,23 @@
 </nav>
 <form action="#" method="post" enctype='multipart/form-data'>
   <div class='row'>
-    <div class="col-md-5 mb-2">
+    <div class="col-md-6 mb-2">
       <label for="name" class="form-label">Name</label>
       <input type="text" class="form-control" name="name" placeholder='product name' />
-    </div>
-    <div class="col-md-4 mb-2">
-      <label for="tags" class="form-label">Partners</label>
-      <input type="text" class="form-control" name="partners" placeholder='partner 1, partner 2, partner 3' />
-    </div>
-    <div class="col-md-3 mb-2">
-      <label for="tags" class="form-label">Tags</label>
-      <input type="text" class="form-control" name="tags" placeholder='tag 1, tag 2, tag 3' />
     </div>
     <div class="col-md-6 mb-2">
       <label for="website" class="form-label">Price</label>
       <input type="text" class="form-control" name="price" placeholder='$ 0.00' />
     </div>
-    <div class="col-md-6 mb-2">
+    <div class="col-md-4 mb-2">
+      <label for="tags" class="form-label">Partners</label>
+      <input type="text" class="form-control" name="partners" placeholder='partner 1, partner 2, partner 3' />
+    </div>
+    <div class="col-md-4 mb-2">
+      <label for="tags" class="form-label">Tags</label>
+      <input type="text" class="form-control" name="tags" placeholder='tag 1, tag 2, tag 3' />
+    </div>
+    <div class="col-md-4 mb-2">
       <label for="image" class="form-label">Image</label>
       <input type="file" class="form-control" name='image' accept='image/*' />
     </div>
@@ -53,8 +53,16 @@
 <script src="{% static 'js/ckeditor.js' %}"></script>
 <script src="{% static 'js/tagify.polyfills.min.js' %}"></script>
 <script>
-  ClassicEditor.create(document.querySelector('#editor'))
-  new Tagify(document.querySelector('input[name=tags]'))
-  new Tagify(document.querySelector('input[name=partners]'))
+  let tagList = {{ tags|safe }}
+  let partnerList = {{ partners|safe }}
+  ClassicEditor.create(document.querySelector("#editor"))
+  new Tagify(document.querySelector("input[name=tags]"), {
+    enforceWhitelist: true,
+    whitelist: tagList.map((item) => item?.fields?.name),
+  })
+  new Tagify(document.querySelector("input[name=partners]"), {
+    enforceWhitelist: true,
+    whitelist: partnerList.map((item) => item?.fields?.name),
+  })
 </script>
 {% endblock %}
