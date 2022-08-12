@@ -12,7 +12,6 @@ class Message(models.Model):
     created_at = models.DateTimeField(default=datetime.now)
     sender = models.ForeignKey(User, on_delete=models.CASCADE)
     receiver = models.IntegerField()
-    group = models.ForeignKey(Tag, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.content

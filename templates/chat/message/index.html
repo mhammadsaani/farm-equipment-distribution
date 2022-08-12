@@ -1,0 +1,84 @@
+{% extends 'layouts/admin.html' %}
+{% load static %}
+{% block title %} Chat {% endblock %}
+{% block content %}
+<h4>Chat</h4>
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+    <li class="breadcrumb-item"><a href="{% url 'dashboard' %}">Dashboard</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Chat</li>
+  </ol>
+</nav>
+
+<div class='card shadow-sm'>
+  <div class='card-header pb-0 border-0'>
+    <ul class='nav nav-tabs' id='search-tab' role='tablist'>
+      <li class='nav-item' role='presentation'>
+        <button class='nav-link active' id='messages-tab' data-bs-toggle='tab' data-bs-target='#messages' type='button' role='tab' aria-controls='messages' aria-selected='true'>
+          <i class='bi bi-chat-dots me-1'></i> Messages
+        </button>
+      </li>
+      <li class='nav-item' role='presentation'>
+        <button class='nav-link' id='start-chat-tab' data-bs-toggle='tab' data-bs-target='#start-chat' type='button' role='tab' aria-controls='start-chat' aria-selected='false'>
+          <i class='bi bi-box me-1'></i> Start Chat
+        </button>
+      </li>
+      <li class='nav-item' role='presentation'>
+        <button class='nav-link' id='conversations-tab' data-bs-toggle='tab' data-bs-target='#conversations' type='button' role='tab' aria-controls='conversations' aria-selected='false'>
+          <i class='bi bi-check2-circle me-1'></i> Conversations
+        </button>
+      </li>
+    </ul>
+  </div>
+  <div class='card-body'>
+    <div class='tab-content' id='tab-content'>
+      <div class='tab-pane fade show active' id='messages' role='tabpanel' aria-labelledby='messages-tab'>
+        <div class='d-flex justify-content-center'>
+          <div class='spinner-border text-info m-5' role='status'><span class='visually-hidden'>loading...</span></div>
+        </div>
+      </div>
+      <div class='tab-pane fade' id='start-chat' role='tabpanel' aria-labelledby='start-chat-tab'>
+
+        <form action="{% url 'chat:message.create' %}" method="post" enctype='multipart/form-data'>
+          <div class='row'>
+            <div class="col-md-6 mb-2">
+              <label for="receiver" class="form-label">People</label>
+              <input type="text" class="form-control" name="receiver" placeholder='person 1, person 2, person 3' />
+            </div>
+            <div class="col-md-6 mb-2">
+              <label for="attachment" class="form-label">Attachment</label>
+              <input type="file" class="form-control" name='attachment' accept='image/*' />
+            </div>
+          </div>
+          <div class="mb-2">
+            <label for="content" class="form-label">Content</label>
+            <textarea id='editor' class='form-control' name='content' rows='5' placeholder="text message..."></textarea>
+          </div>
+          {% csrf_token %}
+          <div class='d-flex justify-content-between'>
+            <button class="btn btn-primary" type="submit">Continue</button>
+            <a class="btn btn-link" href="{% url 'chat:message.index' %}">All messages</a>
+          </div>
+        </form>
+
+      </div>
+      <div class='tab-pane fade' id='conversations' role='tabpanel' aria-labelledby='conversations-tab'>conversations</div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+{% block styles %}
+<link href="{% static 'css/tagify.css' %}" rel="stylesheet" type="text/css" />
+{% endblock %}
+{% block scripts %}
+<script src="{% static 'js/tagify.js' %}"></script>
+<script src="{% static 'js/ckeditor.js' %}"></script>
+<script src="{% static 'js/tagify.polyfills.min.js' %}"></script>
+<script>
+  ClassicEditor.create(document.querySelector('#editor'))
+  let input = document.querySelector('input[name=receiver]');
+  new Tagify(input)
+</script>
+{% endblock %}
