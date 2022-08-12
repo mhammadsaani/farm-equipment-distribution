@@ -1,7 +1,6 @@
 from django.db import models
 from datetime import datetime
 from django.contrib.auth import get_user_model
-from after_sale_service.models import Tag
 
 User = get_user_model()
 
