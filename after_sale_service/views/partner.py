@@ -64,4 +64,9 @@ def partner_delete(request, id):
 
 
 def partner_show(request, slug):
-    pass
+    partner = get_object_or_404(Partner, slug=slug)
+
+    if request.method == "GET":
+        return render(
+            request, "after-sale-service/partner/show.html", {"partner": partner}
+        )

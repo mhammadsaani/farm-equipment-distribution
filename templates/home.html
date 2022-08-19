@@ -35,7 +35,7 @@
               {% for tag in product.json_tags %}
               <span class="badge bg-secondary">{{ tag.value }}</span>
               {% endfor %}
-            </div>
+            </div> 
           </div>
         </div>
       </div>
@@ -50,7 +50,7 @@
         <div class="card shadow-sm">
           <img src="/media/{{ partner.image }}" class='card-img-top' alt='{{ partner.name }}' />
           <div class="card-body">
-            <h5 class='card-title'>{{ partner.name }}</h5>
+            <h5 class='card-title'><a href='{% url "after-sale-service:partner.show" slug=partner.slug %}'>{{ partner.name }} &rarr;</a></h5>
             <h6 class='card-text'>{{ partner.website }}</h6>
             <div>
               {% for tag in partner.json_tags %}
