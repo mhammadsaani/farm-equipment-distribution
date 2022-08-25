@@ -40,3 +40,14 @@ App Models
 CRUD operations
 
 - [x] qna
+
+ANALYTICS
+
+- time before maintenance
+- frequency
+- price
+- suggestions
+- satisfaction
+- frequent asked questions
+
+	- recommendation
