@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     "debug_toolbar",
     "after_sale_service",
     "chat",
+    "feedback",
     "main",
     "qna",
 ]

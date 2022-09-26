@@ -27,7 +27,7 @@
       <a href="{% url 'home' %}" class='btn btn-sm btn-outline-primary'><i class="bi bi-bell me-1"></i> Notifications</a>
     </div>
   </div>
-  <div class='col-md-8 col-sm-12 mb-3'>
+  <div class='col-md-8 col-sm-12 mb-3' id='client-action-card'>
     <div class='card card-body shadow-sm'>
       <h4 class="fw-bold">Looking for farm equipment related services</h4>
       <p>
@@ -35,21 +35,21 @@
         Do you need to purchase, hire, or re-sale farm equipment. Check out our numerous partners, services, products, and other offers to get started today.
       </p>
       <div class='d-flex'>
-        <button class='btn btn-outline-primary'><i class='bi bi-x-lg me-1'></i> Ignore</button>
+        <button class='btn btn-outline-primary' onclick="ignore('client-action-card')"><i class='bi bi-x-lg me-1'></i> Ignore</button>
         <a href="{% url 'after-sale-service:service.index' %}" class='btn btn-outline-primary ms-1'>Available offers <i class='bi bi-chevron-right ms-1'></i></a>
         <a href='{% url "qna:question.index" %}' class='btn btn-outline-primary ms-1'>Ask questions <i class='bi bi-chevron-right ms-1'></i></a>
         <a href="{% url 'contact' %}" class='btn btn-outline-primary ms-1'>Contact us <i class='bi bi-chevron-right ms-1'></i></a>
       </div>
     </div>
   </div>
-  <div class='col-md-4 col-sm-12 mb-3'>
+  <div class='col-md-4 col-sm-12 mb-3' id='partner-action-card'>
     <div class='card card-body shadow-sm'>
       <h4 class="fw-bold">Partner with us</h4>
       <p>
         Are you a company, institution, garage, farmer association... Partner with us to help provide after-sale services to farm equipment buyers (owners).
       </p>
       <div class='d-flex'>
-        <button class='btn btn-outline-primary'><i class='bi bi-x-lg me-1'></i> Ignore</button>
+        <button class='btn btn-outline-primary' onclick="ignore('partner-action-card')"><i class='bi bi-x-lg me-1'></i> Ignore</button>
         <a href="{% url 'apply' %}" class='btn btn-outline-primary ms-1'>Get started <i class='bi bi-chevron-right ms-1'></i></a>
       </div>
     </div>
@@ -97,5 +97,19 @@ const myChart = new Chart(ctx, {
         }
     }
 });
+function ignore(id='') {
+  let list = localStorage.getItem('ignore-card')
+  if (list) {
+    list += '|' + id
+    list = list?.split('|').filter((value, index, self) => self.indexOf(value) === index)
+    list = list?.join('|')
+  } else list = id
+  localStorage.setItem('ignore-card', list)
+  document.getElementById(id)?.classList.add('d-none')
+}
+document.addEventListener("DOMContentLoaded", function() {
+  let list = localStorage.getItem('ignore-card')
+  list?.split('|').map(id => ignore(id))
+})
 </script>
 {% endblock %}

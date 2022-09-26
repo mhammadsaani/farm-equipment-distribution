@@ -23,6 +23,7 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("after_sale_service/", include("after_sale_service.urls")),
     path("chat/", include("chat.urls")),
+    path("feedback/", include("feedback.urls")),
     path("qna/", include("qna.urls")),
     path("__debug__/", include("debug_toolbar.urls")),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
