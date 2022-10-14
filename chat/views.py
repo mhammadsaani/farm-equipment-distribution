@@ -19,12 +19,22 @@ def message_index(request):
         Q(receiver=request.user.id) | Q(sender_id=request.user.id)
     )
 
+    sent_count = Message.objects.filter(sender_id=request.user.id).count()
+    inbox_count = Message.objects.filter(receiver=request.user.id).count()
+
     paginator = Paginator(messages, 50)
     page_number = request.GET.get("page")
     page_object = paginator.get_page(page_number)
 
     return render(
-        request, "chat/message/index.html", {"users": users, "page_object": page_object}
+        request,
+        "chat/message/index.html",
+        {
+            "users": users,
+            "page_object": page_object,
+            "sent_count": sent_count,
+            "inbox_count": inbox_count,
+        },
     )
 
 

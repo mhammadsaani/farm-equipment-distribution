@@ -15,35 +15,43 @@
   <div class='card-header pb-0 border-0'>
     <ul class='nav nav-tabs' id='search-tab' role='tablist'>
       <li class='nav-item' role='presentation'>
-        <button class='nav-link active' id='messages-tab' data-bs-toggle='tab' data-bs-target='#messages' type='button' role='tab' aria-controls='messages' aria-selected='true'>
-          <i class='bi bi-chat-dots me-1'></i> Messages
+        <button class='nav-link active' id='sent-tab' data-bs-toggle='tab' data-bs-target='#sent' type='button' role='tab' aria-controls='sent' aria-selected='true'>
+          <i class='bi bi-chat-dots me-1'></i> Sent ({{ sent_count }})
         </button>
       </li>
       <li class='nav-item' role='presentation'>
-        <button class='nav-link' id='start-chat-tab' data-bs-toggle='tab' data-bs-target='#start-chat' type='button' role='tab' aria-controls='start-chat' aria-selected='false'>
-          <i class='bi bi-box me-1'></i> Start Chat
+        <button class='nav-link' id='inbox-tab' data-bs-toggle='tab' data-bs-target='#inbox' type='button' role='tab' aria-controls='inbox' aria-selected='false'>
+          <i class='bi bi-box me-1'></i> Inbox ({{ inbox_count }})
         </button>
       </li>
       <li class='nav-item' role='presentation'>
-        <button class='nav-link' id='conversations-tab' data-bs-toggle='tab' data-bs-target='#conversations' type='button' role='tab' aria-controls='conversations' aria-selected='false'>
-          <i class='bi bi-check2-circle me-1'></i> Conversations
+        <button class='nav-link' id='compose-tab' data-bs-toggle='tab' data-bs-target='#compose' type='button' role='tab' aria-controls='compose' aria-selected='false'>
+          <i class='bi bi-plus-circle me-1'></i> Compose
         </button>
       </li>
     </ul>
   </div>
   <div class='card-body'>
     <div class='tab-content' id='tab-content'>
-      <div class='tab-pane fade show active' id='messages' role='tabpanel' aria-labelledby='messages-tab'>
-        {% for message in page_object %}
+      <div class='tab-pane fade show active' id='sent' role='tabpanel' aria-labelledby='sent-tab'>
+        {% for message in page_object %} {% if message.sender_id == request.user.id %}
         <div class='bg-light mb-2 py-2 px-3'>
           <i>{{ message.sender.email }} &rarr; {{ message.receiver_email }}</i>
           <i class='float-end'>{{ message.created_at|timesince }}</i> <br>
           {{ message.content|safe }}
         </div>
-        {% endfor %}
+        {% endif %} {% endfor %}
       </div>
-      <div class='tab-pane fade' id='start-chat' role='tabpanel' aria-labelledby='start-chat-tab'>
-
+      <div class='tab-pane fade' id='inbox' role='tabpanel' aria-labelledby='inbox-tab'>
+        {% for message in page_object %} {% if message.receiver == request.user.id %}
+        <div class='bg-light mb-2 py-2 px-3'>
+          <i>{{ message.sender.email }} &rarr; {{ message.receiver_email }}</i>
+          <i class='float-end'>{{ message.created_at|timesince }}</i> <br>
+          {{ message.content|safe }}
+        </div>
+        {% endif %} {% endfor %}
+      </div>
+      <div class='tab-pane fade' id='compose' role='tabpanel' aria-labelledby='compose-tab'>
         <form action="{% url 'chat:message.create' %}" method="post" enctype='multipart/form-data'>
           <div class='row'>
             <div class="col-md-6 mb-2">
@@ -62,12 +70,10 @@
           {% csrf_token %}
           <div class='d-flex justify-content-between'>
             <button class="btn btn-primary" type="submit">Continue</button>
-            <a class="btn btn-link" href="{% url 'chat:message.index' %}">All messages</a>
+            <a class="btn btn-link" href="{% url 'chat:message.index' %}">All sent</a>
           </div>
         </form>
-
       </div>
-      <div class='tab-pane fade' id='conversations' role='tabpanel' aria-labelledby='conversations-tab'>{{ users }}</div>
     </div>
   </div>
 </div>

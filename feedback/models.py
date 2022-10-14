@@ -18,24 +18,25 @@ class Form(models.Model):
 class QuestionField(models.Model):
     NUMBER = "number"
     TEXT = "text"
-    INPUT = "input"
-    BOOL = "bool"
+    LONG_TEXT = "long-text"
+    BOOLEAN = "boolean"
     DATE = "date"
     SELECT = "select"
 
     CHOICES = (
-        (BOOL, BOOL),
+        (BOOLEAN, BOOLEAN),
         (DATE, DATE),
-        (INPUT, INPUT),
+        (LONG_TEXT, LONG_TEXT),
         (TEXT, TEXT),
         (NUMBER, NUMBER),
         (SELECT, SELECT),
     )
 
-    type = models.CharField(max_length=200, choices=CHOICES, default=INPUT)
+    type = models.CharField(max_length=200, choices=CHOICES, default=TEXT)
     label = models.CharField(max_length=200)
     choice = models.CharField(max_length=200)
     width = models.IntegerField()
+    is_required = models.BooleanField(default=False)
     created_at = models.DateTimeField(default=datetime.now)
     form = models.ForeignKey(Form, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
