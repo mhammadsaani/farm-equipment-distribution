@@ -23,7 +23,7 @@ def partner_index(request):
 @login_required(login_url="signin")
 @require_http_methods(["GET", "POST"])
 def partner_create(request):
-    if not request.user.is_superuser:
+    if not request.user.is_superuser:  # redirect back
         return redirect(request.META.get("HTTP_REFERER"))
 
     elif request.method == "GET":
@@ -43,6 +43,8 @@ def partner_create(request):
             slug=slugify(name),
             tags=tags,
             website=website,
+            twitter=twitter,
+            facebook=facebook,
             description=description,
             user_id=request.user.id,
         )

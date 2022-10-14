@@ -42,6 +42,7 @@ def service_create(request):
         service = Service(
             name=name,
             tags=tags,
+            link=link,
             partners=partners,
             slug=slugify(name),
             description=description,

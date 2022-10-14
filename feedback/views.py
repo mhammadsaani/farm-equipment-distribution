@@ -1,28 +1,59 @@
 from django.shortcuts import render, redirect, get_list_or_404
 from django.views.decorators.http import require_http_methods
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.core.serializers import serialize
 from django.contrib.auth.models import User
 from django.core.paginator import Paginator
 from django.contrib import messages
 from django.db.models import Q
-
-# from .models import Question, Response
+from .models import QuestionField, Response, Form
 import json
 
 # Create your views here.
-def response_index(request):
-    return HttpResponse("response index")
+@login_required(login_url="signin")
+@require_http_methods(["GET"])
+def form_index(request):
+    forms = Form.objects.order_by("-id")
+    paginator = Paginator(forms, 20)
+    page_number = request.GET.get("page")
+    page_object = paginator.get_page(page_number)
+
+    return render(request, "feedback/form/index.html", {"page_object": page_object})
 
 
-def response_create(request):
-    return HttpResponse("response create")
+@login_required(login_url="signin")
+@require_http_methods(["GET", "POST"])
+def form_create(request):
+    if request.method == "GET":
+        return render(request, "feedback/form/create.html")
+
+    elif request.method == "POST":
+        print(request.POST.getlist("label"))
+        return JsonResponse(request.POST)
+
+        name = request.POST["name"]
+        description = request.POST["description"]
+
+        form = Form(name=name, description=description, user_id=request.user.id)
+        form.save()
+
+        messages.info(request, "Form created")
+        return redirect("feedback:form.index")
 
 
-def response_delete(request):
-    return HttpResponse("response delete")
+@login_required(login_url="signin")
+@require_http_methods(["GET", "POST"])
+def form_edit(request, id):
+    return HttpResponse("form edit")
 
 
-def response_show(request):
-    return HttpResponse("response show")
+@login_required(login_url="signin")
+@require_http_methods(["GET"])
+def form_delete(request, id):
+    return HttpResponse("form delete")
+
+
+@require_http_methods(["GET"])
+def form_show(request, id):
+    return HttpResponse("form show")
