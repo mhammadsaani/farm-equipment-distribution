@@ -14,8 +14,8 @@
 <form action="#" method="post" enctype='multipart/form-data'>
   <div class='row'>
     <div class="col-md-4 mb-2">
-      <label for="name" class="form-label">Name</label>
-      <input type="text" class="form-control" name="name" placeholder='full name' />
+      <label for="name" class="form-label">Name *</label>
+      <input type="text" class="form-control" name="name" placeholder='full name' required />
     </div>
     <div class="col-md-4 mb-2">
       <label for="tags" class="form-label">Tags</label>
@@ -39,7 +39,7 @@
     </div>
   </div>
   <div class="mb-2">
-    <label for="content" class="form-label">Description</label>
+    <label for="content" class="form-label">Description *</label>
     <textarea id='editor' class='form-control' name='description' rows='5' placeholder="partner information..."></textarea>
   </div>
   {% csrf_token %}

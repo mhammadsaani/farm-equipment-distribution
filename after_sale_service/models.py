@@ -38,7 +38,7 @@ class Partner(models.Model):
     twitter = models.URLField(blank=True)
     facebook = models.URLField(blank=True)
     image = models.ImageField(upload_to="partners", blank=True)
-    description = models.TextField()
+    description = models.TextField(blank=True)
     tags = models.JSONField(blank=True)
     created_at = models.DateTimeField(default=datetime.now)
     user = models.ForeignKey(User, on_delete=models.CASCADE)

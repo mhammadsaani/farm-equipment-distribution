@@ -19,7 +19,11 @@
       {% for partner in page_object %}
       <div class="col-md-3">
         <div class="card shadow-sm my-1">
+          {% if partner.image %}
           <img src="/media/{{ partner.image }}" class='card-img-top' alt='{{ partner.name }}' />
+          {% elif partner.image == '' %}
+          <img src="/static/img/thumbnail.png" class='card-img-top' alt='{{ partner.name }}' />
+          {% endif %}
           <div class="card-body">
             <h5 class='card-title'><a href='{% url "after-sale-service:partner.show" slug=partner.slug %}'>{{ partner.name }} &rarr;</a></h5>
             <h6 class='card-text'>{{ partner.website }}</h6>
