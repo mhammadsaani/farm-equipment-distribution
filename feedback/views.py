@@ -29,14 +29,27 @@ def form_create(request):
         return render(request, "feedback/form/create.html")
 
     elif request.method == "POST":
-        print(request.POST.getlist("label"))
-        return JsonResponse(request.POST)
-
         name = request.POST["name"]
         description = request.POST["description"]
 
         form = Form(name=name, description=description, user_id=request.user.id)
         form.save()
+
+        for count in range(len(request.POST.getlist("label"))):
+            label = request.POST.getlist("label")[count]
+            field_type = request.POST.getlist("field_type")[count]
+            width = request.POST.getlist("width")[count]
+            choice = request.POST.getlist("choice")[count]
+
+            question_field = QuestionField(
+                label=label,
+                field_type=field_type,
+                width=width,
+                choice=choice,
+                form_id=form.id,
+                user_id=request.user.id,
+            )
+            question_field.save()
 
         messages.info(request, "Form created")
         return redirect("feedback:form.index")

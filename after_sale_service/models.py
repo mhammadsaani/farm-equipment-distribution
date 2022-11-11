@@ -12,8 +12,8 @@ class Product(models.Model):
     image = models.ImageField(upload_to="products", blank=True)
     description = models.TextField()
     price = models.CharField(max_length=200)
-    tags = models.JSONField()
-    partners = models.JSONField()
+    tags = models.JSONField(blank=True)
+    partners = models.JSONField(blank=True)
     created_at = models.DateTimeField(default=datetime.now)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
@@ -21,10 +21,14 @@ class Product(models.Model):
         return self.name
 
     def json_tags(self):
-        return json.loads(self.tags)
+        if self.tags:
+            return json.loads(self.tags)
+        return []
 
     def json_partners(self):
-        return json.loads(self.partners)
+        if self.partners:
+            return json.loads(self.partners)
+        return []
 
 
 class Partner(models.Model):
@@ -35,7 +39,7 @@ class Partner(models.Model):
     facebook = models.URLField(blank=True)
     image = models.ImageField(upload_to="partners", blank=True)
     description = models.TextField()
-    tags = models.JSONField()
+    tags = models.JSONField(blank=True)
     created_at = models.DateTimeField(default=datetime.now)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
@@ -43,7 +47,9 @@ class Partner(models.Model):
         return self.name
 
     def json_tags(self):
-        return json.loads(self.tags)
+        if self.tags:
+            return json.loads(self.tags)
+        return []
 
 
 class Service(models.Model):

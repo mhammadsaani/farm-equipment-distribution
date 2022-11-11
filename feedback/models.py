@@ -32,7 +32,7 @@ class QuestionField(models.Model):
         (SELECT, SELECT),
     )
 
-    type = models.CharField(max_length=200, choices=CHOICES, default=TEXT)
+    field_type = models.CharField(max_length=200, choices=CHOICES, default=TEXT)
     label = models.CharField(max_length=200)
     choice = models.CharField(max_length=200)
     width = models.IntegerField()
