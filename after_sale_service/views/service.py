@@ -57,5 +57,8 @@ def service_create(request):
         return redirect("after-sale-service:service.index")
 
 
+@require_http_methods(["GET"])
 def service_show(request, slug):
-    pass
+    service = get_object_or_404(Service, slug=slug)
+
+    return render(request, "after-sale-service/service/show.html", {"service": service})

@@ -65,8 +65,12 @@ def partner_edit(request, id):
         return redirect(request.META.get("HTTP_REFERER"))
 
     elif request.method == "GET":
+        tags = serialize("json", Tag.objects.all()[:50], fields=("name"))
+
         return render(
-            request, "after-sale-service/partner/edit.html", {"partner": partner}
+            request,
+            "after-sale-service/partner/edit.html",
+            {"partner": partner, "tags": tags},
         )
 
     elif request.method == "POST":
@@ -82,17 +86,15 @@ def partner_edit(request, id):
 
         partner.save()
         messages.info(request, "Partner updated")
-        return redirect("after-sale-service:partner.index")
+        return redirect("after-sale-service:partner.show", slug=partner.slug)
 
 
 def partner_delete(request, id):
     pass
 
 
+@require_http_methods(["GET"])
 def partner_show(request, slug):
     partner = get_object_or_404(Partner, slug=slug)
 
-    if request.method == "GET":
-        return render(
-            request, "after-sale-service/partner/show.html", {"partner": partner}
-        )
+    return render(request, "after-sale-service/partner/show.html", {"partner": partner})

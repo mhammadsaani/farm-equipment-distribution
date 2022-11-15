@@ -26,6 +26,7 @@ def product_create(request):
     if request.method == "GET":
         tags = serialize("json", Tag.objects.all()[:50], fields=("name"))
         partners = serialize("json", Partner.objects.all()[:50], fields=("name"))
+
         return render(
             request,
             "after-sale-service/product/create.html",
@@ -55,3 +56,48 @@ def product_create(request):
         product.save()
         messages.info(request, "Product saved")
         return redirect("after-sale-service:product.index")
+
+
+@login_required(login_url="signin")
+@require_http_methods(["GET", "POST"])
+def product_edit(request, id):
+    product = get_object_or_404(Product, id=id)
+
+    if not request.user.is_superuser:
+        return redirect(request.META.get("HTTP_REFERER"))
+
+    elif request.method == "GET":
+        tags = serialize("json", Tag.objects.all()[:50], fields=("name"))
+        partners = serialize("json", Partner.objects.all()[:50], fields=("name"))
+
+        return render(
+            request,
+            "after-sale-service/product/edit.html",
+            {"product": product, "tags": tags, "partners": partners},
+        )
+
+    elif request.method == "POST":
+        product.name = request.POST["name"]
+        product.tags = request.POST["tags"]
+        product.price = request.POST["price"]
+        product.partners = request.POST["partners"]
+        product.description = request.POST["description"]
+        product.slug = slugify(request.POST["name"])
+
+        if request.FILES.get("image") != None:
+            product.image = request.FILES.get("image")
+
+        product.save()
+        messages.info(request, "Product updated")
+        return redirect("after-sale-service:product.show", slug=product.slug)
+
+
+def product_delete(request, id):
+    pass
+
+
+@require_http_methods(["GET"])
+def product_show(request, slug):
+    product = get_object_or_404(Product, slug=slug)
+
+    return render(request, "after-sale-service/product/show.html", {"product": product})

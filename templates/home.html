@@ -30,7 +30,9 @@
           <img src="/static/img/thumbnail.png" class='card-img-top' alt='{{ product.name }}' />
           {% endif %}
           <div class="card-body">
-            <h5 class='card-title'>{{ product.name }}</h5>
+            <h5 class='card-title'>
+              <a href='{% url "after-sale-service:product.show" slug=product.slug %}'>{{ product.name }} &rarr;</a>
+            </h5>
             <h6 class='card-text'>{{ product.price }}</h6>
             <div>
               {% for tag in product.json_partners %}

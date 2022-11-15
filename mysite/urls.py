@@ -21,7 +21,7 @@ from django.conf.urls.static import static
 urlpatterns = [
     path("", include("main.urls")),
     path("admin/", admin.site.urls),
-    path("after_sale_service/", include("after_sale_service.urls")),
+    path("after-sale-service/", include("after_sale_service.urls")),
     path("feedback/", include("feedback.urls")),
     path("qna/", include("qna.urls")),
     path("__debug__/", include("debug_toolbar.urls")),
