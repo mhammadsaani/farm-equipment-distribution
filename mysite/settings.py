@@ -39,7 +39,6 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "debug_toolbar",
     "after_sale_service",
-    "chat",
     "feedback",
     "main",
     "qna",

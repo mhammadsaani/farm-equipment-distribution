@@ -2,20 +2,20 @@
 {% load static %}
 {% block title %} Partner {% endblock %}
 {% block content %}
-<h4>Add new partner</h4>
+<h4>Edit partner</h4>
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
     <li class="breadcrumb-item"><a href="{% url 'dashboard' %}">Dashboard</a></li>
     <li class="breadcrumb-item"><a href="{% url 'after-sale-service:partner.index' %}">Partner</a></li>
-    <li class="breadcrumb-item active" aria-current="page">Add new partner</li>
+    <li class="breadcrumb-item active" aria-current="page">Edit partner</li>
   </ol>
 </nav>
 <form action="#" method="post" enctype='multipart/form-data'>
   <div class='row'>
     <div class="col-md-4 mb-2">
       <label for="name" class="form-label">Name *</label>
-      <input type="text" class="form-control" name="name" placeholder='full name' required />
+      <input type="text" class="form-control" name="name" placeholder='full name' required value="{{ partner.name }}"/>
     </div>
     <div class="col-md-4 mb-2">
       <label for="tags" class="form-label">Tags</label>
@@ -23,7 +23,7 @@
     </div>
     <div class="col-md-4 mb-2">
       <label for="website" class="form-label">Website</label>
-      <input type="text" class="form-control" name="website" placeholder='www.website.com' />
+      <input type="text" class="form-control" name="website" placeholder='www.website.com' value='{{ partner.website }}' />
     </div>
     <div class="col-md-4 mb-2">
       <label for="image" class="form-label">Image</label>
@@ -31,12 +31,12 @@
     </div>
     <div class="col-md-4 mb-2">
       <label for="facebook" class="form-label">Facebook</label>
-      <input type="text" class="form-control" name="facebook" placeholder='www.facebook.com/page-name' />
+      <input type="text" class="form-control" name="facebook" placeholder='www.facebook.com/page-name' value='{{ partner.facebook }}' />
     </div>
   </div>
   <div class="mb-2">
     <label for="content" class="form-label">Description *</label>
-    <textarea id='editor' class='form-control' name='description' rows='5' placeholder="partner information..."></textarea>
+    <textarea id='editor' class='form-control' name='description' rows='5' placeholder="partner information...">{{ partner.description|safe }}</textarea>
   </div>
   {% csrf_token %}
   <div class='d-flex justify-content-between'>

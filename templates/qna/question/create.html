@@ -13,11 +13,11 @@
   <div class='row'>
     <div class="col-md-4 mb-2">
       <label for="title" class="form-label">Title</label>
-      <input type="text" class="form-control" name="title" placeholder='question title...' />
+      <input type="text" class="form-control" name="title" placeholder='question title...' required />
     </div>
     <div class="col-md-4 mb-2">
       <label for="category" class="form-label">Category</label>
-      <select name="category" class="form-control">
+      <select name="category" class="form-control" required>
         <option value="">-- select --</option>
         {% for tag in tags %}
         <option value="{{ tag.id }}">{{ tag.name }}</option>

@@ -23,7 +23,7 @@ def home(request):
 
 
 @require_http_methods(["GET"])
-def profile(requst, id):
+def profile(request, id):
     user = get_object_or_404(User, pk=id)
     return JsonResponse(model_to_dict(user))
 

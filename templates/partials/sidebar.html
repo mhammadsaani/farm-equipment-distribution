@@ -24,9 +24,6 @@
     <a href="{% url 'after-sale-service:service.index' %}" class="list-group-item list-group-item-action {% if '/service' in request.path %} active {% endif %}">
       <i class="bi bi-check2-circle me-1"></i> Services <span class="float-end">&rarr;</span>
     </a>
-    <a href="{% url 'chat:message.index' %}" class="list-group-item list-group-item-action {% if '/chat' in request.path %} active {% endif %}">
-      <i class="bi bi-chat-dots me-1"></i> Chat <span class="float-end">&rarr;</span>
-    </a>
     <a href="{% url 'qna:question.index' %}" class="list-group-item list-group-item-action">
       <i class="bi bi-question-circle me-1"></i> QnA <span class="float-end">&rarr;</span>
     </a>
