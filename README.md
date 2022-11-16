@@ -22,7 +22,7 @@ Final year project
 - `python3 manage.py runserver`
 
 ### Todo
-
+  
 - [ ] form validation
 - [x] search
 - [x] pagination
