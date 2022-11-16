@@ -79,7 +79,11 @@
       {% for service in services %}
       <div class="item">
         <div class="card shadow-sm">
+          {% if service.image %}
           <img src="/media/{{ service.image }}" class='card-img-top' alt='{{ service.name }}' />
+          {% elif service.image == '' %}
+          <img src="/static/img/thumbnail.png" class='card-img-top' alt='{{ service.name }}' />
+          {% endif %}
           <div class="card-body">
             <h5 class='card-title'>
               {% if service.link %}<a href='{{ service.link }}'>{% else %}

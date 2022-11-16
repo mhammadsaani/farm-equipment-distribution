@@ -57,6 +57,44 @@ def service_create(request):
         return redirect("after-sale-service:service.index")
 
 
+@login_required(login_url="signin")
+@require_http_methods(["GET", "POST"])
+def service_edit(request, id):
+    service = get_object_or_404(Service, id=id)
+
+    if not request.user.is_superuser:
+        return redirect(request.META.get("HTTP_REFERER"))
+
+    elif request.method == "GET":
+        tags = serialize("json", Tag.objects.all()[:50], fields=("name"))
+        partners = serialize("json", Partner.objects.all()[:50], fields=("name"))
+
+        return render(
+            request,
+            "after-sale-service/service/edit.html",
+            {"tags": tags, "partners": partners, "service": service},
+        )
+
+    elif request.method == "POST":
+        service.name = request.POST["name"]
+        service.link = request.POST["link"]
+        service.tags = request.POST["tags"]
+        service.partners = request.POST["partners"]
+        service.description = request.POST["description"]
+        service.slug = slugify(request.POST["name"])
+
+        if request.FILES.get("image") != None:
+            service.image = request.FILES.get("image")
+
+        service.save()
+        messages.info(request, "Service updated")
+        return redirect("after-sale-service:service.show", slug=service.slug)
+
+
+def service_delete(request, id):
+    pass
+
+
 @require_http_methods(["GET"])
 def service_show(request, slug):
     service = get_object_or_404(Service, slug=slug)

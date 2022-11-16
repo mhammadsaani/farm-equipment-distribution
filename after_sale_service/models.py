@@ -57,8 +57,8 @@ class Service(models.Model):
     link = models.CharField(max_length=200, blank=True)
     image = models.ImageField(upload_to="services", blank=True)
     description = models.TextField()
-    tags = models.JSONField()
-    partners = models.JSONField()
+    tags = models.JSONField(blank=True)
+    partners = models.JSONField(blank=True)
     created_at = models.DateTimeField(default=datetime.now)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
@@ -66,10 +66,14 @@ class Service(models.Model):
         return self.name
 
     def json_tags(self):
-        return json.loads(self.tags)
+        if self.tags:
+            return json.loads(self.tags)
+        return []
 
     def json_partners(self):
-        return json.loads(self.partners)
+        if self.partners:
+            return json.loads(self.partners)
+        return []
 
 
 class Tag(models.Model):
