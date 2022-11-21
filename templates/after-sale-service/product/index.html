@@ -29,8 +29,8 @@
             </h5>
             <h6 class='card-text'>{{ product.price }}</h6>
             <div>
-              {% for tag in product.json_partners %}
-              <span class="badge bg-info">{{ tag.value }}</span>
+              {% for partner in product.json_partners %}
+              <span class="badge bg-info">{{ partner.value }}</span>
               {% endfor %}
               {% for tag in product.json_tags %}
               <span class="badge bg-secondary">{{ tag.value }}</span>

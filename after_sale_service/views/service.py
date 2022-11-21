@@ -6,6 +6,7 @@ from django.core.paginator import Paginator
 from django.utils.text import slugify
 from django.contrib import messages
 from ..models import Service, Tag, Partner
+import json
 
 
 @require_http_methods(["GET"])
@@ -98,5 +99,12 @@ def service_delete(request, id):
 @require_http_methods(["GET"])
 def service_show(request, slug):
     service = get_object_or_404(Service, slug=slug)
+    partners = []
+    for partner in json.loads(service.partners):
+        partners.append(get_object_or_404(Partner, name=partner["value"]))
 
-    return render(request, "after-sale-service/service/show.html", {"service": service})
+    return render(
+        request,
+        "after-sale-service/service/show.html",
+        {"service": service, "partners": partners},
+    )

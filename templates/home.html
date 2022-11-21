@@ -35,8 +35,8 @@
             </h5>
             <h6 class='card-text'>{{ product.price }}</h6>
             <div>
-              {% for tag in product.json_partners %}
-              <span class="badge bg-info">{{ tag.value }}</span>
+              {% for partner in product.json_partners %}
+              <span class="badge bg-info">{{ partner.value }}</span>
               {% endfor %}
               {% for tag in product.json_tags %}
               <span class="badge bg-secondary">{{ tag.value }}</span>
@@ -92,14 +92,19 @@
             </h5>
             <h6 class='card-text'>{{ service.website }}</h6>
             <div>
-              {% for tag in service.json_partners %}
-              <span class="badge bg-info">{{ tag.value }}</span>
+              {% for partner in service.json_partners %}
+              <span class="badge bg-info">{{ partner.value }}</span>
               {% endfor %}
               {% for tag in service.json_tags %}
               <span class="badge bg-secondary">{{ tag.value }}</span>
               {% endfor %}
             </div>
           </div>
+          {% if user.is_superuser %}
+          <div class='card-footer text-end'>
+            <a href="{% url "after-sale-service:service.show" slug=service.slug %}" class="btn btn-outline-primary btn-sm">View &rarr;</a>
+          </div>
+          {% endif %}
         </div>
       </div>
       {% endfor %}

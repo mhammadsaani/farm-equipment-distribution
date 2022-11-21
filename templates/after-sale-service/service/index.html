@@ -39,6 +39,11 @@
               {% endfor %}
             </div>
           </div>
+          {% if user.is_superuser %}
+          <div class='card-footer text-end'>
+            <a href="{% url "after-sale-service:service.show" slug=service.slug %}" class="btn btn-outline-primary btn-sm">View &rarr;</a>
+          </div>
+          {% endif %}
         </div>
       </div>
       {% endfor %}
