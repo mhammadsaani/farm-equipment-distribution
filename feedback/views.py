@@ -1,12 +1,10 @@
-from django.shortcuts import render, redirect, get_list_or_404
+from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.http import require_http_methods
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse, JsonResponse
-from django.core.serializers import serialize
+from django.http import HttpResponse
 from django.contrib.auth.models import User
 from django.core.paginator import Paginator
 from django.contrib import messages
-from django.db.models import Q
 from .models import QuestionField, Response, Form
 import json
 
@@ -64,7 +62,13 @@ def form_edit(request, id):
 @login_required(login_url="signin")
 @require_http_methods(["GET"])
 def form_delete(request, id):
-    return HttpResponse("form delete")
+    form = get_object_or_404(Form, pk=id)
+
+    if form.user_id == request.user.id:
+        form.delete()
+        messages.info(request, "Form deleted")
+
+    return redirect(request.META.get("HTTP_REFERER"))
 
 
 @require_http_methods(["GET"])

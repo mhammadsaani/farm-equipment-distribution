@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect, get_object_or_404, get_list_or_404
+from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.http import require_http_methods
 from django.contrib.auth.decorators import login_required
 from django.core.serializers import serialize
@@ -88,8 +88,16 @@ def partner_edit(request, id):
         return redirect("after-sale-service:partner.show", slug=partner.slug)
 
 
+@require_http_methods(["GET"])
+@login_required(login_url="signin")
 def partner_delete(request, id):
-    pass
+    partner = get_object_or_404(Partner, pk=id)
+
+    if partner.user_id == request.user.id:
+        partner.delete()
+        messages.info(request, "Partner deleted")
+
+    return redirect(request.META.get("HTTP_REFERER"))
 
 
 @require_http_methods(["GET"])

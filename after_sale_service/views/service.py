@@ -92,8 +92,16 @@ def service_edit(request, id):
         return redirect("after-sale-service:service.show", slug=service.slug)
 
 
+@require_http_methods(["GET"])
+@login_required(login_url="signin")
 def service_delete(request, id):
-    pass
+    service = get_object_or_404(Service, pk=id)
+
+    if service.user_id == request.user.id:
+        service.delete()
+        messages.info(request, "Service deleted")
+
+    return redirect(request.META.get("HTTP_REFERER"))
 
 
 @require_http_methods(["GET"])

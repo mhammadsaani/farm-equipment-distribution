@@ -93,8 +93,16 @@ def product_edit(request, id):
         return redirect("after-sale-service:product.show", slug=product.slug)
 
 
+@require_http_methods(["GET"])
+@login_required(login_url="signin")
 def product_delete(request, id):
-    pass
+    product = get_object_or_404(Product, pk=id)
+
+    if product.user_id == request.user.id:
+        product.delete()
+        messages.info(request, "Product deleted")
+
+    return redirect(request.META.get("HTTP_REFERER"))
 
 
 @require_http_methods(["GET"])
