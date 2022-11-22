@@ -31,4 +31,4 @@ class Answer(models.Model):
     tags = models.JSONField()
 
     def __str__(self):
-        return self.answer
+        return f"{self.question.title} - {self.content}"

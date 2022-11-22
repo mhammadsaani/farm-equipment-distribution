@@ -44,9 +44,16 @@ class QuestionField(models.Model):
     def __str__(self):
         return self.label
 
+    def choice_array(self):
+        try:
+            return self.choice.split(",")
+        except:
+            return []
+
 
 class Response(models.Model):
     value = models.TextField()
+    group_id = models.IntegerField(default=0)
     created_at = models.DateTimeField(default=datetime.now)
     form = models.ForeignKey(Form, on_delete=models.CASCADE)
     question = models.ForeignKey(QuestionField, on_delete=models.CASCADE)

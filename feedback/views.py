@@ -1,11 +1,13 @@
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404, get_list_or_404
 from django.views.decorators.http import require_http_methods
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.contrib.auth.models import User
 from django.core.paginator import Paginator
 from django.contrib import messages
 from .models import QuestionField, Response, Form
+from django.utils.text import slugify
+from django.forms.models import model_to_dict
 import json
 
 # Create your views here.
@@ -38,13 +40,15 @@ def form_create(request):
             field_type = request.POST.getlist("field_type")[count]
             width = request.POST.getlist("width")[count]
             choice = request.POST.getlist("choice")[count]
+            is_required = bool(request.POST.getlist("is_required")[count])
 
             question_field = QuestionField(
-                label=label,
+                label=slugify(label),
                 field_type=field_type,
                 width=width,
                 choice=choice,
                 form_id=form.id,
+                is_required=is_required,
                 user_id=request.user.id,
             )
             question_field.save()
@@ -73,4 +77,7 @@ def form_delete(request, id):
 
 @require_http_methods(["GET"])
 def form_show(request, id):
-    return HttpResponse("form show")
+    form = get_object_or_404(Form, pk=id)
+    fields = get_list_or_404(QuestionField, form_id=id)
+
+    return render(request, "feedback/form/show.html", {"form": form, "fields": fields})
