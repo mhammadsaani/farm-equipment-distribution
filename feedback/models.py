@@ -57,7 +57,6 @@ class Response(models.Model):
     created_at = models.DateTimeField(default=datetime.now)
     form = models.ForeignKey(Form, on_delete=models.CASCADE)
     question = models.ForeignKey(QuestionField, on_delete=models.CASCADE)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.value

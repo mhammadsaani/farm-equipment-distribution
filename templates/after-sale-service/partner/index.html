@@ -22,7 +22,7 @@
           {% if partner.image %}
           <img src="/media/{{ partner.image }}" class='card-img-top' alt='{{ partner.name }}' />
           {% elif partner.image == '' %}
-          <img src="/static/img/thumbnail.png" class='card-img-top' alt='{{ partner.name }}' />
+          <img src="/static/img/placeholder.png" class='card-img-top' alt='{{ partner.name }}' />
           {% endif %}
           <div class="card-body">
             <h5 class='card-title'><a href='{% url "after-sale-service:partner.show" slug=partner.slug %}'>{{ partner.name }} &rarr;</a></h5>

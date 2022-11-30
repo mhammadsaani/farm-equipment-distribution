@@ -1,11 +1,12 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.http import require_http_methods
 from django.contrib.auth.decorators import login_required
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from django.contrib.auth.models import User, auth
 from django.forms.models import model_to_dict
 from django.contrib import messages
 from .models import Profile, Notification
+from feedback.models import Form
 from after_sale_service.models import Partner, Product, Service
 
 # Create your views here.
@@ -26,6 +27,28 @@ def home(request):
 def profile(request, id):
     user = get_object_or_404(User, pk=id)
     return JsonResponse(model_to_dict(user))
+
+
+@require_http_methods(["GET"])
+def apply(request):
+    form = Form.objects.filter(name__icontains="apply for partnership").first()
+
+    if form != None:
+        return redirect("feedback:form.show", id=form.id)
+    else:
+        messages.info(request, "Page not found")
+        return redirect(request.META.get("HTTP_REFERER"))
+
+
+@require_http_methods(["GET"])
+def contact(request):
+    form = Form.objects.filter(name__icontains="contact us").first()
+
+    if form != None:
+        return redirect("feedback:form.show", id=form.id)
+    else:
+        messages.info(request, "Page not found")
+        return redirect(request.META.get("HTTP_REFERER"))
 
 
 @require_http_methods(["GET"])

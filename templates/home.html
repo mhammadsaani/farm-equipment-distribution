@@ -27,7 +27,7 @@
           {% if product.image %}
           <img src="/media/{{ product.image }}" class='card-img-top' alt='{{ product.name }}' />
           {% elif product.image == '' %}
-          <img src="/static/img/thumbnail.png" class='card-img-top' alt='{{ product.name }}' />
+          <img src="/static/img/placeholder.png" class='card-img-top' alt='{{ product.name }}' />
           {% endif %}
           <div class="card-body">
             <h5 class='card-title'>
@@ -57,7 +57,7 @@
           {% if partner.image %}
           <img src="/media/{{ partner.image }}" class='card-img-top' alt='{{ partner.name }}' />
           {% elif partner.image == '' %}
-          <img src="/static/img/thumbnail.png" class='card-img-top' alt='{{ partner.name }}' />
+          <img src="/static/img/placeholder.png" class='card-img-top' alt='{{ partner.name }}' />
           {% endif %}
           <div class="card-body">
             <h5 class='card-title'><a href='{% url "after-sale-service:partner.show" slug=partner.slug %}'>{{ partner.name }} &rarr;</a></h5>
@@ -82,7 +82,7 @@
           {% if service.image %}
           <img src="/media/{{ service.image }}" class='card-img-top' alt='{{ service.name }}' />
           {% elif service.image == '' %}
-          <img src="/static/img/thumbnail.png" class='card-img-top' alt='{{ service.name }}' />
+          <img src="/static/img/placeholder.png" class='card-img-top' alt='{{ service.name }}' />
           {% endif %}
           <div class="card-body">
             <h5 class='card-title'>

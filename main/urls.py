@@ -5,8 +5,8 @@ from . import views
 urlpatterns = [
     path("", views.home, name="home"),
     path("about", TemplateView.as_view(template_name="about.html"), name="about"),
-    path("contact", RedirectView.as_view(url="feedback/form/2"), name="contact"),
-    path("apply", RedirectView.as_view(url="feedback/form/1"), name="apply"),
+    path("contact", views.contact, name="contact"),
+    path("apply", views.apply, name="apply"),
     path("dashboard", views.dashboard, name="dashboard"),
     # path("settings", views.settings, name="settings"),
     path("signup", views.signup, name="signup"),

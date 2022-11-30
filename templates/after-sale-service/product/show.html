@@ -8,7 +8,7 @@
     {% if product.image %}
     <img src="/media/{{ product.image }}" class='mb-3 w-100' alt='{{ product.name }}' />
     {% elif product.image == '' %}
-    <img src="/static/img/thumbnail.png" class='mb-3 w-100' alt='{{ product.name }}' />
+    <img src="/static/img/placeholder.png" class='mb-3 w-100' alt='{{ product.name }}' />
     {% endif %} {% if user.is_superuser %}
     <div class='my-3'>
       <a href='{% url "after-sale-service:product.edit" id=product.id %}' class='btn btn-primary'>
@@ -36,7 +36,7 @@
           {% if partner.image %}
           <img src="/media/{{ partner.image }}" class='card-img-top' alt='{{ partner.name }}' />
           {% elif partner.image == '' %}
-          <img src="/static/img/thumbnail.png" class='card-img-top' alt='{{ partner.name }}' />
+          <img src="/static/img/placeholder.png" class='card-img-top' alt='{{ partner.name }}' />
           {% endif %}
           <div class="card-body">
             <h5 class='card-title'><a href='{% url "after-sale-service:partner.show" slug=partner.slug %}'>{{ partner.name }} &rarr;</a></h5>
