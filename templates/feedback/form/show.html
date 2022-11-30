@@ -1,5 +1,5 @@
 {% extends 'layouts/base.html' %}
-{% block title %} {{ form.name }} - FEDA {% endblock %}
+{% block title %} {{ form.name|title }} - FEDA {% endblock %}
 {% block content %}
 <div class="row justify-content-center">
   <div class="col-md-10">
@@ -12,7 +12,7 @@
             <div class="col-12 mb-2 text-muted">{{ form.description }}</div>
             {% for field in fields %}
             <div class="col-md-{{ field.width }} mb-2">
-              <label for="{{ field.label }}" class="form-label">{{ field.label|upper }} {% if field.is_required %} * {% endif %}</label>
+              <label for="{{ field.label }}" class="form-label">{{ field.label|title }} {% if field.is_required %} * {% endif %}</label>
               {% if field.field_type == 'long-text' %}
               <textarea 
                 class='form-control' 
