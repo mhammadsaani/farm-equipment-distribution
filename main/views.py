@@ -6,8 +6,10 @@ from django.contrib.auth.models import User, auth
 from django.forms.models import model_to_dict
 from django.contrib import messages
 from .models import Profile, Notification
+from qna.models import Question, Answer
 from feedback.models import Form
 from after_sale_service.models import Partner, Product, Service
+from django.db.models import Q
 
 # Create your views here.
 @require_http_methods(["GET"])
@@ -54,7 +56,37 @@ def contact(request):
 @require_http_methods(["GET"])
 def search(request):
     keyword = request.GET.get("keyword")
-    return render(request, "search.html", {"keyword": keyword})
+    answers = Answer.objects.filter(Q(content__icontains=keyword))
+    questions = Question.objects.filter(
+        Q(title__icontains=keyword) | Q(content__icontains=keyword)
+    )
+    partners = Partner.objects.filter(
+        Q(name__icontains=keyword)
+        | Q(website__icontains=keyword)
+        | Q(facebook__icontains=keyword)
+        | Q(description__icontains=keyword)
+    )
+    products = Product.objects.filter(
+        Q(name__icontains=keyword)
+        | Q(price__icontains=keyword)
+        | Q(description__icontains=keyword)
+    )
+    services = Service.objects.filter(
+        Q(name__icontains=keyword) | Q(description__icontains=keyword)
+    )
+
+    return render(
+        request,
+        "search.html",
+        {
+            "keyword": keyword,
+            "answers": answers,
+            "partners": partners,
+            "services": services,
+            "products": products,
+            "questions": questions,
+        },
+    )
 
 
 @require_http_methods(["GET"])

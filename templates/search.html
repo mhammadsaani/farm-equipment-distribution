@@ -56,9 +56,33 @@
               <div class='spinner-border text-info m-5' role='status'><span class='visually-hidden'>loading...</span></div>
             </div>
           </div>
-          <div class='tab-pane fade' id='product' role='tabpanel' aria-labelledby='product-tab'>product</div>
-          <div class='tab-pane fade' id='service' role='tabpanel' aria-labelledby='service-tab'>service</div>
-          <div class='tab-pane fade' id='partner' role='tabpanel' aria-labelledby='partner-tab'>partner</div>
+          <div class='tab-pane fade' id='product' role='tabpanel' aria-labelledby='product-tab'>
+
+            <ul>
+              {% for product in products %}
+              <li>{{ product.name }}</li>
+              {% endfor %}
+            </ul>
+            
+          </div>
+          <div class='tab-pane fade' id='service' role='tabpanel' aria-labelledby='service-tab'>
+
+            <ul>
+              {% for service in services %}
+              <li>{{ service.name }}</li>
+              {% endfor %}
+            </ul>
+
+          </div>
+          <div class='tab-pane fade' id='partner' role='tabpanel' aria-labelledby='partner-tab'>
+            
+            <ul>
+              {% for partner in partners %}
+              <li>{{ partner.name }}</li>
+              {% endfor %}
+            </ul>
+
+          </div>
           <div class='tab-pane fade' id='question' role='tabpanel' aria-labelledby='question-tab'>question</div>
           <div class='tab-pane fade' id='people' role='tabpanel' aria-labelledby='people-tab'>people</div>
           <div class='tab-pane fade' id='tag' role='tabpanel' aria-labelledby='tag-tab'>tag</div>

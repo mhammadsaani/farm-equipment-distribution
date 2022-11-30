@@ -57,7 +57,7 @@ def question_create(request):
 def question_search(request):
     keyword = request.GET.get("keyword")
     questions = Question.objects.filter(
-        Q(content__contains=keyword) | Q(title__contains=keyword)
+        Q(content__icontains=keyword) | Q(title__icontains=keyword)
     )
     tags = Tag.objects.order_by("-id")[:10]
     paginator = Paginator(questions, 50)
