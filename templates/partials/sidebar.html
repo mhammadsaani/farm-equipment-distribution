@@ -10,7 +10,7 @@
     <a href="{% url 'dashboard' %}" class="list-group-item list-group-item-action {% if 'dashboard' in request.path %} active {% endif %}">
       <i class="bi bi-speedometer2 me-1"></i> Dashboard <span class="float-end">&rarr;</span>
     </a>
-    {% if user.is_superuser %}
+    {% if user.is_superuser or user.groups.first.name == 'moderator' %}
     <a href="/admin" class="list-group-item list-group-item-action">
       <i class="bi bi-shield-lock me-1"></i> Admin Area <span class="float-end">&rarr;</span>
     </a>
