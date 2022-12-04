@@ -60,6 +60,16 @@ def form_create(request):
 @login_required(login_url="signin")
 @require_http_methods(["GET", "POST"])
 def form_edit(request, id):
+    form = get_object_or_404(Form, pk=id)
+
+    if request.method == "GET":
+        question_fields = get_list_or_404(QuestionField, form_id=id)
+        return render(
+            request,
+            "feedback/form/edit.html",
+            {"form": form, "question_fields": question_fields},
+        )
+
     return HttpResponse("form edit")
 
 
