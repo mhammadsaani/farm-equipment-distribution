@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404, get_list_or_404
 from django.views.decorators.http import require_http_methods
 from django.contrib.auth.decorators import login_required
+from django.contrib.admin.views.decorators import staff_member_required
 from django.http import HttpResponse, JsonResponse
 from django.contrib.auth.models import User
 from django.core.paginator import Paginator
@@ -22,6 +23,7 @@ def form_index(request):
     return render(request, "feedback/form/index.html", {"page_object": page_object})
 
 
+@staff_member_required
 @login_required(login_url="signin")
 @require_http_methods(["GET", "POST"])
 def form_create(request):
@@ -57,6 +59,7 @@ def form_create(request):
         return redirect("feedback:form.index")
 
 
+@staff_member_required
 @login_required(login_url="signin")
 @require_http_methods(["GET", "POST"])
 def form_edit(request, id):

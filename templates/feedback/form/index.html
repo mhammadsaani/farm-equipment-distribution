@@ -30,7 +30,10 @@
           <a href='{% url "feedback:form.show" id=form.id %}' class='btn btn-sm btn-info m-1' title='view' data-toggle='tooltip'>
             <i class='bi bi-caret-right'></i>
           </a>
-          {% if form.user_id == user.id %}
+          {% if form.user_id == user.id or user.is_superuser %}
+          <a href='{% url "feedback:form.edit" id=form.id %}' class='btn btn-sm btn-primary m-1' title='response' data-toggle='tooltip'>
+            <i class='bi bi-activity'></i>
+          </a>
           <a href='{% url "feedback:form.edit" id=form.id %}' class='btn btn-sm btn-success m-1' title='edit' data-toggle='tooltip'>
             <i class='bi bi-pencil'></i>
           </a>
@@ -56,6 +59,8 @@
       {% endif %}
     </ul>
   </nav>
+  {% if user.is_superuser %}
   <a href="{% url 'feedback:form.create' %}" class="btn btn-info"><i class='bi bi-plus-circle me-1'></i> New form</a>
+  {% endif %}
 </div>
 {% endblock %}
