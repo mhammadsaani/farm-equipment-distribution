@@ -115,9 +115,26 @@ def form_delete(request, id):
     return redirect(request.META.get("HTTP_REFERER"))
 
 
-@require_http_methods(["GET"])
+@require_http_methods(["GET", "POST"])
 def form_show(request, id):
     form = get_object_or_404(Form, pk=id)
     fields = get_list_or_404(QuestionField, form_id=id)
 
-    return render(request, "feedback/form/show.html", {"form": form, "fields": fields})
+    if request.method == "GET":
+        return render(
+            request, "feedback/form/show.html", {"form": form, "fields": fields}
+        )
+
+    elif request.method == "POST":
+        group_id = Response.objects.count()
+        for field in fields:
+            response = Response(
+                value=request.POST[f"{field.label}"],
+                form_id=id,
+                question_id=field.id,
+                group_id=group_id,
+            )
+            response.save()
+
+        messages.info(request, "Feedback saved successfully")
+        return redirect("feedback:form.show", id=id)
