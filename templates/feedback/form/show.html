@@ -9,7 +9,7 @@
       <div class="card-body">
         <form action="#" method="post">
           <div class="row">
-            <div class="col-12 mb-2 text-muted">{{ form.description }}</div>
+            <div class="col-12 mb-2 text-muted">{{ form.description|safe }}</div>
             {% for field in fields %}
             <div class="col-md-{{ field.width }} mb-2">
               <label for="{{ field.label }}" class="form-label">{{ field.label|title }} {% if field.is_required %} * {% endif %}</label>

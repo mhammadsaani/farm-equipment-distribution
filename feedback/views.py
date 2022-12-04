@@ -61,16 +61,45 @@ def form_create(request):
 @require_http_methods(["GET", "POST"])
 def form_edit(request, id):
     form = get_object_or_404(Form, pk=id)
+    question_fields = get_list_or_404(QuestionField, form_id=id)
+
+    if not request.user.is_superuser:
+        return redirect(request.META.get("HTTP_REFERER"))
 
     if request.method == "GET":
-        question_fields = get_list_or_404(QuestionField, form_id=id)
         return render(
             request,
             "feedback/form/edit.html",
             {"form": form, "question_fields": question_fields},
         )
 
-    return HttpResponse("form edit")
+    elif request.method == "POST":
+        form.name = request.POST["name"]
+        form.description = request.POST["description"]
+
+        QuestionField.objects.filter(form_id=id).delete()
+
+        for count in range(len(request.POST.getlist("label"))):
+            label = request.POST.getlist("label")[count]
+            field_type = request.POST.getlist("field_type")[count]
+            width = request.POST.getlist("width")[count]
+            choice = request.POST.getlist("choice")[count]
+            is_required = bool(request.POST.getlist("is_required")[count])
+
+            question_field = QuestionField(
+                label=slugify(label),
+                field_type=field_type,
+                width=width,
+                choice=choice,
+                form_id=form.id,
+                is_required=is_required,
+                user_id=request.user.id,
+            )
+            question_field.save()
+
+        form.save()
+        messages.info(request, "Form updated")
+        return redirect("feedback:form.index")
 
 
 @login_required(login_url="signin")
@@ -80,6 +109,7 @@ def form_delete(request, id):
 
     if form.user_id == request.user.id:
         form.delete()
+        QuestionField.objects.filter(form_id=id).delete()
         messages.info(request, "Form deleted")
 
     return redirect(request.META.get("HTTP_REFERER"))

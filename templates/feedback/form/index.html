@@ -25,7 +25,7 @@
       {% for form in page_object %}
       <tr>
         <td>{{ form.name }}</td>
-        <td>{{ form.description }}</td>
+        <td>{{ form.description|safe }}</td>
         <td>
           <a href='{% url "feedback:form.show" id=form.id %}' class='btn btn-sm btn-info m-1' title='view' data-toggle='tooltip'>
             <i class='bi bi-caret-right'></i>
