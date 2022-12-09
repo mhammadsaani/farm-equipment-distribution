@@ -31,7 +31,7 @@
             <i class='bi bi-caret-right'></i>
           </a>
           {% if form.user_id == user.id or user.is_superuser %}
-          <a href='{% url "feedback:form.edit" id=form.id %}' class='btn btn-sm btn-primary m-1' title='response' data-toggle='tooltip'>
+          <a href='{% url "feedback:response.show" id=form.id %}' class='btn btn-sm btn-primary m-1' title='response' data-toggle='tooltip'>
             <i class='bi bi-activity'></i>
           </a>
           <a href='{% url "feedback:form.edit" id=form.id %}' class='btn btn-sm btn-success m-1' title='edit' data-toggle='tooltip'>

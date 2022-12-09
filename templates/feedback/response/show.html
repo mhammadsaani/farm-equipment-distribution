@@ -1,0 +1,50 @@
+{% extends 'layouts/admin.html' %}
+{% load static %}
+{% block title %} Feedback {% endblock %}
+{% block content %}
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+    <li class="breadcrumb-item"><a href="{% url 'dashboard' %}">Dashboard</a></li>
+    <li class="breadcrumb-item"><a href="{% url 'feedback:form.index' %}">Feedback</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Feedback responses</li>
+  </ol>
+</nav>
+<div class="my-3">{% include 'partials/messages.html' %}</div>
+<h4>{{ form.name }}</h4>
+<p>{{ form.description|safe }}</p>
+<div class="table-responsive">
+  <table class="table table-hover table-bordered">
+    <thead>
+      <tr>
+        {% for field in fields %}
+        <th scope="col">{{ field.label }}</th>
+        {% endfor %}
+        <th scope='col'>action</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for group in groups %}
+      <tr>
+        {% for field in fields %}
+        <td>
+            {% for response in responses %}
+            {% if response.group_id == group.group_id and response.question_id == field.id %}
+            {{ response.value }}
+            {% endif %}
+            {% endfor %}
+        </td>
+        {% endfor %}
+        <td>
+          {% if form.user_id == user.id or user.is_superuser %}
+          <a href='{% url "feedback:response.delete" id=group.group_id %}' class='btn btn-sm btn-warning m-1' title='delete' data-toggle='delete'>
+            <i class='bi bi-x-lg'></i>
+          </a>
+          {% endif %}
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

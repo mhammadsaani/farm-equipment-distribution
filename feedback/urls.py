@@ -10,4 +10,6 @@ urlpatterns = [
     path("form/<int:id>", views.form_show, name="form.show"),
     path("form/<int:id>/edit", views.form_edit, name="form.edit"),
     path("form/<int:id>/delete", views.form_delete, name="form.delete"),
+    path('response/<int:id>', views.response_show, name='response.show'),
+    path('response/<int:id>/delete', views.response_delete, name='response.delete'),
 ]

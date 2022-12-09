@@ -9,6 +9,7 @@ from django.contrib import messages
 from .models import QuestionField, Response, Form
 from django.utils.text import slugify
 from django.forms.models import model_to_dict
+from django.db.models import Count
 import json
 
 # Create your views here.
@@ -141,3 +142,32 @@ def form_show(request, id):
 
         messages.info(request, "Feedback saved successfully")
         return redirect("feedback:form.show", id=id)
+
+
+@staff_member_required
+@require_http_methods(["GET"])
+@login_required(login_url="signin")
+def response_show(request, id):
+    form = get_object_or_404(Form, pk=id)
+    responses = get_list_or_404(Response, form_id=id)
+    fields = get_list_or_404(QuestionField, form_id=id)
+    groups = (
+        Response.objects.filter(form_id=id)
+        .values("group_id")
+        .annotate(total_count=Count("id"))
+    )
+
+    return render(
+        request,
+        "feedback/response/show.html",
+        {"form": form, "fields": fields, "groups": groups, "responses": responses},
+    )
+
+
+@staff_member_required
+@require_http_methods(["GET"])
+@login_required(login_url="signin")
+def response_delete(request, id):
+    Response.objects.filter(group_id=id).delete()
+
+    return redirect(request.META.get("HTTP_REFERER"))
