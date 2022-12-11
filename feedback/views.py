@@ -119,6 +119,16 @@ def form_delete(request, id):
     return redirect(request.META.get("HTTP_REFERER"))
 
 
+@staff_member_required
+@require_http_methods(["GET"])
+@login_required(login_url="signin")
+def form_share(request, id):
+    form = get_object_or_404(Form, pk=id)
+
+    # ! send mass email
+    return HttpResponse("Forward form to email")
+
+
 @require_http_methods(["GET", "POST"])
 def form_show(request, id):
     form = get_object_or_404(Form, pk=id)

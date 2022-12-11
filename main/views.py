@@ -1,11 +1,11 @@
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404, get_list_or_404
 from django.views.decorators.http import require_http_methods
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse, HttpResponse
 from django.contrib.auth.models import User, auth
 from django.forms.models import model_to_dict
 from django.contrib import messages
-from .models import Profile, Notification
+from .models import Profile, Notification, SearchHistory, Settings
 from qna.models import Question, Answer
 from feedback.models import Form
 from after_sale_service.models import Partner, Product, Service
@@ -105,6 +105,40 @@ def dashboard(request):
             "notification_count": notification_count,
         },
     )
+
+
+@login_required(login_url="signin")
+@require_http_methods(["GET", "POST"])
+def settings(request):
+    # ! show settings forms: profile, tags
+    return HttpResponse("Update settings: profile, tags")
+
+
+@require_http_methods(["POST"])
+@login_required(login_url="signin")
+def profile_update(request, id):
+    profile = get_object_or_404(Profile, profile_user_id=id)
+    # ! update profile information
+    return HttpResponse("Update profile")
+
+
+@require_http_methods(["GET"])
+@login_required(login_url="signin")
+def notification(request):
+    notifications = get_list_or_404(Notification, user_id=request.user.id)
+    # ! show all my notifications
+    return HttpResponse("Show all notifications")
+
+
+@require_http_methods(["GET"])
+@login_required(login_url="signin")
+def notification_delete(request, id):
+    notification = get_object_or_404(Notification, pk=id)
+    # ! redirect user after deleting notification
+    if notification.user_id == request.user.id:
+        notification.delete()
+
+    return redirect(request.META.get("HTTP_REFERER"))
 
 
 @require_http_methods(["GET", "POST"])

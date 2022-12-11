@@ -1,47 +1,87 @@
 <div class="col-md-2">
   <div class="card card-body text-center shadow-sm">
-    <img class='img-fluid rounded-pill w-50 mx-auto' src='/static/img/person.png' alt='{{ user.username }}' />
+    <img
+      class="img-fluid rounded-pill w-50 mx-auto"
+      src="/static/img/person.png"
+      alt="{{ user.username }}"
+    />
     <h5 class="text-truncate fw-bold my-1">{{ user.username }}</h5>
     <p class="text-truncate m-0">{{ user.email }}</p>
   </div>
   <div class="list-group shadow-sm my-3">
     <a href="{% url 'home' %}" class="list-group-item list-group-item-action">
-      <i class="bi bi-house-door me-1"></i> Home <span class="float-end">&rarr;</span>
+      <i class="bi bi-house-door me-1"></i> Home
+      <span class="float-end">&rarr;</span>
     </a>
-    <a href="{% url 'dashboard' %}" class="list-group-item list-group-item-action {% if 'dashboard' in request.path %} active {% endif %}">
-      <i class="bi bi-speedometer2 me-1"></i> Dashboard <span class="float-end">&rarr;</span>
+    <a
+      href="{% url 'dashboard' %}"
+      class="list-group-item list-group-item-action {% if 'dashboard' in request.path %} active {% endif %}"
+    >
+      <i class="bi bi-speedometer2 me-1"></i> Dashboard
+      <span class="float-end">&rarr;</span>
     </a>
     {% if user.is_superuser or user.groups.first.name == 'moderator' %}
     <a href="/admin" class="list-group-item list-group-item-action">
-      <i class="bi bi-shield-lock me-1"></i> Admin Area <span class="float-end">&rarr;</span>
+      <i class="bi bi-shield-lock me-1"></i> Admin Area
+      <span class="float-end">&rarr;</span>
     </a>
     {% endif %}
-    <a href="{% url 'after-sale-service:partner.index' %}" class="list-group-item list-group-item-action {% if '/partner' in request.path %} active {% endif %}">
-      <i class="bi bi-people me-1"></i> Partners <span class="float-end">&rarr;</span>
+    <a
+      href="{% url 'after-sale-service:partner.index' %}"
+      class="list-group-item list-group-item-action {% if '/partner' in request.path %} active {% endif %}"
+    >
+      <i class="bi bi-people me-1"></i> Partners
+      <span class="float-end">&rarr;</span>
     </a>
-    <a href="{% url 'after-sale-service:product.index' %}" class="list-group-item list-group-item-action {% if '/product' in request.path %} active {% endif %}">
-      <i class="bi bi-box me-1"></i> Products <span class="float-end">&rarr;</span>
+    <a
+      href="{% url 'after-sale-service:product.index' %}"
+      class="list-group-item list-group-item-action {% if '/product' in request.path %} active {% endif %}"
+    >
+      <i class="bi bi-box me-1"></i> Products
+      <span class="float-end">&rarr;</span>
     </a>
-    <a href="{% url 'after-sale-service:service.index' %}" class="list-group-item list-group-item-action {% if '/service' in request.path %} active {% endif %}">
-      <i class="bi bi-check2-circle me-1"></i> Services <span class="float-end">&rarr;</span>
+    <a
+      href="{% url 'after-sale-service:service.index' %}"
+      class="list-group-item list-group-item-action {% if '/service' in request.path %} active {% endif %}"
+    >
+      <i class="bi bi-check2-circle me-1"></i> Services
+      <span class="float-end">&rarr;</span>
     </a>
-    <a href="{% url 'qna:question.index' %}" class="list-group-item list-group-item-action">
-      <i class="bi bi-question-circle me-1"></i> QnA <span class="float-end">&rarr;</span>
+    <a
+      href="{% url 'qna:question.index' %}"
+      class="list-group-item list-group-item-action"
+    >
+      <i class="bi bi-question-circle me-1"></i> QnA
+      <span class="float-end">&rarr;</span>
     </a>
-    <a href="{% url 'feedback:form.index' %}" class="list-group-item list-group-item-action {% if '/feedback' in request.path %} active {% endif %}">
-      <i class="bi bi-activity me-1"></i> Feedback <span class="float-end">&rarr;</span>
+    <a
+      href="{% url 'feedback:form.index' %}"
+      class="list-group-item list-group-item-action {% if '/feedback' in request.path %} active {% endif %}"
+    >
+      <i class="bi bi-activity me-1"></i> Feedback
+      <span class="float-end">&rarr;</span>
     </a>
     <a href="{% url 'home' %}" class="list-group-item list-group-item-action">
-      <i class="bi bi-bell me-1"></i> Notifications <span class="float-end">&rarr;</span>
+      <i class="bi bi-bell me-1"></i> Notifications
+      <span class="float-end">&rarr;</span>
     </a>
-    <a href="{% url 'home' %}" class="list-group-item list-group-item-action">
-      <i class="bi bi-gear me-1"></i> Settings <span class="float-end">&rarr;</span>
+    <a
+      href="{% url 'settings' %}"
+      class="list-group-item list-group-item-action"
+    >
+      <i class="bi bi-gear me-1"></i> Settings
+      <span class="float-end">&rarr;</span>
     </a>
-    <a href="{% url 'profile' id=user.id %}" class="list-group-item list-group-item-action">
-      <i class="bi bi-person me-1"></i> My profile <span class="float-end">&rarr;</span>
+    <a
+      href="{% url 'profile' id=user.id %}"
+      class="list-group-item list-group-item-action"
+    >
+      <i class="bi bi-person me-1"></i> My profile
+      <span class="float-end">&rarr;</span>
     </a>
     <a href="{% url 'logout' %}" class="list-group-item list-group-item-action">
-      <i class="bi bi-box-arrow-right me-1"></i> Log out <span class="float-end">&rarr;</span>
+      <i class="bi bi-box-arrow-right me-1"></i> Log out
+      <span class="float-end">&rarr;</span>
     </a>
   </div>
 </div>

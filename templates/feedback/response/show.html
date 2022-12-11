@@ -30,7 +30,7 @@
         <td>
             {% for response in responses %}
             {% if response.group_id == group.group_id and response.question_id == field.id %}
-            {{ response.value }}
+            {{ response.value|safe }}
             {% endif %}
             {% endfor %}
         </td>
