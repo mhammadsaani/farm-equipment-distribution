@@ -1,0 +1,81 @@
+{% extends 'layouts/admin.html' %}
+{% load static %}
+{% block title %} Settings - FEDA {% endblock %}
+{% block content %}
+<h4>Settings</h4>
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+    <li class="breadcrumb-item"><a href="{% url 'dashboard' %}">Dashboard</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Settings</li>
+  </ol>
+</nav>
+<div class="row">
+  <div class='col-12'>
+    {% include 'partials/messages.html' %}
+    <div class='card shadow-sm'>
+      <div class='card-header pb-0 border-0'>
+        <ul class='nav nav-tabs' id='search-tab' role='tablist'>
+          <li class='nav-item' role='presentation'>
+            <button class='nav-link active' id='profile-tab' data-bs-toggle='tab' data-bs-target='#profile' type='button' role='tab' aria-controls='profile' aria-selected='true'>
+              <i class='bi bi-person me-1'></i> Profile
+            </button>
+          </li>
+          {% if user.is_superuser %}
+          <li class='nav-item' role='presentation'>
+            <button class='nav-link' id='form-settings-tab' data-bs-toggle='tab' data-bs-target='#form-settings' type='button' role='tab' aria-controls='form-settings' aria-selected='false'>
+              <i class='bi bi-layers me-1'></i> Form Settings
+            </button>
+          </li>
+          {% endif %}
+        </ul>
+      </div>
+      <div class='card-body'>
+        <div class='tab-content' id='tab-content'>
+          <div class='tab-pane fade show active' id='profile' role='tabpanel' aria-labelledby='profile-tab'>
+            <form action="{% url 'profile.update' id=user.id %}" method="post" enctype='multipart/form-data'>
+              <div class='row'>
+                <div class="col-md-4 mb-2">
+                  <label for="first_name" class="form-label">First Name</label>
+                  <input type="text" class="form-control" name="first_name" value='{{ user.first_name }}' required />
+                </div>
+                <div class="col-md-4 mb-2">
+                  <label for="last_name" class="form-label">Last Name</label>
+                  <input type="text" class="form-control" name="last_name" value='{{ user.last_name }}' required />
+                </div>
+                <div class="col-md-4 mb-2">
+                  <label for="username" class="form-label">Username</label>
+                  <input type="text" class="form-control" name="username" value='{{ user.username }}' required />
+                </div>
+                <div class="col-md-6 mb-2">
+                  <label for="email" class="form-label">Email</label>
+                  <input type="email" class="form-control" name="email" value='{{ user.email }}' required />
+                </div>
+                <div class="col-md-6 mb-2">
+                  <label for="image" class="form-label">Image</label>
+                  <input type="file" class="form-control" name='image' accept='image/*' />
+                </div>
+              </div>
+              <div class="mb-2">
+                <label for="content" class="form-label">Bio</label>
+                <textarea id='editor' class='form-control' name='bio' rows='3' placeholder="who are you, what do you do...">{{ profile.bio|safe }}</textarea>
+              </div>
+              {% csrf_token %}
+              <button class="btn btn-primary" type="submit">Continue</button>
+            </form>
+          </div>
+          {% if user.is_superuser %}
+          <div class='tab-pane fade' id='form-settings' role='tabpanel' aria-labelledby='form-settings-tab'>form-settings</div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script src="{% static 'js/ckeditor.js' %}"></script>
+<script>
+  ClassicEditor.create(document.querySelector('#editor'))
+</script>
+{% endblock %}

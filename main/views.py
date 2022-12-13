@@ -8,7 +8,7 @@ from django.contrib import messages
 from .models import Profile, Notification, SearchHistory, Settings
 from qna.models import Question, Answer
 from feedback.models import Form
-from after_sale_service.models import Partner, Product, Service
+from after_sale_service.models import Partner, Product, Service, Tag
 from django.db.models import Q
 
 # Create your views here.
@@ -110,16 +110,45 @@ def dashboard(request):
 @login_required(login_url="signin")
 @require_http_methods(["GET", "POST"])
 def settings(request):
-    # ! show settings forms: profile, tags
-    return HttpResponse("Update settings: profile, tags")
+
+    if request.method == "GET":
+        tags = Tag.objects.all()
+        settings = Settings.objects.filter(user_id=request.user.id).all()
+        profile = Profile.objects.filter(profile_user_id=request.user.id).first()
+
+        return render(
+            request,
+            "settings.html",
+            {"tags": tags, "settings": settings, "profile": profile},
+        )
 
 
 @require_http_methods(["POST"])
 @login_required(login_url="signin")
 def profile_update(request, id):
-    profile = get_object_or_404(Profile, profile_user_id=id)
-    # ! update profile information
-    return HttpResponse("Update profile")
+    user = get_object_or_404(User, pk=request.user.id)
+
+    if not Profile.objects.filter(profile_user_id=id).exists():
+        profile = Profile.objects.create(user=user, profile_user_id=user.id)
+        profile.save()
+    else:
+        profile = Profile.objects.filter(profile_user_id=id).get()
+
+    if request.method == "POST":
+        user.last_name = request.POST["last_name"]
+        user.first_name = request.POST["first_name"]
+        user.username = request.POST["username"]
+        user.email = request.POST["email"]
+        profile.bio = request.POST["bio"]
+
+        if request.FILES.get("image") != None:
+            profile.image = request.FILES.get("image")
+
+        user.save()
+        profile.save()
+        messages.info(request, "Settings updated")
+
+    return redirect(request.META.get("HTTP_REFERER"))
 
 
 @require_http_methods(["GET"])
