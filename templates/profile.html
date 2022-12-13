@@ -1,0 +1,48 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+{% block title %} Profile - FEDA {% endblock %}
+{% block content %}
+<h4>Profile</h4>
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+    <li class="breadcrumb-item"><a href="{% url 'signin' %}">Account</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Profile</li>
+  </ol>
+</nav>
+<div class="row">
+    <div class='col-md-4'>
+        <div class="card card-body text-center shadow-sm">
+            {% if profile.image %}
+            <img
+                class="img-fluid rounded-pill w-50 mx-auto"
+                src="/media/{{ profile.image }}"
+                alt="{{ user.username }}"
+            />
+            {% else %}
+            <img
+                class="img-fluid rounded-pill w-50 mx-auto"
+                src="/static/img/person.png"
+                alt="{{ user.username }}"
+            />
+            {% endif %}
+            <h5 class="text-truncate fw-bold my-1">{{ user.username }}</h5>
+        </div>
+    </div>
+  <div class='col-md-8'>
+    {% include 'partials/messages.html' %}
+    <div class='card card-body shadow-sm'>
+        <h4>Full names</h4>
+        <p>{{ user.first_name }} {{ user.last_name }}, {{ user.email }}</p>
+        <h4>Bio</h4>
+        <div>{{ profile.bio|safe }}</div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script src="{% static 'js/ckeditor.js' %}"></script>
+<script>
+  ClassicEditor.create(document.querySelector('#editor'))
+</script>
+{% endblock %}
