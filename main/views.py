@@ -28,7 +28,14 @@ def home(request):
 @require_http_methods(["GET"])
 def profile(request, id):
     user = get_object_or_404(User, pk=id)
-    return JsonResponse(model_to_dict(user))
+
+    if not Profile.objects.filter(profile_user_id=id).exists():
+        profile = Profile.objects.create(user=user, profile_user_id=user.id)
+        profile.save()
+    else:
+        profile = Profile.objects.filter(profile_user_id=id).get()
+
+    return render(request, "profile.html", {"profile": profile, "user": user})
 
 
 @require_http_methods(["GET"])
@@ -134,19 +141,18 @@ def profile_update(request, id):
     else:
         profile = Profile.objects.filter(profile_user_id=id).get()
 
-    if request.method == "POST":
-        user.last_name = request.POST["last_name"]
-        user.first_name = request.POST["first_name"]
-        user.username = request.POST["username"]
-        user.email = request.POST["email"]
-        profile.bio = request.POST["bio"]
+    user.last_name = request.POST["last_name"]
+    user.first_name = request.POST["first_name"]
+    user.username = request.POST["username"]
+    user.email = request.POST["email"]
+    profile.bio = request.POST["bio"]
 
-        if request.FILES.get("image") != None:
-            profile.image = request.FILES.get("image")
+    if request.FILES.get("image") != None:
+        profile.image = request.FILES.get("image")
 
-        user.save()
-        profile.save()
-        messages.info(request, "Settings updated")
+    user.save()
+    profile.save()
+    messages.info(request, "Settings updated")
 
     return redirect(request.META.get("HTTP_REFERER"))
 
