@@ -21,8 +21,5 @@ from django.conf.urls.static import static
 urlpatterns = [
     path("", include("main.urls")),
     path("admin/", admin.site.urls),
-    path("after-sale-service/", include("after_sale_service.urls")),
-    path("feedback/", include("feedback.urls")),
-    path("qna/", include("qna.urls")),
     path("__debug__/", include("debug_toolbar.urls")),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

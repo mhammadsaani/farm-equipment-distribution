@@ -5,23 +5,19 @@ from django.http import JsonResponse, HttpResponse
 from django.contrib.auth.models import User, auth
 from django.forms.models import model_to_dict
 from django.contrib import messages
-from .models import Profile, Notification, SearchHistory, Settings
-from qna.models import Question, Answer
-from feedback.models import Form
-from after_sale_service.models import Partner, Product, Service, Tag
+from .models import Profile, Notification, Product, Location
 from django.db.models import Q
 
 # Create your views here.
 @require_http_methods(["GET"])
 def home(request):
-    partners = Partner.objects.order_by("-id")[:10]
     products = Product.objects.order_by("-id")[:10]
-    services = Service.objects.order_by("-id")[:10]
+    locations = Location.objects.order_by("-id")[:10]
 
     return render(
         request,
         "home.html",
-        {"partners": partners, "products": products, "services": services},
+        {"locations": locations, "products": products},
     )
 
 
@@ -51,56 +47,14 @@ def apply(request):
 
 @require_http_methods(["GET"])
 def contact(request):
-    form = Form.objects.filter(name__icontains="contact us").first()
-
-    if form != None:
-        return redirect("feedback:form.show", id=form.id)
-    else:
-        messages.info(request, "Page not found")
-        return redirect(request.META.get("HTTP_REFERER"))
-
-
-@require_http_methods(["GET"])
-def search(request):
-    keyword = request.GET.get("keyword")
-    answers = Answer.objects.filter(Q(content__icontains=keyword))
-    questions = Question.objects.filter(
-        Q(title__icontains=keyword) | Q(content__icontains=keyword)
-    )
-    partners = Partner.objects.filter(
-        Q(name__icontains=keyword)
-        | Q(website__icontains=keyword)
-        | Q(facebook__icontains=keyword)
-        | Q(description__icontains=keyword)
-    )
-    products = Product.objects.filter(
-        Q(name__icontains=keyword)
-        | Q(price__icontains=keyword)
-        | Q(description__icontains=keyword)
-    )
-    services = Service.objects.filter(
-        Q(name__icontains=keyword) | Q(description__icontains=keyword)
-    )
-
-    return render(
-        request,
-        "search.html",
-        {
-            "keyword": keyword,
-            "answers": answers,
-            "partners": partners,
-            "services": services,
-            "products": products,
-            "questions": questions,
-        },
-    )
+    pass
 
 
 @require_http_methods(["GET"])
 @login_required(login_url="signin")
 def dashboard(request):
     product_count = Product.objects.count()
-    service_count = Service.objects.count()
+    location_count = Location.objects.count()
     notification_count = Notification.objects.count()
 
     return render(
@@ -108,7 +62,7 @@ def dashboard(request):
         "dashboard.html",
         {
             "product_count": product_count,
-            "service_count": service_count,
+            "location_count": location_count,
             "notification_count": notification_count,
         },
     )
@@ -119,14 +73,13 @@ def dashboard(request):
 def settings(request):
 
     if request.method == "GET":
-        tags = Tag.objects.all()
         settings = Settings.objects.filter(user_id=request.user.id).all()
         profile = Profile.objects.filter(profile_user_id=request.user.id).first()
 
         return render(
             request,
             "settings.html",
-            {"tags": tags, "settings": settings, "profile": profile},
+            {"settings": settings, "profile": profile},
         )
 
 

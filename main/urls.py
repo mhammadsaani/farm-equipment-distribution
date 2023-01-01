@@ -20,5 +20,4 @@ urlpatterns = [
     path("logout", views.logout, name="logout"),
     path("profile/<int:id>", views.profile, name="profile"),
     path("profile/<int:id>/update", views.profile_update, name="profile.update"),
-    path("search", views.search, name="search"),
 ]

@@ -38,10 +38,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "debug_toolbar",
-    "after_sale_service",
-    "feedback",
     "main",
-    "qna",
 ]
 
 MIDDLEWARE = [

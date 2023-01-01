@@ -26,16 +26,16 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link {% if '/product' in request.path %} active {% endif %}" href="{% url 'after-sale-service:product.index' %}">Products</a>
+          <a class="nav-link {% if '/product' in request.path %} active {% endif %}" href="{% url 'home' %}">Products</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link {% if '/partner' in request.path %} active {% endif %}" href="{% url 'after-sale-service:partner.index' %}">Partners</a>
+          <a class="nav-link {% if '/partner' in request.path %} active {% endif %}" href="{% url 'home' %}">Partners</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link {% if '/service' in request.path %} active {% endif %}" href="{% url 'after-sale-service:service.index' %}">Services</a>
+          <a class="nav-link {% if '/service' in request.path %} active {% endif %}" href="{% url 'home' %}">Services</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link {% if 'qna' in request.path %} active {% endif %}" href="{% url 'qna:question.index' %}">QnA</a>
+          <a class="nav-link {% if 'qna' in request.path %} active {% endif %}" href="{% url 'home' %}">QnA</a>
         </li>
         <li class="nav-item dropdown">
           <a
@@ -88,12 +88,6 @@
           <a class="nav-link {% if 'signup' in request.path %} active {% endif %}" href="{% url 'signup' %}">Register</a>
         </li>
         {% endif %}
-        <li class="nav-item">
-          <form class='d-flex' action='{% url "search" %}' method='GET' autocomplete="off">
-            <input type="text" name="keyword" class='form-control me-1' placeholder='Search . . .' required='true' />
-            <button type='submit' class='btn btn-info'><i class="bi bi-search"></i></button>
-          </form>
-        </li>
       </ul>
     </div>
   </div>
