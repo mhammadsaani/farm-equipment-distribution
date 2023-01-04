@@ -35,38 +35,24 @@
     </a>
     {% endif %}
     <a
-      href="{% url 'after-sale-service:partner.index' %}"
+      href="{% url 'location.index' %}"
       class="list-group-item list-group-item-action {% if '/partner' in request.path %} active {% endif %}"
     >
-      <i class="bi bi-people me-1"></i> Partners
+      <i class="bi bi-map me-1"></i> Location
       <span class="float-end">&rarr;</span>
     </a>
     <a
-      href="{% url 'after-sale-service:product.index' %}"
+      href="{% url 'product.index' %}"
       class="list-group-item list-group-item-action {% if '/product' in request.path %} active {% endif %}"
     >
       <i class="bi bi-box me-1"></i> Products
       <span class="float-end">&rarr;</span>
     </a>
     <a
-      href="{% url 'after-sale-service:service.index' %}"
+      href="{% url 'order.index' %}"
       class="list-group-item list-group-item-action {% if '/service' in request.path %} active {% endif %}"
     >
-      <i class="bi bi-check2-circle me-1"></i> Services
-      <span class="float-end">&rarr;</span>
-    </a>
-    <a
-      href="{% url 'qna:question.index' %}"
-      class="list-group-item list-group-item-action"
-    >
-      <i class="bi bi-question-circle me-1"></i> QnA
-      <span class="float-end">&rarr;</span>
-    </a>
-    <a
-      href="{% url 'feedback:form.index' %}"
-      class="list-group-item list-group-item-action {% if '/feedback' in request.path %} active {% endif %}"
-    >
-      <i class="bi bi-activity me-1"></i> Feedback
+      <i class="bi bi-check2-circle me-1"></i> Order
       <span class="float-end">&rarr;</span>
     </a>
     <a href="{% url 'home' %}" class="list-group-item list-group-item-action">

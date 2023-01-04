@@ -6,19 +6,19 @@
   <div class="col-md-3 col-sm-6 mb-3">
     <div class="card card-body shadow-sm">
       <h1>{{ product_count }}</h1>
-      <a href="{% url 'after-sale-service:product.index' %}" class='btn btn-sm btn-outline-primary'><i class="bi bi-box me-1"></i> Products</a>
-    </div>
-  </div>
-  <div class="col-md-3 col-sm-6 mb-3">
-    <div class="card card-body shadow-sm">
-      <h1>{{ service_count }}</h1>
-      <a href="{% url 'after-sale-service:service.index' %}" class='btn btn-sm btn-outline-primary'><i class="bi bi-check2-circle me-1"></i> Services</a>
+      <a href="{% url 'home' %}" class='btn btn-sm btn-outline-primary'><i class="bi bi-box me-1"></i> Products</a>
     </div>
   </div>
   <div class="col-md-3 col-sm-6 mb-3">
     <div class="card card-body shadow-sm">
       <h1>{{ '0' }}</h1>
-      <a href="{% url 'home' %}" class='btn btn-sm btn-outline-primary'><i class="bi bi-chat-dots me-1"></i> Questions</a>
+      <a href="{% url 'home' %}" class='btn btn-sm btn-outline-primary'><i class="bi bi-check2-circle me-1"></i> Locations</a>
+    </div>
+  </div>
+  <div class="col-md-3 col-sm-6 mb-3">
+    <div class="card card-body shadow-sm">
+      <h1>{{ '0' }}</h1>
+      <a href="{% url 'home' %}" class='btn btn-sm btn-outline-primary'><i class="bi bi-chat-dots me-1"></i> Order</a>
     </div>
   </div>
   <div class="col-md-3 col-sm-6 mb-3">
@@ -27,84 +27,118 @@
       <a href="{% url 'home' %}" class='btn btn-sm btn-outline-primary'><i class="bi bi-bell me-1"></i> Notifications</a>
     </div>
   </div>
-  <div class='col-md-8 col-sm-12 mb-3' id='client-action-card'>
-    <div class='card card-body shadow-sm'>
-      <h4 class="fw-bold">Looking for farm equipment related services</h4>
-      <p>
-        Are you looking or selling spare parts, do you need or provide trainings. Do you have questions or can answer technical questions related to farm equipments.
-        Do you need to purchase, hire, or re-sale farm equipment. Check out our numerous partners, services, products, and other offers to get started today.
-      </p>
-      <div class='d-flex'>
-        <button class='btn btn-outline-primary' onclick="ignore('client-action-card')"><i class='bi bi-x-lg me-1'></i> Ignore</button>
-        <a href="{% url 'after-sale-service:service.index' %}" class='btn btn-outline-primary ms-1'>Available offers <i class='bi bi-chevron-right ms-1'></i></a>
-        <a href='{% url "qna:question.index" %}' class='btn btn-outline-primary ms-1'>Ask questions <i class='bi bi-chevron-right ms-1'></i></a>
-        <a href="{% url 'contact' %}" class='btn btn-outline-primary ms-1'>Contact us <i class='bi bi-chevron-right ms-1'></i></a>
-      </div>
-    </div>
-  </div>
-  <div class='col-md-4 col-sm-12 mb-3' id='partner-action-card'>
-    <div class='card card-body shadow-sm'>
-      <h4 class="fw-bold">Partner with us</h4>
-      <p>
-        Are you a company, institution, garage, farmer association... Partner with us to help provide after-sale services to farm equipment buyers (owners).
-      </p>
-      <div class='d-flex'>
-        <button class='btn btn-outline-primary' onclick="ignore('partner-action-card')"><i class='bi bi-x-lg me-1'></i> Ignore</button>
-        <a href="{% url 'apply' %}" class='btn btn-outline-primary ms-1'>Get started <i class='bi bi-chevron-right ms-1'></i></a>
-      </div>
-    </div>
-  </div>
   <div class="col-12">
-    <canvas id="myChart" width="400" height="200"></canvas>
+    <div class='card-body p-3'><div id="map"></div></div>
   </div>
 </div>
 {% endblock %}
-{% block scripts %}
+{% block styles %}
+<link rel="stylesheet" href="{% static 'css/mapbox-gl.css' %}">
+<style>
+  #map {
+    height: 60vh;
+    width: 100%;
+  }
+  .marker {
+    background-image: url("/static/img/map-marker.svg");
+    background-size: cover;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+  .mapboxgl-popup {
+    max-width: 200px;
+  }
+  .mapboxgl-popup-content {
+    text-align: center;
+    font-family: "Open Sans", sans-serif;
+  }
+</style>
+{% endblock %} {% block scripts %}
+<script src="{% static 'js/mapbox-gl.js' %}"></script>
 <script src="{% static 'vendor/chartjs/chart.min.js' %}"></script>
 <script>
-const ctx = document.getElementById('myChart').getContext('2d');
-const myChart = new Chart(ctx, {
-    type: 'line',
-    data: {
-        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-        datasets: [{
-            label: '# of Votes',
-            data: [12, 19, 3, 5, 2, 3],
-            backgroundColor: [
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(255, 206, 86, 0.2)',
-                'rgba(75, 192, 192, 0.2)',
-                'rgba(153, 102, 255, 0.2)',
-                'rgba(255, 159, 64, 0.2)'
-            ],
-            borderColor: [
-                'rgba(255, 99, 132, 1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)',
-                'rgba(75, 192, 192, 1)',
-                'rgba(153, 102, 255, 1)',
-                'rgba(255, 159, 64, 1)'
-            ],
-            borderWidth: 1
-        }]
-    },
-    options: {
-        scales: {
-            y: {
-                beginAtZero: true
-            }
+  mapboxgl.accessToken = "pk.eyJ1IjoiNmhpc2xhaW4iLCJhIjoiY2s1MWE1b3J0MHM0eDNlcDdta3Fkd2F0aCJ9.LCOX_jB2myxTALrIDnA23g";
+  const map = new mapboxgl.Map({
+    container: "map", // container ID
+    style: "mapbox://styles/mapbox/streets-v11", // style URL
+    center: [30.0821, -1.9351], // starting position [lng, lat]
+    zoom: 9, // starting zoom
+    projection: "globe" // display the map as a 3D globe
+  });
+
+  map.on("style.load", () => {
+    map.setFog({}); // Set the default atmosphere style
+  });
+
+  let geojson = {
+    type: "FeatureCollection",
+    features: [
+      {
+        type: "Feature",
+        geometry: {
+          type: "Point",
+          coordinates: [29.3022, -1.6679]
+        },
+        properties: {
+          title: "Goma",
+          description: "Warehouse"
         }
-    }
-});
-function ignore(id='') {
-  document.getElementById(id)?.classList.add('d-none')
-  let list = JSON.parse(localStorage.getItem('ignore-card')) || []
-  localStorage.setItem('ignore-card', JSON.stringify([id, ...list.filter(a => a != id)]))
-}
-document.addEventListener("DOMContentLoaded", function() {
-  let list = JSON.parse(localStorage.getItem('ignore-card')) || []
-  list?.map(id => ignore(id))
-})
+      },
+      {
+        type: "Feature",
+        geometry: {
+          type: "Point",
+          coordinates: [30.105, -1.93]
+        },
+        properties: {
+          title: "Kigali",
+          description: "Regional Warehouse"
+        }
+      },
+      {
+        type: "Feature",
+        geometry: {
+          type: "Point",
+          coordinates: [30.405, -1.93]
+        },
+        properties: {
+          title: "Rwamagana",
+          description: "Warehouse"
+        }
+      },
+      {
+        type: "Feature",
+        geometry: {
+          type: "Point",
+          coordinates: [30.0834, -1.6132]
+        },
+        properties: {
+          title: "Byumba",
+          description: "Warehouse"
+        }
+      }
+    ]
+  };
+  geojson.features.forEach(function (marker) {
+    var el = document.createElement("div");
+    el.className = "marker";
+
+    new mapboxgl.Marker(el)
+      .setLngLat(marker.geometry.coordinates)
+      .setPopup(
+        new mapboxgl.Popup({ offset: 25 }) // add popups
+          .setHTML(
+            "<h5 class='mb-0'>" +
+              marker.properties.title +
+              "</h5><p class='mb-0'>" +
+              marker.properties.description +
+              "</p>"
+          )
+      )
+      .addTo(map);
+  });
+
 </script>
 {% endblock %}

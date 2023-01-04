@@ -5,8 +5,13 @@ from django.http import JsonResponse, HttpResponse
 from django.contrib.auth.models import User, auth
 from django.forms.models import model_to_dict
 from django.contrib import messages
-from .models import Profile, Notification, Product, Location
+from ..models import Profile, Notification, Product, Location
 from django.db.models import Q
+from .comment import *
+from .location import *
+from .order import *
+from .product import *
+
 
 # Create your views here.
 @require_http_methods(["GET"])
@@ -32,17 +37,6 @@ def profile(request, id):
         profile = Profile.objects.filter(profile_user_id=id).get()
 
     return render(request, "profile.html", {"profile": profile, "user": user})
-
-
-@require_http_methods(["GET"])
-def apply(request):
-    form = Form.objects.filter(name__icontains="apply for partnership").first()
-
-    if form != None:
-        return redirect("feedback:form.show", id=form.id)
-    else:
-        messages.info(request, "Page not found")
-        return redirect(request.META.get("HTTP_REFERER"))
 
 
 @require_http_methods(["GET"])
@@ -73,14 +67,8 @@ def dashboard(request):
 def settings(request):
 
     if request.method == "GET":
-        settings = Settings.objects.filter(user_id=request.user.id).all()
         profile = Profile.objects.filter(profile_user_id=request.user.id).first()
-
-        return render(
-            request,
-            "settings.html",
-            {"settings": settings, "profile": profile},
-        )
+        return render(request, "settings.html", {"profile": profile})
 
 
 @require_http_methods(["POST"])
@@ -120,7 +108,7 @@ def notification(request):
 
 @require_http_methods(["GET"])
 @login_required(login_url="signin")
-def notification_delete(request, id):
+def notification_show(request, id):
     notification = get_object_or_404(Notification, pk=id)
     # ! redirect user after deleting notification
     if notification.user_id == request.user.id:

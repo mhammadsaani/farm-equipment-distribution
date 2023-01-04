@@ -55,7 +55,7 @@ class Order(models.Model):
 
 
 class Comment(models.Model):
-    message = models.BigIntegerField(default=0)
+    message = models.TextField()
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(default=datetime.now)
@@ -65,7 +65,7 @@ class Comment(models.Model):
 
 
 class Notification(models.Model):
-    message = models.CharField(max_length=200)
+    message = models.TextField()
     link = models.URLField(max_length=200)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(default=datetime.now)
