@@ -31,17 +31,9 @@
           {% endif %}
           <div class="card-body">
             <h5 class='card-title'>
-              <a href='{% url "after-sale-service:product.show" slug=product.slug %}'>{{ product.name }} &rarr;</a>
+              <a href='{% url "product.show" id=product.id %}'>{{ product.name }} &rarr;</a>
             </h5>
-            <h6 class='card-text'>{{ product.price }}</h6>
-            <div>
-              {% for partner in product.json_partners %}
-              <span class="badge bg-info">{{ partner.value }}</span>
-              {% endfor %}
-              {% for tag in product.json_tags %}
-              <span class="badge bg-secondary">{{ tag.value }}</span>
-              {% endfor %}
-            </div> 
+            <h6 class='card-text'>{{ product.price }} RWF</h6>
           </div>
         </div>
       </div>
@@ -49,62 +41,20 @@
     </div>
   </div>
   <div class="col-12 my-3">
-    <h1 class="display-6 fw-bold my-4 text-center">Our estimed partners</h1>
+    <h1 class="display-6 fw-bold my-4 text-center">Locations</h1>
     <div class="owl-carousel owl-theme mb-3">
-      {% for partner in partners %}
+      {% for location in locations %}
       <div class="item">
         <div class="card shadow-sm">
-          {% if partner.image %}
-          <img src="/media/{{ partner.image }}" class='card-img-top' alt='{{ partner.name }}' />
-          {% elif partner.image == '' %}
-          <img src="/static/img/placeholder.png" class='card-img-top' alt='{{ partner.name }}' />
+          {% if location.image %}
+          <img src="/media/{{ location.image }}" class='card-img-top' alt='{{ location.name }}' />
+          {% elif location.image == '' %}
+          <img src="/static/img/placeholder.png" class='card-img-top' alt='{{ location.name }}' />
           {% endif %}
           <div class="card-body">
-            <h5 class='card-title'><a href='{% url "after-sale-service:partner.show" slug=partner.slug %}'>{{ partner.name }} &rarr;</a></h5>
-            <h6 class='card-text'>{{ partner.website }}</h6>
-            <div>
-              {% for tag in partner.json_tags %}
-              <span class="badge bg-secondary">{{ tag.value }}</span>
-              {% endfor %}
-            </div>
+            <h5 class='card-title'><a href='{% url "location.show" id=location.id %}'>{{ location.name }} &rarr;</a></h5>
+            <h6 class='card-text'>{{ location.website }}</h6>
           </div>
-        </div>
-      </div>
-      {% endfor %}
-    </div>
-  </div>
-  <div class="col-12 my-3">
-    <h1 class="display-6 fw-bold my-4 text-center">Available services</h1>
-    <div class="owl-carousel owl-theme mb-3">
-      {% for service in services %}
-      <div class="item">
-        <div class="card shadow-sm">
-          {% if service.image %}
-          <img src="/media/{{ service.image }}" class='card-img-top' alt='{{ service.name }}' />
-          {% elif service.image == '' %}
-          <img src="/static/img/placeholder.png" class='card-img-top' alt='{{ service.name }}' />
-          {% endif %}
-          <div class="card-body">
-            <h5 class='card-title'>
-              {% if service.link %}<a href='{{ service.link }}'>{% else %}
-              <a href='{% url "after-sale-service:service.show" slug=service.slug %}'>
-              {% endif %}{{ service.name }} &rarr;</a>
-            </h5>
-            <h6 class='card-text'>{{ service.website }}</h6>
-            <div>
-              {% for partner in service.json_partners %}
-              <span class="badge bg-info">{{ partner.value }}</span>
-              {% endfor %}
-              {% for tag in service.json_tags %}
-              <span class="badge bg-secondary">{{ tag.value }}</span>
-              {% endfor %}
-            </div>
-          </div>
-          {% if user.is_superuser %}
-          <div class='card-footer text-end'>
-            <a href="{% url "after-sale-service:service.show" slug=service.slug %}" class="btn btn-outline-primary btn-sm">View &rarr;</a>
-          </div>
-          {% endif %}
         </div>
       </div>
       {% endfor %}

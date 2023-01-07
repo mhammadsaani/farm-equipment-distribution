@@ -6,7 +6,7 @@
     <h1 class="display-6 fw-bold my-4">Our quality products</h1>
     <div>
       {% if user.is_superuser %}
-      <a href='{% url "after-sale-service:product.create" %}' class='btn btn-lg btn-outline-primary'>
+      <a href='{% url "product.create" %}' class='btn btn-lg btn-outline-primary'>
         <i class='bi bi-plus-circle me-1'></i> Add new product
       </a>
       {% endif %}
@@ -25,17 +25,9 @@
           {% endif %}
           <div class="card-body">
             <h5 class='card-title'>
-              <a href='{% url "after-sale-service:product.show" slug=product.slug %}'>{{ product.name }} &rarr;</a>
+              <a href='{% url "product.show" id=product.id %}'>{{ product.name }} &rarr;</a>
             </h5>
-            <h6 class='card-text'>{{ product.price }}</h6>
-            <div>
-              {% for partner in product.json_partners %}
-              <span class="badge bg-info">{{ partner.value }}</span>
-              {% endfor %}
-              {% for tag in product.json_tags %}
-              <span class="badge bg-secondary">{{ tag.value }}</span>
-              {% endfor %}
-            </div>
+            <h6 class='card-text'>{{ product.price }} RWF</h6>
           </div>
         </div>
       </div>

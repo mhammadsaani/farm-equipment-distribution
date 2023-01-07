@@ -6,37 +6,35 @@
   <div class="col-md-3 col-sm-6 mb-3">
     <div class="card card-body shadow-sm">
       <h1>{{ product_count }}</h1>
-      <a href="{% url 'home' %}" class='btn btn-sm btn-outline-primary'><i class="bi bi-box me-1"></i> Products</a>
+      <a href="{% url 'product.index' %}" class='btn btn-sm btn-outline-primary'><i class="bi bi-box me-1"></i> Products</a>
     </div>
   </div>
   <div class="col-md-3 col-sm-6 mb-3">
     <div class="card card-body shadow-sm">
-      <h1>{{ '0' }}</h1>
-      <a href="{% url 'home' %}" class='btn btn-sm btn-outline-primary'><i class="bi bi-check2-circle me-1"></i> Locations</a>
+      <h1>{{ location_count }}</h1>
+      <a href="{% url 'location.index' %}" class='btn btn-sm btn-outline-primary'><i class="bi bi-map me-1"></i> Locations</a>
     </div>
   </div>
   <div class="col-md-3 col-sm-6 mb-3">
     <div class="card card-body shadow-sm">
-      <h1>{{ '0' }}</h1>
-      <a href="{% url 'home' %}" class='btn btn-sm btn-outline-primary'><i class="bi bi-chat-dots me-1"></i> Order</a>
+      <h1>{{ order_count }}</h1>
+      <a href="{% url 'order.index' %}" class='btn btn-sm btn-outline-primary'><i class="bi bi-check2-circle me-1"></i> Order</a>
     </div>
   </div>
   <div class="col-md-3 col-sm-6 mb-3">
     <div class="card card-body shadow-sm">
       <h1>{{ notification_count }}</h1>
-      <a href="{% url 'home' %}" class='btn btn-sm btn-outline-primary'><i class="bi bi-bell me-1"></i> Notifications</a>
+      <a href="{% url 'notification' %}" class='btn btn-sm btn-outline-primary'><i class="bi bi-bell me-1"></i> Notifications</a>
     </div>
   </div>
-  <div class="col-12">
-    <div class='card-body p-3'><div id="map"></div></div>
-  </div>
+  <div class="col-12"><div id="map"></div></div>
 </div>
 {% endblock %}
 {% block styles %}
 <link rel="stylesheet" href="{% static 'css/mapbox-gl.css' %}">
 <style>
   #map {
-    height: 60vh;
+    height: 75vh;
     width: 100%;
   }
   .marker {
@@ -64,7 +62,7 @@
     container: "map", // container ID
     style: "mapbox://styles/mapbox/streets-v11", // style URL
     center: [30.0821, -1.9351], // starting position [lng, lat]
-    zoom: 9, // starting zoom
+    zoom: 8, // starting zoom
     projection: "globe" // display the map as a 3D globe
   });
 

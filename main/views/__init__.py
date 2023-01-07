@@ -5,7 +5,7 @@ from django.http import JsonResponse, HttpResponse
 from django.contrib.auth.models import User, auth
 from django.forms.models import model_to_dict
 from django.contrib import messages
-from ..models import Profile, Notification, Product, Location
+from ..models import Profile, Product, Location, Order
 from django.db.models import Q
 from .comment import *
 from .location import *
@@ -47,17 +47,17 @@ def contact(request):
 @require_http_methods(["GET"])
 @login_required(login_url="signin")
 def dashboard(request):
+    order_count = Order.objects.count()
     product_count = Product.objects.count()
     location_count = Location.objects.count()
-    notification_count = Notification.objects.count()
 
     return render(
         request,
         "dashboard.html",
         {
+            "order_count": order_count,
             "product_count": product_count,
             "location_count": location_count,
-            "notification_count": notification_count,
         },
     )
 
@@ -98,23 +98,6 @@ def profile_update(request, id):
     return redirect(request.META.get("HTTP_REFERER"))
 
 
-@require_http_methods(["GET"])
-@login_required(login_url="signin")
-def notification(request):
-    notifications = get_list_or_404(Notification, user_id=request.user.id)
-    # ! show all my notifications
-    return HttpResponse("Show all notifications")
-
-
-@require_http_methods(["GET"])
-@login_required(login_url="signin")
-def notification_show(request, id):
-    notification = get_object_or_404(Notification, pk=id)
-    # ! redirect user after deleting notification
-    if notification.user_id == request.user.id:
-        notification.delete()
-
-    return redirect(request.META.get("HTTP_REFERER"))
 
 
 @require_http_methods(["GET", "POST"])

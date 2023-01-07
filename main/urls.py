@@ -33,6 +33,4 @@ urlpatterns = [
     path("comment/<int:id>/edit", views.comment_edit, name="comment.edit"),
     path("comment/<int:id>/delete", views.comment_delete, name="comment.delete"),
     path("comment/<int:id>", views.comment_show, name="comment.show"),
-    path("notification", views.notification, name="notification"),
-    path("notification/<int:id>", views.notification_show, name="notification.show"),
 ]
