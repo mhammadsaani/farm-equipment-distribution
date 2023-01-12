@@ -5,24 +5,26 @@ from django.http import JsonResponse, HttpResponse
 from django.contrib.auth.models import User, auth
 from django.forms.models import model_to_dict
 from django.contrib import messages
-from ..models import Profile, Product, Location, Order
+from ..models import Profile, Product, Location, Order, Supplier
 from django.db.models import Q
 from .comment import *
 from .location import *
 from .order import *
 from .product import *
+from .supplier import *
+from .buyer import *
 
 
 # Create your views here.
 @require_http_methods(["GET"])
 def home(request):
     products = Product.objects.order_by("-id")[:10]
-    locations = Location.objects.order_by("-id")[:10]
+    suppliers = Supplier.objects.order_by("-id")[:10]
 
     return render(
         request,
         "home.html",
-        {"locations": locations, "products": products},
+        {"suppliers": suppliers, "products": products},
     )
 
 
@@ -50,6 +52,7 @@ def dashboard(request):
     order_count = Order.objects.count()
     product_count = Product.objects.count()
     location_count = Location.objects.count()
+    supplier_count = Supplier.objects.count()
 
     return render(
         request,
@@ -58,6 +61,7 @@ def dashboard(request):
             "order_count": order_count,
             "product_count": product_count,
             "location_count": location_count,
+            "supplier_count": supplier_count,
         },
     )
 
@@ -96,8 +100,6 @@ def profile_update(request, id):
     messages.info(request, "Settings updated")
 
     return redirect(request.META.get("HTTP_REFERER"))
-
-
 
 
 @require_http_methods(["GET", "POST"])

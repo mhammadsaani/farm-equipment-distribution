@@ -42,6 +42,13 @@
       <span class="float-end">&rarr;</span>
     </a>
     <a
+      href="{% url 'supplier.index' %}"
+      class="list-group-item list-group-item-action {% if '/supplier' in request.path %} active {% endif %}"
+    >
+      <i class="bi bi-truck me-1"></i> Suppliers
+      <span class="float-end">&rarr;</span>
+    </a>
+    <a
       href="{% url 'product.index' %}"
       class="list-group-item list-group-item-action {% if '/product' in request.path %} active {% endif %}"
     >
@@ -53,10 +60,6 @@
       class="list-group-item list-group-item-action {% if '/order' in request.path %} active {% endif %}"
     >
       <i class="bi bi-check2-circle me-1"></i> Order
-      <span class="float-end">&rarr;</span>
-    </a>
-    <a href="{% url 'notification' %}" class="list-group-item list-group-item-action">
-      <i class="bi bi-bell me-1"></i> Notifications
       <span class="float-end">&rarr;</span>
     </a>
     <a

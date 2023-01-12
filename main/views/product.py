@@ -5,10 +5,9 @@ from django.core.paginator import Paginator
 from django.http import HttpResponse, JsonResponse
 from django.contrib.auth.models import User, auth
 from django.contrib import messages
-from ..models import Product, Location
+from ..models import Product, Location, Supplier
+import pandas as pd
 
-
-@login_required(login_url="signin")
 def product_index(request):
     products = Product.objects.order_by("-id")
     paginator = Paginator(products, 10)
@@ -27,14 +26,20 @@ def product_show(request, id):
 @login_required(login_url="signin")
 def product_create(request):
     if request.method == "GET":
-        return render(request, "product/create.html")
+        suppliers = Supplier.objects.all()
+        return render(request, "product/create.html", {"suppliers": suppliers})
 
     elif request.method == "POST":
         name = request.POST["name"]
         price = request.POST["price"]
         description = request.POST["description"]
+        supplier = request.POST["supplier"]
         product = Product(
-            name=name, price=price, description=description, user_id=request.user.id
+            name=name,
+            price=price,
+            supplier_id=supplier,
+            description=description,
+            user_id=request.user.id,
         )
 
         if request.FILES.get("image") != None:
@@ -55,6 +60,7 @@ def product_edit(request, id):
     elif request.method == "POST":
         product.name = request.POST["name"]
         product.price = request.POST["price"]
+        product.supplier_id = request.POST["supplier"]
         product.description = request.POST["description"]
 
         if request.FILES.get("image") != None:

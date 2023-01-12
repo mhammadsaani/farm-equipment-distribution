@@ -1,13 +1,19 @@
 html,
 body {
-  background: whitesmoke;
+  background: transparent;
   min-height: 100vh;
+}
+
+html {
+  background: url("/static/img/wallpaper.jpg") no-repeat;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
 }
 
 .ck-editor__editable {
   min-height: 120px !important;
 }
-
 
 .card-img-top {
   height: 200px !important;
