@@ -1,33 +1,29 @@
 {% extends 'layouts/admin.html' %}
 {% load static %}
-{% block title %} Product {% endblock %}
+{% block title %} Location {% endblock %}
 {% block content %}
-<h4>Edit product</h4>
+<h4>Edit location</h4>
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
     <li class="breadcrumb-item"><a href="{% url 'dashboard' %}">Dashboard</a></li>
-    <li class="breadcrumb-item"><a href="{% url 'after-sale-service:product.index' %}">Product</a></li>
-    <li class="breadcrumb-item active" aria-current="page">Edit product</li>
+    <li class="breadcrumb-item"><a href="{% url 'location.index' %}">Location</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Edit location</li>
   </ol>
 </nav>
 <form action="#" method="post" enctype='multipart/form-data'>
   <div class='row'>
-    <div class="col-md-6 mb-2">
+    <div class="col-md-4 mb-2">
       <label for="name" class="form-label">Name</label>
-      <input type="text" class="form-control" name="name" placeholder='product name' required value='{{ product.name }}' />
-    </div>
-    <div class="col-md-6 mb-2">
-      <label for="website" class="form-label">Price</label>
-      <input type="text" class="form-control" name="price" placeholder='$ 0.00' value='{{ product.price }}' />
+      <input type="text" class="form-control" name="name" placeholder='Location name' required />
     </div>
     <div class="col-md-4 mb-2">
-      <label for="tags" class="form-label">Partners</label>
-      <input type="text" class="form-control" name="partners" placeholder='partner 1, partner 2, partner 3' />
+      <label for="tags" class="form-label">Longitude</label>
+      <input type="text" class="form-control" name="longitude" placeholder='29.3022' />
     </div>
     <div class="col-md-4 mb-2">
-      <label for="tags" class="form-label">Tags</label>
-      <input type="text" class="form-control" name="tags" placeholder='tag 1, tag 2, tag 3' />
+      <label for="tags" class="form-label">Latitude</label>
+      <input type="text" class="form-control" name="latitude" placeholder='-1.6679' />
     </div>
     <div class="col-md-4 mb-2">
       <label for="image" class="form-label">Image</label>
@@ -36,12 +32,12 @@
   </div>
   <div class="mb-2">
     <label for="content" class="form-label">Description</label>
-    <textarea id='editor' class='form-control' name='description' rows='5' placeholder="product details...">{{ product.description|safe }}</textarea>
+    <textarea id='editor' class='form-control' name='description' rows='5' placeholder="location details..."></textarea>
   </div>
   {% csrf_token %}
   <div class='d-flex justify-content-between'>
     <button class="btn btn-primary" type="submit">Continue</button>
-    <a class="btn btn-link" href="{% url 'after-sale-service:product.index' %}">All products</a>
+    <a class="btn btn-link" href="{% url 'location.index' %}">All locations</a>
   </div>
 </form>
 {% endblock %}
@@ -49,20 +45,8 @@
 <link href="{% static 'css/tagify.css' %}" rel="stylesheet" type="text/css" />
 {% endblock %}
 {% block scripts %}
-<script src="{% static 'js/tagify.js' %}"></script>
 <script src="{% static 'js/ckeditor.js' %}"></script>
-<script src="{% static 'js/tagify.polyfills.min.js' %}"></script>
 <script>
-  let tagList = {{ tags|safe }}
-  let partnerList = {{ partners|safe }}
   ClassicEditor.create(document.querySelector("#editor"))
-  new Tagify(document.querySelector("input[name=tags]"), {
-    enforceWhitelist: true,
-    whitelist: tagList.map((item) => item?.fields?.name),
-  })
-  new Tagify(document.querySelector("input[name=partners]"), {
-    enforceWhitelist: true,
-    whitelist: partnerList.map((item) => item?.fields?.name),
-  })
 </script>
 {% endblock %}

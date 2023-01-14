@@ -28,9 +28,9 @@
       <i class="bi bi-speedometer2 me-1"></i> Dashboard
       <span class="float-end">&rarr;</span>
     </a>
-    {% if user.is_superuser or user.groups.first.name == 'moderator' %}
+    {% if user.is_staff %}
     <a href="/admin" class="list-group-item list-group-item-action">
-      <i class="bi bi-shield-lock me-1"></i> Admin Area
+      <i class="bi bi-shield-lock me-1"></i> Staff Section
       <span class="float-end">&rarr;</span>
     </a>
     {% endif %}
