@@ -1,22 +1,24 @@
-{% extends 'layouts/base.html' %}
-{% load static %}
-{% block title %} Farm Equipment Distribution & Analytics {% endblock %}
-{% block content %}
+{% extends 'layouts/base.html' %} {% load static %} {% block title %} Farm
+Equipment Distribution & Analytics {% endblock %} {% block content %}
 <div class="row justify-content-center">
   <div class="col-md-5">
-    <h1 class="display-6 fw-bold my-4">Farm Equipment <br/> Distribution & Analytics</h1>
-    <p class="text-muted fs-5 my-2">
-      We coordinate and monitor the supply, demand, and delivery of farm equipment by location
+    <h1 class="display-6 fw-bold my-4">
+      Farm Equipment <br />
+      Distribution & Analytics
+    </h1>
+    <p class="fs-5 my-2">
+      We coordinate and monitor the supply, demand, and delivery of farm
+      equipment by location
     </p>
-    <ul class='text-muted fs-5 my-2 mx-3'>
+    <ul class="fs-5 my-2 mx-3">
       <li>Track orders</li>
       <li>Monitor deliveries</li>
       <li>Identify which equipment needs servicing</li>
       <li>Get notified on ongoing activities</li>
     </ul>
   </div>
-  <div class='col-md-7'>
-    <img src="{% static 'img/tractor.png' %}" class='w-100' alt='tractor'/>
+  <div class="col-md-7">
+    <img src="{% static 'img/tractor.png' %}" class="w-100" alt="tractor" />
   </div>
   <div class="col-12 my-3">
     <h1 class="display-6 fw-bold my-4 text-center">Our quality products</h1>
@@ -25,15 +27,25 @@
       <div class="item">
         <div class="card shadow-sm">
           {% if product.image %}
-          <img src="/media/{{ product.image }}" class='card-img-top' alt='{{ product.name }}' />
+          <img
+            src="/media/{{ product.image }}"
+            class="card-img-top"
+            alt="{{ product.name }}"
+          />
           {% elif product.image == '' %}
-          <img src="/static/img/placeholder.png" class='card-img-top' alt='{{ product.name }}' />
+          <img
+            src="/static/img/placeholder.png"
+            class="card-img-top"
+            alt="{{ product.name }}"
+          />
           {% endif %}
           <div class="card-body">
-            <h5 class='card-title'>
-              <a href='{% url "product.show" id=product.id %}'>{{ product.name }} &rarr;</a>
+            <h5 class="card-title">
+              <a href='{% url "product.show" id=product.id %}'
+                >{{ product.name }} &rarr;</a
+              >
             </h5>
-            <h6 class='card-text'>{{ product.price }} RWF</h6>
+            <h6 class="card-text">{{ product.price }} RWF</h6>
           </div>
         </div>
       </div>
@@ -47,13 +59,25 @@
       <div class="item">
         <div class="card shadow-sm">
           {% if location.image %}
-          <img src="/media/{{ location.image }}" class='card-img-top' alt='{{ location.name }}' />
+          <img
+            src="/media/{{ location.image }}"
+            class="card-img-top"
+            alt="{{ location.name }}"
+          />
           {% elif location.image == '' %}
-          <img src="/static/img/placeholder.png" class='card-img-top' alt='{{ location.name }}' />
+          <img
+            src="/static/img/placeholder.png"
+            class="card-img-top"
+            alt="{{ location.name }}"
+          />
           {% endif %}
           <div class="card-body">
-            <h5 class='card-title'><a href='{% url "location.show" id=location.id %}'>{{ location.name }} &rarr;</a></h5>
-            <h6 class='card-text'>{{ location.website }}</h6>
+            <h5 class="card-title">
+              <a href='{% url "location.show" id=location.id %}'
+                >{{ location.name }} &rarr;</a
+              >
+            </h5>
+            <h6 class="card-text">{{ location.website }}</h6>
           </div>
         </div>
       </div>
@@ -61,29 +85,38 @@
     </div>
   </div>
 </div>
-{% endblock %}
-
-{% block scripts %}
-<link rel="stylesheet" type="text/css" href="{% static 'vendor/owl-carousel/assets/owl.carousel.min.css' %}">
-<link rel="stylesheet" type="text/css" href="{% static 'vendor/owl-carousel/assets/owl.theme.default.min.css' %}">
+{% endblock %} {% block scripts %}
+<link
+  rel="stylesheet"
+  type="text/css"
+  href="{% static 'vendor/owl-carousel/assets/owl.carousel.min.css' %}"
+/>
+<link
+  rel="stylesheet"
+  type="text/css"
+  href="{% static 'vendor/owl-carousel/assets/owl.theme.default.min.css' %}"
+/>
 <script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
-<script type="text/javascript" src="{% static 'vendor/owl-carousel/owl.carousel.min.js' %}"></script>
+<script
+  type="text/javascript"
+  src="{% static 'vendor/owl-carousel/owl.carousel.min.js' %}"
+></script>
 <script type="text/javascript">
-$(document).ready(function () {
-  $(".owl-carousel").owlCarousel({
-    loop: true,
-    margin: 10,
-    autoplay: true,
-    autoplayTimeout: 5000,
-    autoplayHoverPause: true,
-    animateOut: "slideOutDown",
-    animateIn: "flipInX",
-    responsive: {
-      0: { items: 1 },
-      600: { items: 2 },
-      1000: { items: 4 },
-    },
+  $(document).ready(function () {
+    $(".owl-carousel").owlCarousel({
+      loop: true,
+      margin: 10,
+      autoplay: true,
+      autoplayTimeout: 5000,
+      autoplayHoverPause: true,
+      animateOut: "slideOutDown",
+      animateIn: "flipInX",
+      responsive: {
+        0: { items: 1 },
+        600: { items: 2 },
+        1000: { items: 4 },
+      },
+    });
   });
-});
 </script>
 {% endblock %}

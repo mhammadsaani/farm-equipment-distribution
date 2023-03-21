@@ -1,0 +1,279 @@
+{% extends 'layouts/admin.html' %} {% load static %} {% block title %} Edit
+Order {% endblock %} {% block content %}
+<h4>Edit order</h4>
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+    <li class="breadcrumb-item">
+      <a href="{% url 'dashboard' %}">Dashboard</a>
+    </li>
+    <li class="breadcrumb-item"><a href="{% url 'order.index' %}">Order</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Edit order</li>
+  </ol>
+</nav>
+<form action="#" method="post" enctype="multipart/form-data">
+  <div class="accordion" id="accordionExample">
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="headingOne">
+        <button
+          class="accordion-button"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#collapseOne"
+          aria-expanded="true"
+          aria-controls="collapseOne"
+        >
+          Essential Information
+        </button>
+      </h2>
+      <div
+        id="collapseOne"
+        class="accordion-collapse collapse show"
+        aria-labelledby="headingOne"
+        data-bs-parent="#accordionExample"
+      >
+        <div class="accordion-body">
+          <div class="row">
+            <div class="col-md-6 mb-2">
+              <label for="product" class="form-label">Product</label>
+              <select class="form-control" name="product" required>
+                <option value="{{ order.product_id }}">
+                  {{ order.product.name }}
+                </option>
+                {% for product in products %}
+                <option value="{{product.id}}">{{product.name}}</option>
+                {% endfor %}
+              </select>
+            </div>
+            <div class="col-md-6 mb-2">
+              <label for="order_type" class="form-label">Order type</label>
+              <select class="form-control" name="order_type" required>
+                <option value="{{ order.order_type }}">
+                  {{ order.order_type }}
+                </option>
+                <option value="import">import</option>
+                <option value="sale">sale</option>
+                <option value="proforma">proforma</option>
+                <option value="repair">repair</option>
+                <option value="replace">replace</option>
+              </select>
+            </div>
+            <div class="col-md-6 mb-2">
+              <label for="location" class="form-label">Location</label>
+              <select class="form-control" name="location">
+                <option value="{{ order.location_id }}">
+                  {{ order.location.name }}
+                </option>
+                {% for location in locations %}
+                <option value="{{location.id}}">{{location.name}}</option>
+                {% endfor %}
+              </select>
+            </div>
+            <div class="col-md-6 mb-2">
+              <label for="quantity" class="form-label">Quantity</label>
+              <input
+                type="number"
+                class="form-control"
+                name="quantity"
+                value="{{ order.quantity }}"
+              />
+            </div>
+          </div>
+          <div class="mb-2">
+            <label for="content" class="form-label">Description</label>
+            <textarea
+              id="editor"
+              class="form-control"
+              name="description"
+              rows="3"
+              placeholder="order details..."
+            >
+              {{order.description}}
+            </textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="headingTwo">
+        <button
+          class="accordion-button collapsed"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#collapseTwo"
+          aria-expanded="false"
+          aria-controls="collapseTwo"
+        >
+          Buyer Details
+        </button>
+      </h2>
+      <div
+        id="collapseTwo"
+        class="accordion-collapse collapse"
+        aria-labelledby="headingTwo"
+        data-bs-parent="#accordionExample"
+      >
+        <div class="accordion-body">
+          <div class="row">
+            <div class="col-md-6 mb-2">
+              <label for="buyer_name" class="form-label">Full name</label>
+              <input
+                type="text"
+                class="form-control"
+                name="buyer_name"
+                placeholder="john doe"
+              />
+            </div>
+            <div class="col-md-6 mb-2">
+              <label for="buyer_contact_info" class="form-label"
+                >Contact information</label
+              >
+              <input
+                type="text"
+                class="form-control"
+                name="buyer_contact_info"
+                placeholder="phone or email"
+              />
+            </div>
+          </div>
+          <div class="mb-2">
+            <label for="buyer_description" class="form-label"
+              >Description</label
+            >
+            <textarea
+              class="form-control"
+              name="buyer_description"
+              rows="3"
+              placeholder="buyer details..."
+            ></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="headingThree">
+        <button
+          class="accordion-button collapsed"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#collapseThree"
+          aria-expanded="false"
+          aria-controls="collapseThree"
+        >
+          Insurance
+        </button>
+      </h2>
+      <div
+        id="collapseThree"
+        class="accordion-collapse collapse"
+        aria-labelledby="headingThree"
+        data-bs-parent="#accordionExample"
+      >
+        <div class="accordion-body">
+          <div class="row">
+            <div class="col-md-4 mb-2">
+              <label for="insurance_company_name" class="form-label"
+                >Insurance company</label
+              >
+              <input
+                type="text"
+                class="form-control"
+                name="insurance_company_name"
+                placeholder="radiant, bk, soras"
+              />
+            </div>
+            <div class="col-md-4 mb-2">
+              <label for="insurance_contact_info" class="form-label"
+                >Contact information</label
+              >
+              <input
+                type="text"
+                class="form-control"
+                name="insurance_contact_info"
+                placeholder="phone or email"
+              />
+            </div>
+            <div class="col-md-4 mb-2">
+              <label for="insurance_price" class="form-label">Price</label>
+              <input
+                type="number"
+                class="form-control"
+                name="insurance_price"
+                placeholder="250000"
+              />
+            </div>
+          </div>
+          <div class="mb-2">
+            <label for="insurance_description" class="form-label"
+              >Description</label
+            >
+            <textarea
+              class="form-control"
+              name="insurance_description"
+              rows="3"
+              placeholder="insurance details..."
+            ></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="headingFour">
+        <button
+          class="accordion-button collapsed"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#collapseFour"
+          aria-expanded="false"
+          aria-controls="collapseFour"
+        >
+          Guarantee
+        </button>
+      </h2>
+      <div
+        id="collapseFour"
+        class="accordion-collapse collapse"
+        aria-labelledby="headingFour"
+        data-bs-parent="#accordionExample"
+      >
+        <div class="accordion-body">
+          <div class="row">
+            <div class="col-md-4 mb-2">
+              <label for="month_duration" class="form-label"
+                >Month duration</label
+              >
+              <input
+                type="number"
+                class="form-control"
+                name="month_duration"
+                placeholder="6"
+              />
+            </div>
+          </div>
+          <div class="mb-2">
+            <label for="content" class="form-label">Description</label>
+            <textarea
+              class="form-control"
+              name="guarantee_description"
+              rows="3"
+              placeholder="guarantee details..."
+            ></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% csrf_token %}
+  <div class="d-flex justify-content-between my-2">
+    <button class="btn btn-primary" type="submit">Continue</button>
+    <a class="btn btn-outline-primary" href="{% url 'order.index' %}"
+      >All orders</a
+    >
+  </div>
+</form>
+{% endblock %} {% block scripts %}
+<script src="{% static 'js/ckeditor.js' %}"></script>
+<script>
+  ClassicEditor.create(document.querySelector("#editor"));
+</script>
+{% endblock %}

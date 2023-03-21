@@ -48,7 +48,7 @@ def location_create(request):
         location.save()
         messages.info(request, "location saved")
         return redirect("location.index")
-
+ 
 
 @login_required(login_url="signin")
 def location_edit(request, id):
@@ -58,12 +58,13 @@ def location_edit(request, id):
         return render(request, "location/edit.html", {"location": location})
 
     elif request.method == "POST":
-        location.marks = request.POST["marks"]
-        location.semester = request.POST["semester"]
-        location.year = request.POST["year"]
+        location.name = request.POST["name"]
+        location.latitude = request.POST["latitude"]
+        location.longitude = request.POST["longitude"]
         location.description = request.POST["description"]
-        location.student_id = request.POST["student"]
-        location.school_id = request.POST["school"]
+
+        if request.FILES.get("image") != None:
+            location.image = request.FILES.get("image")
 
         if location.user_id == request.user.id:
             location.save()

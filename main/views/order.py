@@ -30,11 +30,17 @@ def order_create(request):
     if request.method == "GET":
         buyers = Buyer.objects.all()
         products = Product.objects.all()
+        locations = Location.objects.all()
         insurances = Insurance.objects.all()
         return render(
             request,
             "order/create.html",
-            {"products": products, "insurances": insurances, "buyers": buyers},
+            {
+                "products": products,
+                "insurances": insurances,
+                "locations": locations,
+                "buyers": buyers,
+            },
         )
 
     elif request.method == "POST":
@@ -44,8 +50,8 @@ def order_create(request):
         description = request.POST["description"]
         order_type = request.POST["order_type"]
         order = Order(
-            product=product,
-            location=location,
+            product_id=product,
+            location_id=location,
             quantity=quantity,
             description=description,
             order_type=order_type,
@@ -58,9 +64,44 @@ def order_create(request):
 
 @login_required(login_url="signin")
 def order_edit(request, id):
-    pass
+    order = get_object_or_404(Order, pk=id)
+
+    if request.method == "GET":
+        buyers = Buyer.objects.all()
+        products = Product.objects.all()
+        locations = Location.objects.all()
+        insurances = Insurance.objects.all()
+
+        return render(
+            request,
+            "order/edit.html",
+            {
+                "order": order,
+                "products": products,
+                "insurances": insurances,
+                "locations": locations,
+                "buyers": buyers,
+            },
+        )
+
+    elif request.method == "POST":
+        order.product_id = request.POST["product"]
+        order.location_id = request.POST["location"]
+        order.quantity = request.POST["quantity"]
+        order.description = request.POST["description"]
+        order.order_type = request.POST["order_type"]
+
+        order.save()
+        messages.info(request, "order updated")
+        return redirect("order.index")
 
 
 @login_required(login_url="signin")
 def order_delete(request, id):
-    pass
+    order = get_object_or_404(Order, pk=id)
+
+    if order.user_id == request.user.id:
+        order.delete()
+        messages.info(request, "order deleted")
+
+    return redirect("order.index")

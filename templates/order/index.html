@@ -1,42 +1,50 @@
-{% extends 'layouts/admin.html' %}
-{% load static %}
-{% block title %} Order {% endblock %}
-{% block content %}
+{% extends 'layouts/admin.html' %} {% load static %} {% block title %} All Order
+{% endblock %} {% block content %}
 <h4>All Orders</h4>
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
-    <li class="breadcrumb-item"><a href="{% url 'dashboard' %}">Dashboard</a></li>
+    <li class="breadcrumb-item">
+      <a href="{% url 'dashboard' %}">Dashboard</a>
+    </li>
     <li class="breadcrumb-item"><a href="{% url 'order.index' %}">Order</a></li>
     <li class="breadcrumb-item active" aria-current="page">All Orders</li>
   </ol>
 </nav>
-<a href="{% url 'order.create' %}" class="btn btn-primary float-end">Add new order</a>
+<a href="{% url 'order.create' %}" class="btn btn-primary float-end"
+  >Add new order</a
+>
 {% include 'partials/messages.html' %}
 <table class="table">
   <thead>
     <tr>
       <th scope="col">Image</th>
-      <th scope="col">Name</th>
-      <th scope="col">Address</th>
-      <th scope="col">Details</th>
-      <th scope="col">Time</th> 
+      <th scope="col">Order Type</th>
+      <th scope="col">Quantity</th>
+      <th scope="col">Description</th>
+      <th scope="col">Time</th>
       <th scope="col">Action</th>
     </tr>
   </thead>
   <tbody>
     {% for order in page_object %}
     <tr>
-      <td><img src='/media/{{order.image}}' width='50'/></td>
-      <td>{{order.name}}</td>
-      <td>{{order.address}}</td>
-      <td>{{order.details|truncatechars:20}}</td>
+      <td><img src="/media/{{order.product.image}}" width="50" /></td>
+      <td>{{order.order_type}}</td>
+      <td>{{order.quantity}}</td>
+      <td>{{order.description|truncatechars:20|safe}}</td>
       <td>{{order.created_at}}</td>
       <td>
-        <a href='{% url "order.show" id=order.id %}' class='btn btn-success'>Details</a>
+        <a href='{% url "order.show" id=order.id %}' class="btn btn-success">
+          Details
+        </a>
         {% if order.user_id == user.id %}
-        <a href="{% url 'order.edit' id=order.id %}" class="btn btn-info">Edit</a>
-        <a href="{% url 'order.delete' id=order.id %}" class="btn btn-warning">Delete</a>
+        <a href="{% url 'order.edit' id=order.id %}" class="btn btn-info">
+          Edit
+        </a>
+        <a href="{% url 'order.delete' id=order.id %}" class="btn btn-warning">
+          Delete
+        </a>
         {% endif %}
       </td>
     </tr>
@@ -46,17 +54,31 @@
 <nav aria-label="pagination">
   <ul class="pagination justify-content-center">
     {% if page_object.has_previous %}
-    <li class="page-item"><a class="page-link" href='?page={{ page_object.previous_page_number }}'><i class='bi bi-chevron-left'></i></a></li>
+    <li class="page-item">
+      <a class="page-link" href="?page={{ page_object.previous_page_number }}"
+        ><i class="bi bi-chevron-left"></i
+      ></a>
+    </li>
     {% endif %}
-    <li class="page-item"><a class="page-link" href="#">{{ page_object.number }} / {{ page_object.paginator.num_pages }}</a></li>
+    <li class="page-item">
+      <a class="page-link" href="#"
+        >{{ page_object.number }} / {{ page_object.paginator.num_pages }}</a
+      >
+    </li>
     {% if page_object.has_next %}
-    <li class="page-item"><a class="page-link" href='?page={{ page_object.next_page_number }}'><i class='bi bi-chevron-right'></i></a></li>
+    <li class="page-item">
+      <a class="page-link" href="?page={{ page_object.next_page_number }}"
+        ><i class="bi bi-chevron-right"></i
+      ></a>
+    </li>
     {% endif %}
   </ul>
 </nav>
-{% endblock %}
-{% block scripts %}
+{% endblock %} {% block scripts %}
 <style>
-  html, body { background: whitesmoke !important; }
+  html,
+  body {
+    background: whitesmoke !important;
+  }
 </style>
 {% endblock %}

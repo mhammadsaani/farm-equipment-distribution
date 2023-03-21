@@ -8,6 +8,7 @@ from django.contrib import messages
 from ..models import Product, Location, Supplier
 import pandas as pd
 
+
 def product_index(request):
     products = Product.objects.order_by("-id")
     paginator = Paginator(products, 10)
@@ -15,7 +16,7 @@ def product_index(request):
     page_object = paginator.get_page(page_number)
 
     return render(request, "product/index.html", {"page_object": page_object})
-
+ 
 
 @login_required(login_url="signin")
 def product_show(request, id):
@@ -55,7 +56,10 @@ def product_edit(request, id):
     product = get_object_or_404(Product, pk=id)
 
     if request.method == "GET":
-        return render(request, "product/edit.html", {"product": product})
+        suppliers = Supplier.objects.all()
+        return render(
+            request, "product/edit.html", {"product": product, "suppliers": suppliers}
+        )
 
     elif request.method == "POST":
         product.name = request.POST["name"]

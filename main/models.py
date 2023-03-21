@@ -4,6 +4,7 @@ from django.contrib.auth import get_user_model
 
 User = get_user_model()
 
+
 # Create your models here.
 class Profile(models.Model):
     bio = models.TextField()
@@ -11,7 +12,7 @@ class Profile(models.Model):
     image = models.ImageField(upload_to="profiles", blank=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(default=datetime.now)
-
+ 
     def __str__(self):
         return self.user.username
 
@@ -67,11 +68,11 @@ class Buyer(models.Model):
 
 class Order(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    location = models.ForeignKey(Location, on_delete=models.CASCADE, blank=True)
+    location = models.ForeignKey(Location, on_delete=models.CASCADE, null=True)
     quantity = models.FloatField(default=1)
     description = models.TextField(blank=True)
     order_type = models.CharField(max_length=250)
-    buyer = models.ForeignKey(Buyer, on_delete=models.CASCADE, blank=True)
+    buyer = models.ForeignKey(Buyer, on_delete=models.CASCADE, null=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(default=datetime.now)
 
