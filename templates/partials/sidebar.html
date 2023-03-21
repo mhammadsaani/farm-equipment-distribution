@@ -28,6 +28,13 @@
       <i class="bi bi-speedometer2 me-1"></i> Dashboard
       <span class="float-end">&rarr;</span>
     </a>
+    <a
+      href="{% url 'location.index' %}"
+      class="list-group-item list-group-item-action {% if '/report' in request.path %} active {% endif %}"
+    >
+      <i class="bi bi-bar-chart me-1"></i> Report
+      <span class="float-end">&rarr;</span>
+    </a>
     {% if user.is_staff %}
     <a href="/admin" class="list-group-item list-group-item-action">
       <i class="bi bi-shield-lock me-1"></i> Staff Section
@@ -59,7 +66,7 @@
       href="{% url 'order.index' %}"
       class="list-group-item list-group-item-action {% if '/order' in request.path %} active {% endif %}"
     >
-      <i class="bi bi-check2-circle me-1"></i> Order
+      <i class="bi bi-check2-circle me-1"></i> Orders
       <span class="float-end">&rarr;</span>
     </a>
     <a

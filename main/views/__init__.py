@@ -42,11 +42,6 @@ def profile(request, id):
 
 
 @require_http_methods(["GET"])
-def contact(request):
-    pass
-
-
-@require_http_methods(["GET"])
 @login_required(login_url="signin")
 def dashboard(request):
     order_count = Order.objects.count()
@@ -69,7 +64,6 @@ def dashboard(request):
 @login_required(login_url="signin")
 @require_http_methods(["GET", "POST"])
 def settings(request):
-
     if request.method == "GET":
         profile = Profile.objects.filter(profile_user_id=request.user.id).first()
         return render(request, "settings.html", {"profile": profile})

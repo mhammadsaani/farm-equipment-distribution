@@ -41,9 +41,9 @@ Equipment Distribution & Analytics {% endblock %} {% block content %}
           {% endif %}
           <div class="card-body">
             <h5 class="card-title">
-              <a href='{% url "product.show" id=product.id %}'
-                >{{ product.name }} &rarr;</a
-              >
+              <a href='{% url "product.show" id=product.id %}'>
+                {{ product.name }} &rarr;
+              </a>
             </h5>
             <h6 class="card-text">{{ product.price }} RWF</h6>
           </div>
@@ -53,31 +53,31 @@ Equipment Distribution & Analytics {% endblock %} {% block content %}
     </div>
   </div>
   <div class="col-12 my-3">
-    <h1 class="display-6 fw-bold my-4 text-center">Locations</h1>
+    <h1 class="display-6 fw-bold my-4 text-center">Esteemed suppliers</h1>
     <div class="owl-carousel owl-theme mb-3">
-      {% for location in locations %}
+      {% for supplier in suppliers %}
       <div class="item">
         <div class="card shadow-sm">
-          {% if location.image %}
+          {% if supplier.image %}
           <img
-            src="/media/{{ location.image }}"
+            src="/media/{{ supplier.image }}"
             class="card-img-top"
-            alt="{{ location.name }}"
+            alt="{{ supplier.name }}"
           />
-          {% elif location.image == '' %}
+          {% elif supplier.image == '' %}
           <img
             src="/static/img/placeholder.png"
             class="card-img-top"
-            alt="{{ location.name }}"
+            alt="{{ supplier.name }}"
           />
           {% endif %}
           <div class="card-body">
             <h5 class="card-title">
-              <a href='{% url "location.show" id=location.id %}'
-                >{{ location.name }} &rarr;</a
-              >
+              <a href='{% url "supplier.show" id=supplier.id %}'>
+                {{ supplier.name }} &rarr;
+              </a>
             </h5>
-            <h6 class="card-text">{{ location.website }}</h6>
+            <h6 class="card-text">{{ supplier.website }}</h6>
           </div>
         </div>
       </div>

@@ -2,10 +2,10 @@ from django.urls import path
 from django.views.generic import TemplateView, RedirectView
 from . import views
 
-urlpatterns = [
+urlpatterns = [ 
     path("", views.home, name="home"),
     path("about", TemplateView.as_view(template_name="about.html"), name="about"),
-    path("contact", views.contact, name="contact"),
+    path("contact", TemplateView.as_view(template_name="contact.html"), name="contact"),
     path("dashboard", views.dashboard, name="dashboard"),
     path("settings", views.settings, name="settings"),
     path("signup", views.signup, name="signup"),
